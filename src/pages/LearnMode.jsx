@@ -11,6 +11,10 @@
 */
 
 import React, { useState, useEffect } from 'react';
+// A montagem das alternativas mora num arquivo sem tela (questoesCore), que é
+// conferido por `npm run testar`. É ele que impede a prova de mostrar duas
+// alternativas iguais — uma valendo ponto e a outra não.
+import { montarMultiplaEscolha } from '../estudo/questoesCore.js';
 // Importamos ícones elegantes para enriquecer a experiência de quiz
 import { ArrowLeft, RotateCcw, Check, X, Award, AlertTriangle, ArrowRight } from 'lucide-react';
 
@@ -60,22 +64,16 @@ export default function LearnMode({ set, onNavigate, onCompleteSession }) {
     if (cardsToStudy.length === 0 || currentIndex >= cardsToStudy.length) return;
 
     const currentCard = cardsToStudy[currentIndex];
-    
-    // Filtra todas as OUTRAS definições do baralho para servir como alternativas falsas (distratores)
-    const otherCards = set.cards.filter(c => c.id !== currentCard.id);
-    
-    // Sorteia até 3 definições incorretas aleatoriamente
-    const randomWrongCards = [...otherCards]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, Math.min(3, otherCards.length));
-    
-    // Junta a resposta correta com as erradas em uma lista
-    const optionsPool = [currentCard, ...randomWrongCards];
-    
-    // Embaralha a ordem final das opções para que a correta não fique sempre no mesmo lugar!
-    const shuffledOptions = optionsPool.sort(() => Math.random() - 0.5);
-    
-    setCurrentOptions(shuffledOptions);
+
+    // Monta as 4 alternativas JÁ embaralhadas e sem repetição: as definições
+    // iguais à resposta certa (o mesmo conceito escrito de outro jeito em outro
+    // cartão) são descartadas, para você nunca ver duas opções idênticas com
+    // uma valendo ponto e a outra valendo erro.
+    const questao = montarMultiplaEscolha(currentCard, set.cards);
+
+    // Baralho em que todas as definições são a mesma coisa: não há alternativa
+    // errada honesta para oferecer, então mostramos só a certa.
+    setCurrentOptions(questao ? questao.opcoes : [currentCard]);
     setSelectedOptionId(null);
     setIsAnswered(false);
   }, [currentIndex, cardsToStudy, set.cards]);
@@ -252,7 +250,7 @@ export default function LearnMode({ set, onNavigate, onCompleteSession }) {
                             borderRadius: '4px',
                             border: '1px solid rgba(255, 255, 255, 0.1)',
                             objectFit: 'contain',
-                            background: '#090d16',
+                            background: '#0B0C0E',
                             alignSelf: 'flex-start',
                             cursor: 'zoom-in',
                           }} 
@@ -410,13 +408,13 @@ const styles = {
   progressBarBg: {
     width: '100%',
     height: '6px',
-    background: '#1e293b',
+    background: '#22252B',
     borderRadius: '10px',
     overflow: 'hidden',
   },
   progressBarFill: {
     height: '100%',
-    background: 'linear-gradient(90deg, #6366f1 0%, #a855f7 100%)',
+    background: 'linear-gradient(90deg, #E8933F 0%, #E77950 100%)',
     borderRadius: '10px',
     transition: 'width 0.3s ease',
   },
@@ -424,14 +422,14 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '12px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '600',
   },
   progressText: {
-    color: '#94a3b8',
+    color: '#99A1AC',
   },
   accuracyText: {
-    color: '#94a3b8',
+    color: '#99A1AC',
   },
   questionPanel: {
     width: '100%',
@@ -445,7 +443,7 @@ const styles = {
   panelCategory: {
     fontSize: '12px',
     fontWeight: '700',
-    color: '#a855f7',
+    color: '#E77950',
     textTransform: 'uppercase',
     letterSpacing: '1px',
   },
@@ -463,7 +461,7 @@ const styles = {
     width: '100%',
   },
   optionButton: {
-    background: 'rgba(19, 26, 48, 0.6)',
+    background: 'rgba(21, 23, 26, 0.6)',
     border: '1px solid rgba(255, 255, 255, 0.06)',
     borderRadius: '12px',
     padding: '16px 20px',
@@ -494,7 +492,7 @@ const styles = {
     alignItems: 'center',
     fontSize: '13px',
     fontWeight: '700',
-    color: '#94a3b8',
+    color: '#99A1AC',
   },
   optionVal: {
     fontSize: '15px',
@@ -503,16 +501,16 @@ const styles = {
     textAlign: 'left',
   },
   correctBtnStyle: {
-    background: 'rgba(16, 185, 129, 0.15)',
-    borderColor: '#10b981',
-    color: '#10b981',
-    boxShadow: '0 0 10px rgba(16, 185, 129, 0.15)',
+    background: 'rgba(62, 207, 142, 0.15)',
+    borderColor: '#3ECF8E',
+    color: '#3ECF8E',
+    boxShadow: '0 0 10px rgba(62, 207, 142, 0.15)',
   },
   wrongBtnStyle: {
-    background: 'rgba(244, 63, 94, 0.15)',
-    borderColor: '#f43f5e',
-    color: '#f43f5e',
-    boxShadow: '0 0 10px rgba(244, 63, 94, 0.15)',
+    background: 'rgba(229, 72, 77, 0.15)',
+    borderColor: '#E5484D',
+    color: '#E5484D',
+    boxShadow: '0 0 10px rgba(229, 72, 77, 0.15)',
   },
   nextBtn: {
     alignSelf: 'flex-end',
@@ -532,9 +530,9 @@ const styles = {
     alignItems: 'center',
   },
   awardIcon: {
-    color: '#f59e0b',
+    color: '#EEA53D',
     marginBottom: '20px',
-    filter: 'drop-shadow(0 0 10px rgba(245, 158, 11, 0.3))',
+    filter: 'drop-shadow(0 0 10px rgba(238, 165, 61, 0.3))',
   },
   finishedTitle: {
     fontSize: '28px',
@@ -542,7 +540,7 @@ const styles = {
     marginBottom: '6px',
   },
   finishedSubtitle: {
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontSize: '15px',
     marginBottom: '32px',
   },
@@ -566,7 +564,7 @@ const styles = {
   },
   scoreLabel: {
     fontSize: '12px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '600',
     textTransform: 'uppercase',
     marginTop: '4px',
@@ -585,19 +583,19 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     fontSize: '14px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     marginBottom: '8px',
   },
   masteryBarBg: {
     width: '100%',
     height: '8px',
-    background: '#1e293b',
+    background: '#22252B',
     borderRadius: '10px',
     overflow: 'hidden',
   },
   masteryBarFill: {
     height: '100%',
-    background: 'linear-gradient(90deg, #10b981 0%, #059669 100%)',
+    background: 'linear-gradient(90deg, #3ECF8E 0%, #2FAF78 100%)',
     borderRadius: '10px',
   },
   finishedActions: {
@@ -623,7 +621,7 @@ const styles = {
     padding: '14px 20px',
     background: 'transparent',
     borderColor: 'transparent',
-    color: '#94a3b8',
+    color: '#99A1AC',
   }
 };
 

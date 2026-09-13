@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 02 — Ligações Químicas e Soluções | Química Geral e Experimental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   PALETA — as mesmas cores da Plataforma Bueno (src/index.css + as esferas do
+   Sub-Cerebro). Cada funcao inorganica ganhou a cor de uma esfera, para o olho
+   ja saber onde esta: acido = rosa (Aula), base = azul (Anotacao),
+   sal = verde (Exercicios), oxido = violeta (Caderno), NOX = ambar (Link).
+   ========================================================================= */
+:root{
+  --bg-0:#0C0D0F; --bg-1:#15171A; --bg-2:#1E2126;
+  --border:rgba(255,255,255,.07); --border-2:rgba(255,255,255,.12);
+  --laranja:#E8933F; --laranja-2:#E77950;
+  --verde:#3ECF8E;  --vermelho:#E5484D; --amarelo:#EEA53D;
+  --rosa:#F472B6;   --azul:#60A5FA;     --violeta:#A78BFA;
+  --esmeralda:#34D399; --ambar:#F59E0B;
+  --txt:#F4F5F7; --txt-2:#C3C9D2; --mut:#99A1AC;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;
+  --r-s:10px; --r-m:14px; --r-l:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg-0); color:var(--txt); font-family:var(--sans);
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(680px 480px at 12% -6%, rgba(167,139,250,.16), transparent 60%),
+    radial-gradient(620px 520px at 92% 4%, rgba(244,114,182,.13), transparent 62%),
+    radial-gradient(760px 620px at 50% 108%, rgba(232,147,63,.10), transparent 64%);
+}
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 22px 90px}
+
+/* ---------------------------------------------------------------- CAPA -- */
+.capa{padding:52px 0 30px; text-align:center}
+.selo{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 16px;
+  border:1px solid rgba(244,114,182,.35); border-radius:999px;
+  background:rgba(244,114,182,.10); color:#FBCFE8;
+  font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+}
+.capa h1{
+  font-family:var(--serif); font-weight:700; margin:20px 0 8px;
+  font-size:clamp(30px,5.4vw,54px); line-height:1.08; letter-spacing:-.02em;
+  background:linear-gradient(120deg,#fff 8%,#F9C58D 52%,#F472B6 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.capa .sub{color:var(--txt-2); font-size:17px; max-width:660px; margin:0 auto}
+.chips{display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:24px}
+.chip{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 14px;
+  border:1px solid var(--border-2); border-radius:999px; background:rgba(255,255,255,.04);
+  font-size:12.5px; font-weight:600; color:var(--txt-2);
+}
+.chip b{color:var(--txt); font-weight:800}
+
+/* -------------------------------------------------------------- SUMARIO -- */
+.sumario{
+  margin:34px 0 8px; padding:20px; border:1px solid var(--border);
+  border-radius:var(--r-l); background:linear-gradient(180deg,rgba(30,33,38,.9),rgba(21,23,26,.72));
+  backdrop-filter:blur(8px);
+}
+.sumario h2{margin:0 0 14px; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mut)}
+.sumario ol{margin:0; padding:0; list-style:none; display:grid; gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.sumario a{
+  display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:var(--r-s);
+  border:1px solid transparent; color:var(--txt-2); text-decoration:none;
+  font-size:14.5px; font-weight:600; transition:.18s;
+}
+.sumario a:hover{background:rgba(255,255,255,.05); border-color:var(--border-2); color:#fff; transform:translateX(3px)}
+.sumario .num{
+  flex:0 0 26px; height:26px; display:grid; place-items:center; border-radius:8px;
+  background:rgba(232,147,63,.14); color:var(--laranja); font-size:12px; font-weight:800;
+}
+
+/* ------------------------------------------------------------- SECCOES -- */
+section{scroll-margin-top:18px; margin-top:46px}
+.sec-cab{display:flex; align-items:flex-start; gap:15px; margin-bottom:20px}
+.sec-ico{
+  flex:0 0 46px; height:46px; border-radius:14px; display:grid; place-items:center;
+  font-size:22px; border:1px solid var(--border-2); background:rgba(255,255,255,.04);
+}
+.sec-cab h2{
+  font-family:var(--serif); font-weight:700; margin:0; letter-spacing:-.01em;
+  font-size:clamp(22px,3.2vw,30px); line-height:1.2;
+}
+.sec-cab p{margin:5px 0 0; color:var(--mut); font-size:14.5px}
+
+.card{
+  border:1px solid var(--border); border-radius:var(--r-m); padding:20px 22px;
+  background:linear-gradient(180deg,rgba(30,33,38,.72),rgba(21,23,26,.55)); margin:16px 0;
+}
+.grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+h3{font-size:18px; margin:26px 0 10px; letter-spacing:-.01em}
+h4{font-size:15px; margin:18px 0 8px; color:var(--txt)}
+p{margin:0 0 12px; color:var(--txt-2)}
+ul,ol{color:var(--txt-2); padding-left:22px; margin:0 0 12px}
+li{margin-bottom:7px}
+b,strong{color:var(--txt)}
+a{color:var(--laranja)}
+
+.tag{display:inline-block; padding:2px 9px; border-radius:6px; font-size:12px; font-weight:800; letter-spacing:.03em}
+.t-acido{background:rgba(244,114,182,.16); color:#F9A8D4}
+.t-base{background:rgba(96,165,250,.16); color:#93C5FD}
+.t-sal{background:rgba(52,211,153,.16); color:#6EE7B7}
+.t-oxido{background:rgba(167,139,250,.16); color:#C4B5FD}
+.t-nox{background:rgba(245,158,11,.16); color:#FCD34D}
+
+.f{font-family:'Menlo','Consolas',monospace; font-weight:700; color:#fff; white-space:nowrap}
+.f sub{font-size:.72em; font-weight:700}
+.f sup{font-size:.72em; font-weight:700}
+.eq{
+  font-family:'Menlo','Consolas',monospace; font-size:15px; font-weight:700; color:#fff;
+  background:rgba(0,0,0,.34); border:1px solid var(--border-2); border-left:3px solid var(--laranja);
+  border-radius:var(--r-s); padding:13px 16px; margin:12px 0; overflow-x:auto; line-height:2;
+}
+.eq small{display:block; font-family:var(--sans); font-weight:600; color:var(--mut); font-size:12.5px; margin-top:6px}
+
+.box{border-radius:var(--r-m); padding:15px 18px; margin:16px 0; border:1px solid; font-size:14.5px}
+.box .tit{display:flex; align-items:center; gap:9px; font-weight:800; margin-bottom:7px; font-size:14px; letter-spacing:.02em}
+.box p:last-child{margin-bottom:0}
+.b-dica{border-color:rgba(62,207,142,.3); background:rgba(62,207,142,.07)} .b-dica .tit{color:var(--verde)}
+.b-atencao{border-color:rgba(238,165,61,.32); background:rgba(238,165,61,.07)} .b-atencao .tit{color:var(--amarelo)}
+.b-pegadinha{border-color:rgba(229,72,77,.32); background:rgba(229,72,77,.07)} .b-pegadinha .tit{color:#F87171}
+.b-prova{border-color:rgba(167,139,250,.32); background:rgba(167,139,250,.07)} .b-prova .tit{color:var(--violeta)}
+.b-aula{border-color:rgba(244,114,182,.30); background:rgba(244,114,182,.06)} .b-aula .tit{color:var(--rosa)}
+
+.tab-rol{overflow-x:auto; margin:16px 0; border:1px solid var(--border); border-radius:var(--r-m)}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:480px}
+thead th{
+  background:rgba(255,255,255,.045); color:var(--mut); text-align:left; padding:11px 14px;
+  font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:800;
+  border-bottom:1px solid var(--border-2); white-space:nowrap;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--txt-2); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(255,255,255,.028)}
+td .f{color:#fff}
+
+.ph-barra{
+  display:flex; height:42px; border-radius:10px; overflow:hidden; margin:8px 0 4px;
+  border:1px solid var(--border-2); font-size:11px; font-weight:800;
+}
+.ph-barra div{flex:1; display:grid; place-items:center; color:rgba(0,0,0,.62)}
+.ph-legenda{display:flex; justify-content:space-between; color:var(--mut); font-size:12px; font-weight:700}
+.ph-lista{display:grid; gap:7px; margin-top:16px}
+.ph-item{
+  display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:12px;
+  padding:9px 13px; border-radius:var(--r-s); background:rgba(255,255,255,.032);
+  border:1px solid var(--border); font-size:14px;
+}
+.ph-val{font-family:'Menlo','Consolas',monospace; font-weight:800; font-size:15px; text-align:center;
+  padding:3px 0; border-radius:6px; color:#0C0D0F}
+.ph-cat{font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--mut)}
+
+.fc-grid{display:grid; gap:13px; grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+.fc{
+  position:relative; min-height:160px; cursor:pointer; perspective:1200px;
+  background:none; border:0; padding:0; text-align:left; font-family:inherit;
+}
+.fc-int{position:relative; width:100%; height:100%; min-height:160px; transition:transform .5s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d}
+.fc.virado .fc-int{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border:1px solid var(--border-2); border-radius:var(--r-m); padding:16px 17px;
+  display:flex; flex-direction:column; justify-content:center; gap:8px; overflow:auto;
+}
+.fc-frente{background:linear-gradient(160deg,rgba(232,147,63,.16),rgba(30,33,38,.92))}
+.fc-tras{background:linear-gradient(160deg,rgba(62,207,142,.14),rgba(21,23,26,.97)); transform:rotateY(180deg)}
+.fc-tema{font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja)}
+.fc-tras .fc-tema{color:var(--verde)}
+.fc-txt{font-size:15px; font-weight:700; color:#fff; line-height:1.45}
+.fc-tras .fc-txt{font-weight:600; font-size:14.5px; color:var(--txt-2)}
+.fc-tras .fc-txt strong{color:#fff}
+.fc-pista{font-size:11px; color:var(--mut); font-weight:600}
+.fc-barra{display:flex; flex-wrap:wrap; gap:9px; align-items:center; margin:6px 0 18px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:10px;
+  border:1px solid var(--border-2); background:rgba(255,255,255,.05); color:var(--txt);
+  font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; transition:.18s;
+}
+.btn:hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
+.btn-l{background:linear-gradient(135deg,#E8933F,#D96C3F); border-color:transparent; color:#170F06}
+
+.q{border:1px solid var(--border); border-radius:var(--r-m); padding:17px 19px; margin:13px 0;
+  background:linear-gradient(180deg,rgba(30,33,38,.66),rgba(21,23,26,.5))}
+.q-cab{display:flex; align-items:center; gap:10px; margin-bottom:11px}
+.q-n{flex:0 0 28px; height:28px; border-radius:9px; display:grid; place-items:center;
+  background:rgba(167,139,250,.16); color:var(--violeta); font-size:12.5px; font-weight:800}
+.q-tema{font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mut)}
+.q-enun{color:var(--txt); font-size:15px; margin:0 0 11px; font-weight:600}
+.alts{list-style:none; padding:0; margin:0 0 12px; display:grid; gap:6px}
+.alts li{padding:8px 12px; border-radius:8px; background:rgba(255,255,255,.03);
+  border:1px solid var(--border); font-size:14px; color:var(--txt-2)}
+.alts li b{color:var(--laranja); margin-right:6px}
+details{border-top:1px dashed var(--border-2); padding-top:11px}
+details summary{
+  cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:8px;
+  font-size:13px; font-weight:800; color:var(--verde); letter-spacing:.02em;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"\25B8"; transition:.2s}
+details[open] summary::before{transform:rotate(90deg)}
+details .resp{margin-top:11px; font-size:14.5px; color:var(--txt-2);
+  background:rgba(62,207,142,.06); border:1px solid rgba(62,207,142,.22);
+  border-radius:var(--r-s); padding:13px 15px}
+details .resp b{color:#6EE7B7}
+
+.links{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.link{
+  display:flex; gap:13px; padding:15px 16px; border:1px solid var(--border); border-radius:var(--r-m);
+  background:rgba(245,158,11,.045); text-decoration:none; transition:.18s;
+}
+.link:hover{border-color:rgba(245,158,11,.4); background:rgba(245,158,11,.09); transform:translateY(-2px)}
+.link .ico{flex:0 0 38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  background:rgba(245,158,11,.14); font-size:18px}
+.link .tit{color:#fff; font-weight:700; font-size:14.5px; display:block; margin-bottom:3px}
+.link .desc{color:var(--mut); font-size:12.5px; display:block; line-height:1.45}
+
+.cola{border:1px solid rgba(232,147,63,.3); background:rgba(232,147,63,.055)}
+.cola-grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.cola-bloco{border:1px solid var(--border); border-radius:var(--r-s); padding:13px 15px; background:rgba(12,13,15,.5)}
+.cola-bloco h5{margin:0 0 8px; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--laranja)}
+.cola-bloco ul{margin:0; padding-left:17px; font-size:13.5px}
+.cola-bloco li{margin-bottom:5px}
+
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--border); text-align:center;
+  color:var(--mut); font-size:12.5px}
+footer b{color:var(--txt-2)}
+
+@media(max-width:620px){
+  .wrap{padding:0 15px 70px}
+  .ph-item{grid-template-columns:56px 1fr}
+  .ph-cat{grid-column:1/-1}
+  .sec-cab{gap:11px} .sec-ico{flex:0 0 38px; height:38px; font-size:18px}
+}
+@media print{
+  body::before{display:none}
+  .fc-int{transform:none!important}
+  details .resp{display:block}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="capa">
+  <span class="selo" style="border-color:rgba(52,211,153,.35); background:rgba(52,211,153,.10); color:#A7F3D0">&#9679; Aula 02 &middot; Semana 2 &middot; Módulo 53/2026</span>
+  <h1 style="background:linear-gradient(120deg,#fff 8%,#A7F3D0 50%,#34D399 100%); -webkit-background-clip:text; background-clip:text; color:transparent">Ligações Químicas e Soluções</h1>
+  <p class="sub">Duas aulas em uma: primeiro como os átomos se juntam (iônica, covalente, metálica),
+  depois como se mede uma solução (concentração, diluição, solubilidade).</p>
+  <div class="chips">
+    <span class="chip">&#128218; <b>Química Geral e Experimental</b></span>
+    <span class="chip">&#127891; Aula ao vivo 02</span>
+    <span class="chip">&#9201; <b>1h35</b> de aula</span>
+    <span class="chip">&#129504; 7 blocos + 52 flashcards</span>
+    <span class="chip">&#9997; 14 questões com gabarito</span>
+    <span class="chip" style="border-color:rgba(238,165,61,.4); color:#FCD34D">&#9888; cai nas atividades</span>
+  </div>
+</header>
+
+<nav class="sumario">
+  <h2>Mapa da aula</h2>
+  <ol>
+    <li><a href="#s1"><span class="num">1</span> Valência e regra do octeto</a></li>
+    <li><a href="#s2"><span class="num">2</span> Cátions, ânions e Lewis</a></li>
+    <li><a href="#s3"><span class="num">3</span> Ligação iônica</a></li>
+    <li><a href="#s4"><span class="num">4</span> Ligação covalente</a></li>
+    <li><a href="#s5"><span class="num">5</span> Covalente dativa e geometria</a></li>
+    <li><a href="#s6"><span class="num">6</span> Ligação metálica</a></li>
+    <li><a href="#s7"><span class="num">7</span> Soluções: soluto e solvente</a></li>
+    <li><a href="#s8"><span class="num">8</span> Concentrações e diluição</a></li>
+    <li><a href="#s9"><span class="num">9</span> Solubilidade</a></li>
+    <li><a href="#sfc"><span class="num">10</span> Flashcards (52)</a></li>
+    <li><a href="#s10"><span class="num">11</span> Exercícios comentados</a></li>
+    <li><a href="#s11"><span class="num">12</span> Pegadinhas de prova</a></li>
+    <li><a href="#slinks"><span class="num">&#128279;</span> Links e simuladores</a></li>
+    <li><a href="#s12"><span class="num">13</span> Cola de uma página</a></li>
+  </ol>
+</nav>
+
+<div class="box b-atencao" style="margin-top:26px">
+  <div class="tit">&#9888; Aviso da abertura da aula</div>
+  <p>A <b>parte 2 (soluções)</b> é a que está cobrada nas <b>atividades</b> &mdash; e a
+  <b>Atividade de Estudo 2</b> exige o uso do <b>Laboratório Virtual</b>, no menu lateral do Studeo.
+  Os templates estão em &ldquo;Material da disciplina&rdquo;.</p>
+</div>
+
+<!-- ===================================== OCTETO ======================== -->
+<section id="s1">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(52,211,153,.12); border-color:rgba(52,211,153,.32)">&#9410;</div>
+    <div>
+      <h2>1. Camada de valência e regra do octeto</h2>
+      <p>Toda ligação química existe por um motivo só: chegar a oito.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(52,211,153,.28)">
+    <h4 style="margin-top:0; color:var(--esmeralda)">Regra do octeto</h4>
+    <p style="margin-bottom:0">Os átomos se combinam de modo que cada um fique com <b>OITO elétrons
+    na camada de valência</b> &mdash; a mesma configuração estável dos gases nobres.
+    Toda ligação química é uma tentativa de chegar lá.</p>
+  </div>
+
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Reforço da aula 01: valência &ne; mais energético</div>
+    <p>Quem faz a ligação é a <b>camada de valência</b> &mdash; a camada de <b>maior número</b>.
+    No ferro (<span class="f">1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶</span>) o subnível mais <em>energético</em>
+    é o <b>3d⁶</b>, mas a valência é a camada <b>4</b> (<span class="f">4s²</span>).
+    São coisas diferentes e a professora voltou nisso duas vezes.</p>
+  </div>
+
+  <h3>As exceções do octeto</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Elemento</th><th>Estabiliza com</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td><b>Hidrogênio</b> (H)</td><td><b>2 elétrons</b></td>
+            <td>A exceção mais importante. Faz <b>sempre 1 ligação</b>, nunca mais.</td></tr>
+        <tr><td><b>Hélio</b> (He)</td><td><b>2 elétrons</b></td><td>Já nasce estável com 2. É gás nobre.</td></tr>
+        <tr><td><b>Berílio</b> (Be)</td><td>4 elétrons</td><td>Exceção citada de passagem.</td></tr>
+        <tr><td><b>Boro</b> (B)</td><td>6 elétrons</td><td>Exceção citada de passagem.</td></tr>
+        <tr><td><b>Alumínio</b> (Al)</td><td>pode ficar com 6</td><td>Citado na aula como exceção.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Não precisa decorar todas</div>
+    <p>A professora foi clara: o que importa é saber que a <b>regra do octeto vale em geral</b> e que o
+    <b>hidrogênio é a exceção</b> (estabiliza com 2). As outras não são o foco da disciplina.</p>
+  </div>
+
+  <h3>O atalho da família</h3>
+  <div class="eq">
+    1A &rarr; 1 e⁻ &nbsp;&middot;&nbsp; 2A &rarr; 2 &nbsp;&middot;&nbsp; 3A &rarr; 3 &nbsp;&middot;&nbsp; 4A &rarr; 4<br>
+    5A &rarr; 5 e⁻ &nbsp;&middot;&nbsp; 6A &rarr; 6 &nbsp;&middot;&nbsp; 7A &rarr; 7 &nbsp;&middot;&nbsp; 8A &rarr; 8 (He: 2)
+    <small>O NÚMERO DA FAMÍLIA É o número de elétrons de valência. Bateu o olho na coluna, já sabe — sem fazer distribuição nenhuma.</small>
+  </div>
+  <div class="box b-prova">
+    <div class="tit">&#127891; Por que os gases nobres não reagem</div>
+    <p>Família <b>8A</b>: já têm os 8 elétrons na valência. Não precisam ganhar, perder nem compartilhar
+    nada com ninguém. São <b>inertes</b> e <b>estáveis</b> &mdash; e é exatamente por isso que
+    todos os outros átomos &ldquo;querem virar&rdquo; um gás nobre.</p>
+  </div>
+</section>
+
+<!-- ============================= CÁTIONS, ÂNIONS, LEWIS ================ -->
+<section id="s2">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#9889;</div>
+    <div>
+      <h2>2. Cátions, ânions e a fórmula de Lewis</h2>
+      <p>Quem doa, quem recebe e como desenhar isso rápido.</p>
+    </div>
+  </div>
+
+  <h3>A lei do menor esforço</h3>
+  <p>O sódio tem <b>1</b> elétron na valência. O cloro tem <b>7</b>. Os dois querem chegar a 8.
+  Qual é o caminho mais curto?</p>
+  <div class="eq">
+    Sódio: doar <b>1</b> elétron &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>ou</em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; receber <b>7</b>? &rarr; <b>doa</b><br>
+    Cloro: receber <b>1</b> elétron &nbsp;&nbsp;<em>ou</em>&nbsp;&nbsp; doar <b>7</b>? &rarr; <b>recebe</b>
+    <small>Quem tem POUCOS elétrons de valência doa. Quem tem MUITOS recebe. Quem decide é a ELETRONEGATIVIDADE (aula 01).</small>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; A regra geral</div>
+    <p><b>METAIS</b> (poucos elétrons de valência, pouco eletronegativos) &rarr; tendem a <b>DOAR</b>.<br>
+    <b>AMETAIS</b> (muitos elétrons de valência, muito eletronegativos) &rarr; tendem a <b>RECEBER</b>.</p>
+  </div>
+
+  <h3>Cátion e ânion</h3>
+  <div class="grid">
+    <div class="card" style="border-color:rgba(229,72,77,.28)">
+      <h4 style="margin-top:0; color:var(--vermelho)">CÁTION &mdash; perdeu elétron</h4>
+      <p style="margin-bottom:0">Sobrou próton: a carga fica <b>positiva</b>.<br>
+      <span class="f">Na &rarr; Na<sup>+</sup></span> (doou 1)<br>
+      <span class="f">Ca &rarr; Ca<sup>2+</sup></span> (doou 2)<br>
+      <span class="f">Al &rarr; Al<sup>3+</sup></span> (doou 3)</p>
+    </div>
+    <div class="card" style="border-color:rgba(96,165,250,.28)">
+      <h4 style="margin-top:0; color:var(--azul)">ÂNION &mdash; ganhou elétron</h4>
+      <p style="margin-bottom:0">Sobrou elétron: a carga fica <b>negativa</b>.<br>
+      <span class="f">Cl &rarr; Cl<sup>&minus;</sup></span> (ganhou 1)<br>
+      <span class="f">O &rarr; O<sup>2&minus;</sup></span> (ganhou 2)<br>
+      <span class="f">N &rarr; N<sup>3&minus;</sup></span> (ganhou 3)</p>
+    </div>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; A carga é o NÚMERO de elétrons trocados</div>
+    <p>Doou 2 &rarr; carga <b>2+</b>. Recebeu 3 &rarr; carga <b>3&minus;</b>. Simples assim.
+    E lembre da aula 01: o átomo neutro tem prótons = elétrons; ao mexer nos elétrons,
+    o equilíbrio se desfaz e sobra carga.</p>
+  </div>
+
+  <h3>O sódio depois de doar</h3>
+  <div class="eq">
+    Na &nbsp;&nbsp;= 1s² 2s² 2p⁶ <b>3s¹</b> &nbsp;&nbsp;&rarr; valência: camada 3, com 1 e⁻<br>
+    Na<sup>+</sup> = 1s² <b>2s² 2p⁶</b> &nbsp;&nbsp;&nbsp;&nbsp;&rarr; valência: camada 2, com 2 + 6 = <b>8</b> e⁻ &#10004;
+    <small>Doando o único elétron da camada 3, essa camada DESAPARECE — e a camada 2, que já tinha 8, passa a ser a valência. Octeto cumprido.</small>
+  </div>
+  <div class="eq">
+    Cl &nbsp;&nbsp;= 1s² 2s² 2p⁶ 3s² <b>3p⁵</b> &rarr; valência: 2 + 5 = <b>7</b> e⁻<br>
+    Cl<sup>&minus;</sup> = 1s² 2s² 2p⁶ 3s² <b>3p⁶</b> &rarr; valência: 2 + 6 = <b>8</b> e⁻ &#10004;
+    <small>Recebendo 1 elétron, o 3p⁵ virou 3p⁶ e o cloro fechou o octeto na mesma camada 3.</small>
+  </div>
+
+  <h3>Fórmula de Lewis (fórmula eletrônica)</h3>
+  <p>É desenhar o átomo mostrando <b>só os elétrons da camada de valência</b>, com pontinhos ao redor do símbolo.
+  Não enche o desenho com elétrons que não vão participar de nada.</p>
+  <div class="eq">
+    Na&#8226; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 elétron de valência<br>
+    &#8226;&#8226;<br>
+    &#8226;Cl&#8226; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 elétrons de valência<br>
+    &#8226;&#8226;&nbsp;&#8226;&#8226;
+    <small>Bateu o olho na fórmula de Lewis e você já vê: o Na doa, o Cl recebe. É a relação entre Lewis e o octeto — Lewis EVIDENCIA quantos elétrons faltam.</small>
+  </div>
+</section>
+
+<!-- ============================================== IÔNICA =============== -->
+<section id="s3">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#9889;</div>
+    <div>
+      <h2>3. Ligação IÔNICA</h2>
+      <p><b>Metal + ametal.</b> Um doa, o outro recebe. Formam-se íons.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h4 style="margin-top:0">QUEM</h4>
+      <p style="margin-bottom:0"><b>METAL + AMETAL.</b> Na prática, as famílias <b>1A e 2A</b>
+      (metais alcalinos e alcalinoterrosos, pouco eletronegativos) com os <b>ametais</b>
+      (muito eletronegativos).</p></div>
+    <div class="card"><h4 style="margin-top:0">COMO</h4>
+      <p style="margin-bottom:0"><b>TRANSFERÊNCIA</b> definitiva de elétrons.
+      O mais eletronegativo <b>arranca</b> os elétrons do menos eletronegativo.</p></div>
+    <div class="card"><h4 style="margin-top:0">RESULTADO</h4>
+      <p style="margin-bottom:0">Formação de <b>ÍONS</b> &mdash; cátion e ânion presos por
+      atração eletrostática. O nome vem daí: i<b>ôn</b>ica, de <b>íons</b>.</p></div>
+  </div>
+
+  <div class="eq">
+    Na<sup>&#8226;</sup> &nbsp;+&nbsp; Cl (7 e⁻) &nbsp;&nbsp;&rarr;&nbsp;&nbsp; Na<sup>+</sup> + Cl<sup>&minus;</sup> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; <b>NaCl</b>
+    <small>O sódio doa seu único elétron de valência ao cloro. Os dois fecham o octeto e ficam presos pela atração entre + e −.</small>
+  </div>
+
+  <h3>Propriedades dos compostos iônicos</h3>
+  <ul>
+    <li><b>Estrutura cristalina</b> &mdash; formam figuras geométricas bem definidas.
+    O <span class="f">NaCl</span> forma <b>cubos</b> perfeitos (dá para ver na lupa em um grão de sal).</li>
+    <li><b>Sólidos</b> à temperatura ambiente, com pontos de fusão e ebulição <b>altos</b>.</li>
+    <li><b>Conduzem corrente elétrica</b> quando <b>dissolvidos em água ou fundidos</b> &mdash;
+    porque aí os íons ficam livres para se movimentar.</li>
+    <li><b>Não conduzem</b> quando sólidos e secos: os íons estão travados no retículo.</li>
+    <li>Duros, mas <b>quebradiços</b>.</li>
+  </ul>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; &ldquo;Composto iônico conduz eletricidade&rdquo; &mdash; depende!</div>
+    <p><b>Em solução ou fundido: SIM</b> (íons livres). <b>Sólido e seco: NÃO</b> (íons presos).
+    A prova adora essa distinção. Compare com o metal, que conduz <em>sólido</em> porque lá
+    os <em>elétrons</em> é que estão livres.</p>
+  </div>
+
+  <h3>Montando a fórmula: a troca de cargas</h3>
+  <div class="eq">
+    A carga do <b>cátion</b> vira o índice do <b>ânion</b>, e vice-versa.<br><br>
+    Ca<sup>2+</sup> + F<sup>&minus;</sup> &nbsp;&rarr;&nbsp; <b>CaF₂</b><br>
+    Mg<sup>2+</sup> + Cl<sup>&minus;</sup> &rarr;&nbsp; <b>MgCl₂</b><br>
+    Al<sup>3+</sup> + O<sup>2&minus;</sup> &nbsp;&rarr;&nbsp; <b>Al₂O₃</b><br>
+    Na<sup>+</sup> + Cl<sup>&minus;</sup> &nbsp;&nbsp;&rarr;&nbsp; <b>NaCl</b> &nbsp;(1 para 1, os índices somem)
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Entenda em vez de decorar (recado da professora)</div>
+    <p>O cálcio tem <b>2</b> elétrons para doar. Cada flúor só aceita <b>1</b>.
+    Logo, <b>um cálcio abastece dois flúores</b> &rarr; <span class="f">CaF₂</span>.
+    A regra da troca é só um atalho para chegar nisso mais rápido.</p>
+  </div>
+</section>
+
+<!-- ============================================ COVALENTE ============== -->
+<section id="s4">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(96,165,250,.12); border-color:rgba(96,165,250,.32)">&#129309;</div>
+    <div>
+      <h2>4. Ligação COVALENTE</h2>
+      <p><b>Ametal + ametal</b> (ou qualquer coisa com H). Ninguém doa: os dois usam os mesmos elétrons.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h4 style="margin-top:0">QUEM</h4>
+      <p style="margin-bottom:0"><b>AMETAL + AMETAL</b>, ou <b>qualquer ligação com HIDROGÊNIO</b>.
+      Toda vez que houver H na ligação, ela é covalente.</p></div>
+    <div class="card"><h4 style="margin-top:0">COMO</h4>
+      <p style="margin-bottom:0"><b>COMPARTILHAMENTO</b> de pares de elétrons. Eles ficam orbitando
+      ao redor dos <b>dois núcleos</b> ao mesmo tempo.</p></div>
+    <div class="card"><h4 style="margin-top:0">RESULTADO</h4>
+      <p style="margin-bottom:0"><b>MOLÉCULAS.</b> Não há íons e não há retículo cristalino &mdash;
+      cada molécula tem sua própria <b>geometria</b>.</p></div>
+  </div>
+
+  <h4>Exemplo 1 &mdash; a água <span class="f">H₂O</span></h4>
+  <div class="eq">
+    O tem <b>6</b> e⁻ de valência &rarr; precisa de <b>2</b><br>
+    H tem <b>1</b> e⁻ &rarr; precisa de <b>1</b> (exceção: estabiliza com 2)<br><br>
+    O compartilha 1 par com cada H &rarr; O fica com <b>8</b> &#10004; e cada H fica com <b>2</b> &#10004;<br>
+    &rarr; são necessários <b>DOIS</b> hidrogênios &rarr; <b>H₂O</b>
+  </div>
+
+  <h4>Exemplo 2 &mdash; o gás cloro <span class="f">Cl₂</span></h4>
+  <div class="eq">
+    Cada Cl tem <b>7</b> e⁻ &rarr; cada um precisa de <b>1</b><br>
+    Compartilham <b>um par</b> entre si &rarr; os dois passam a contar <b>8</b> &#10004;
+    <small>Dois ametais iguais se ligando. É por isso que o cloro na natureza é Cl₂, e não Cl solto.</small>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; Como decidir o tipo de ligação em 3 segundos</div>
+    <p>Tem <b>H</b> na jogada? &rarr; <b>covalente</b>.<br>
+    <b>Metal</b> com <b>ametal</b>? &rarr; <b>iônica</b>.<br>
+    <b>Ametal</b> com <b>ametal</b>? &rarr; <b>covalente</b>.<br>
+    <b>Metal</b> com <b>metal</b>? &rarr; <b>metálica</b>.</p>
+  </div>
+</section>
+
+<!-- ==================================== DATIVA E GEOMETRIA ============= -->
+<section id="s5">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#128260;</div>
+    <div>
+      <h2>5. Covalente dativa e geometria molecular</h2>
+      <p>O empréstimo de elétrons e o formato que sai disso.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(167,139,250,.28)">
+    <h4 style="margin-top:0; color:var(--violeta)">Ligação covalente DATIVA (ou coordenada)</h4>
+    <p style="margin-bottom:0">É quando um átomo que <b>já está estável</b> (já tem seus 8 elétrons)
+    cede um <b>par de elétrons seu</b>, em empréstimo, para outro átomo que ainda precisa se estabilizar.
+    O par continua pertencendo a quem emprestou.</p>
+  </div>
+
+  <h4>O exemplo do <span class="f">SO₂</span> &mdash; passo a passo</h4>
+  <div class="eq">
+    <b>1.</b> S tem 6 e⁻, O tem 6 e⁻. Compartilham um par &rarr; os dois ficam com <b>8</b> &#10004;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&rarr; formou-se o <b>SO</b> (monóxido de enxofre), estável.<br><br>
+    <b>2.</b> Chega um <b>segundo oxigênio</b>, que tem só 6 e⁻ e precisa se estabilizar.<br><br>
+    <b>3.</b> O enxofre, <b>já estável</b>, <b>EMPRESTA</b> um par de elétrons a esse oxigênio.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&rarr; formou-se o <b>SO₂</b>: uma ligação covalente normal + uma <b>DATIVA</b>.
+  </div>
+
+  <h3>Geometria molecular (teoria VSEPR)</h3>
+  <p>Na ligação covalente não existe estrutura cristalina definida &mdash; cada molécula tem sua geometria.
+  A regra que decide é a <b>repulsão dos pares eletrônicos da camada de valência</b>:
+  os pares de elétrons, <b>ligantes e não ligantes</b>, se afastam o <b>máximo possível</b> uns dos outros.</p>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Pares ligantes</th><th>Pares livres</th><th>Geometria</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td>0</td><td><b>LINEAR</b></td><td><span class="f">CO₂</span>, <span class="f">BeH₂</span></td></tr>
+        <tr><td>2</td><td>1 ou 2</td><td><b>ANGULAR</b></td><td><span class="f">H₂O</span>, <span class="f">SO₂</span></td></tr>
+        <tr><td>3</td><td>0</td><td><b>TRIGONAL PLANA</b></td><td><span class="f">BF₃</span></td></tr>
+        <tr><td>3</td><td>1</td><td><b>PIRAMIDAL</b></td><td><span class="f">NH₃</span></td></tr>
+        <tr><td>4</td><td>0</td><td><b>TETRAÉDRICA</b></td><td><span class="f">CH₄</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-prova">
+    <div class="tit">&#127891; Por que a água é ANGULAR e o CO₂ é LINEAR</div>
+    <p>Os dois têm <b>2 pares ligantes</b>. A diferença: o oxigênio da água ainda tem <b>2 pares
+    NÃO ligantes</b>, que também se repelem e <b>empurram</b> os hidrogênios para baixo, entortando
+    a molécula. No <span class="f">CO₂</span> o carbono não tem pares livres &mdash; nada empurra,
+    e a molécula fica reta.</p>
+    <p style="margin-top:8px"><b>Os pares NÃO ligantes contam na geometria.</b> Esse é o ponto que
+    todo mundo esquece.</p>
+  </div>
+</section>
+
+<!-- ============================================= METÁLICA ============== -->
+<section id="s6">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(238,165,61,.12); border-color:rgba(238,165,61,.32)">&#9881;</div>
+    <div>
+      <h2>6. Ligação METÁLICA</h2>
+      <p><b>Metal + metal.</b> Cátions mergulhados num mar de elétrons.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(238,165,61,.28)">
+    <p style="margin-bottom:0">Os metais perdem elétrons com facilidade. O resultado é uma rede de
+    <b>cátions fixos</b> com <b>elétrons livres circulando</b> entre eles &mdash; o modelo do
+    <b>&ldquo;mar de elétrons&rdquo;</b>.</p>
+  </div>
+
+  <h3>Propriedades &mdash; todas explicadas pelos elétrons livres</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Propriedade</th><th>Por quê</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ótimos condutores</b> de eletricidade e calor</td>
+            <td>Os elétrons livres transportam carga e energia, <b>mesmo no estado sólido</b></td></tr>
+        <tr><td><b>Maleáveis e dúcteis</b></td>
+            <td>O mar de elétrons acompanha a deformação: os cátions escorregam sem romper a ligação</td></tr>
+        <tr><td><b>Brilho metálico</b></td>
+            <td>Os elétrons livres interagem com a luz e a refletem</td></tr>
+        <tr><td><b>Densidade elevada</b></td>
+            <td>Os cátions ficam muito compactados na rede</td></tr>
+        <tr><td>Formam <b>ligas metálicas</b></td>
+            <td>Aço (Fe + C) &middot; bronze (Cu + Sn) &middot; latão (Cu + Zn)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; A comparação que fecha a parte 1</div>
+    <p><b>Metal</b> conduz <b>sólido</b>, porque os <b>elétrons</b> estão livres.<br>
+    <b>Composto iônico</b> conduz <b>dissolvido</b>, porque aí os <b>íons</b> ficam livres.<br>
+    <b>Composto molecular</b> (covalente) em geral <b>não conduz</b>: não tem nem íon nem elétron livre.</p>
+  </div>
+</section>
+
+<!-- ============================================== SOLUÇÕES ============= -->
+<section id="s7">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(96,165,250,.12); border-color:rgba(96,165,250,.32)">&#129380;</div>
+    <div>
+      <h2>7. Soluções: soluto e solvente</h2>
+      <p>A segunda metade da aula &mdash; e a que cai nas atividades.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">SOLVENTE</h4>
+      <p style="margin-bottom:0">Quem <b>dissolve</b>. Está em <b>maior</b> quantidade.
+      Normalmente é líquido &mdash; e normalmente é a <b>água</b>.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">SOLUTO</h4>
+      <p style="margin-bottom:0">Quem é <b>dissolvido</b>. Está em <b>menor</b> quantidade.
+      Normalmente é um sólido (um pozinho).</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Se o soluto&hellip;</th><th>A mistura é</th><th>Nome</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b>dissolve totalmente</b></td><td><b>HOMOGÊNEA</b> &mdash; não se distingue mais soluto de solvente</td>
+            <td><b style="color:var(--verde)">SOLUÇÃO</b></td><td>sal em água</td></tr>
+        <tr><td><b>não dissolve</b></td><td><b>HETEROGÊNEA</b> &mdash; dá para ver o soluto separado</td>
+            <td><b style="color:var(--amarelo)">DISPERSÃO</b></td><td>areia em água</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Nem toda mistura é solução</div>
+    <p>A palavra &ldquo;solução&rdquo; é usada solta no dia a dia, mas em química ela exige
+    <b>mistura homogênea</b>. Água com areia <b>não é solução</b> &mdash; é dispersão.</p>
+  </div>
+</section>
+
+<!-- ======================================== CONCENTRAÇÕES ============== -->
+<section id="s8">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.12); border-color:rgba(232,147,63,.32)">&#129514;</div>
+    <div>
+      <h2>8. Concentrações e diluição</h2>
+      <p>Quatro fórmulas. É tudo o que a aula pede.</p>
+    </div>
+  </div>
+
+  <h3>1. Concentração comum (C)</h3>
+  <div class="eq">
+    <b>C = massa do soluto &divide; volume da solução</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; <b>g/L</b><br><br>
+    Ex.: 20 g de sal em 1 L de água &rarr; C = 20 &divide; 1 = <b>20 g/L</b>
+  </div>
+
+  <h3>2. Concentração molar / molaridade (M)</h3>
+  <div class="eq">
+    <b>M = n° de mols do soluto &divide; volume da solução</b>&nbsp;&nbsp;&rarr; <b>mol/L</b><br><br>
+    Ex.: 0,5 mol de açúcar em 1 L &rarr; M = <b>0,5 mol/L</b>
+  </div>
+  <p>E quando o exercício dá a <b>massa</b> em vez dos mols? Use a <b>massa molar</b> (MM) para converter:</p>
+  <div class="eq" style="border-left-color:var(--verde)">
+    <b>M = m &divide; (MM &times; V)</b><br><br>
+    Ex.: 20 g de <span class="f">NaCl</span>, MM = 58,44 g/mol, em 1 L<br>
+    M = 20 &divide; (58,44 &times; 1) = <b>0,34 mol/L</b>
+    <small>É a fórmula mais cobrada da parte 2. A massa molar sai da soma das massas atômicas da tabela periódica.</small>
+  </div>
+
+  <h3>3. Fração molar (X)</h3>
+  <div class="eq">
+    do <b>soluto</b>: &nbsp;&nbsp;&nbsp;X₁ = n₁ &divide; (n₁ + n₂)<br>
+    do <b>solvente</b>: X₂ = n₂ &divide; (n₁ + n₂)<br><br>
+    Ex.: 2 mols de açúcar + 8 mols de água<br>
+    X(açúcar) = 2 &divide; 10 = <b>0,2</b>&nbsp;&nbsp;&nbsp;&nbsp;X(água) = 8 &divide; 10 = <b>0,8</b>
+    <small>NÃO tem unidade — é uma razão. E a SOMA de todas as frações molares é SEMPRE 1: 0,2 + 0,8 = 1 ✓ (serve de conferência).</small>
+  </div>
+
+  <h3>4. Diluição</h3>
+  <div class="eq">
+    <b>C₁ &middot; V₁ = C₂ &middot; V₂</b>&nbsp;&nbsp;&nbsp;&nbsp;(1 = antes &nbsp;|&nbsp; 2 = depois)<br><br>
+    Ex.: 100 mL a 2 mol/L, completando com água até 200 mL<br>
+    2 &times; 100 = C₂ &times; 200 &nbsp;&rarr;&nbsp; C₂ = 200 &divide; 200 = <b>1 mol/L</b>
+    <small>Dobrou o volume, a concentração caiu à metade. A QUANTIDADE de soluto não mudou — só está mais espalhada.</small>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Atenção às unidades</div>
+    <p>Concentração comum é <b>g/L</b> e molaridade é <b>mol/L</b> &mdash; o volume precisa estar em
+    <b>litros</b>. Se o enunciado der em mL, divida por 1000 (250 mL = 0,25 L).<br>
+    <b>Exceção prática:</b> na fórmula da diluição as unidades se cancelam nos dois lados,
+    então dá para trabalhar em mL.</p>
+  </div>
+</section>
+
+<!-- ========================================== SOLUBILIDADE ============= -->
+<section id="s9">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(52,211,153,.12); border-color:rgba(52,211,153,.32)">&#127864;</div>
+    <div>
+      <h2>9. Solubilidade</h2>
+      <p>Até onde dá para dissolver &mdash; e o que acontece quando você passa do ponto.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Classificação</th><th>O que é</th><th>No gráfico</th></tr></thead>
+      <tbody>
+        <tr><td><b>INSATURADA</b> (não saturada)</td>
+            <td>Ainda <b>não chegou</b> no limite. Dissolveu tudo e daria para dissolver mais.</td>
+            <td><b>abaixo</b> da curva</td></tr>
+        <tr><td><b>SATURADA</b></td>
+            <td>Chegou <b>exatamente</b> no limite de solubilidade. Um grão a mais já não dissolve.</td>
+            <td><b>sobre</b> a curva</td></tr>
+        <tr><td><b>SATURADA COM CORPO DE FUNDO</b></td>
+            <td><b>Passou</b> do limite: o excesso <b>precipita</b> no fundo e não dissolve.</td>
+            <td>sobre a curva + sólido no fundo</td></tr>
+        <tr><td><b>SUPERSATURADA</b></td>
+            <td>Tem <b>mais</b> soluto dissolvido do que seria possível em condições normais.
+            É <b>INSTÁVEL</b>.</td>
+            <td><b>acima</b> da curva</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-aula">
+    <div class="tit">&#127864; O exemplo do refrigerante</div>
+    <p>O <span class="f">CO₂</span> dissolvido no refrigerante é uma solução <b>supersaturada</b>:
+    só cabe tanto gás ali porque a garrafa está sob <b>alta pressão</b>. Ao abrir, a pressão cai,
+    a solução volta a ser instável e o gás escapa &mdash; é o chiado e a espuma.</p>
+    <p style="margin-top:8px">Para dissolver <b>mais</b> soluto do que o limite, é preciso
+    <b>mudar as condições</b>: aumentar a temperatura ou a pressão.</p>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; O jeito rápido de decidir</div>
+    <p>Sobrou pó no fundo? &rarr; <b>saturada com corpo de fundo</b>.<br>
+    Dissolveu tudo e ainda cabe mais? &rarr; <b>insaturada</b>.<br>
+    Dissolveu tudo e não cabe mais nada? &rarr; <b>saturada</b>.<br>
+    Dissolveu mais do que devia (com ajuda de pressão/temperatura)? &rarr; <b>supersaturada</b>.</p>
+  </div>
+</section>
+
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#34D3991f; border-color:#34D39952">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 02</h2>
+      <p>52 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 02","Quais elétrons participam das ligações químicas?","Só os da CAMADA DE VALÊNCIA — a camada mais externa, a de maior número na distribuição eletrônica."],
+    ["Aula 02","O que diz a regra do octeto?","Que os átomos se combinam de modo a ficar com OITO elétrons na camada de valência — a configuração estável dos gases nobres."],
+    ["Aula 02","Qual é a principal exceção da regra do octeto?","O HIDROGÊNIO: estabiliza com apenas 2 elétrons e faz sempre 1 ligação só. Também são exceções o hélio (2), o berílio (4), o boro (6) e o alumínio."],
+    ["Aula 02","Por que os gases nobres não fazem ligações?","Porque já têm 8 elétrons na camada de valência (o hélio, 2) — já estão estáveis. Não precisam ganhar, perder nem compartilhar nada. São INERTES."],
+    ["Aula 02","O que é a fórmula de Lewis?","A representação do átomo mostrando SÓ os elétrons da camada de valência, com pontinhos ao redor do símbolo. Simplifica o desenho e deixa óbvio quem doa e quem recebe."],
+    ["Aula 02","Quantos elétrons de valência tem um elemento da família 2A? E da 6A?","2A → 2 elétrons. 6A → 6 elétrons. O número da família É o número de elétrons de valência (famílias A)."],
+    ["Aula 02","Por que o sódio doa elétron e o cloro recebe?","Lei do menor esforço. O Na tem 1 elétron na valência: é mais fácil doar 1 do que receber 7. O Cl tem 7: é mais fácil receber 1 do que doar 7. Quem decide é a ELETRONEGATIVIDADE."],
+    ["Aula 02","O que é um CÁTION? E um ÂNION?","CÁTION: átomo que PERDEU elétron(s) e ficou com carga POSITIVA (Na⁺, Ca²⁺). ÂNION: átomo que GANHOU elétron(s) e ficou com carga NEGATIVA (Cl⁻, O²⁻)."],
+    ["Aula 02","Um átomo doou 2 elétrons. Qual a carga dele?","2+ — virou um cátion com carga 2 positiva. A carga é sempre o NÚMERO de elétrons doados (se doou 3, fica 3+)."],
+    ["Aula 02","Depois de doar seu elétron, com quantas camadas fica o sódio?","Com DUAS (antes tinha três). O único elétron da camada 3 foi doado, então a camada 3 desapareceu e a camada 2 — que já tinha 8 elétrons — passou a ser a valência. Octeto cumprido."],
+    ["Aula 02","Quando ocorre uma ligação IÔNICA?","Entre METAL e AMETAL — na prática, entre as famílias 1A/2A (pouco eletronegativas) e os ametais (muito eletronegativos)."],
+    ["Aula 02","O que acontece com os elétrons numa ligação iônica?","Há TRANSFERÊNCIA definitiva: o átomo mais eletronegativo ARRANCA elétrons do menos eletronegativo. Formam-se íons (cátion + ânion) presos por atração eletrostática."],
+    ["Aula 02","Por que uma solução de NaCl conduz corrente elétrica?","Porque em água o NaCl se dissocia em ÍONS LIVRES (Na⁺ e Cl⁻), e são os íons em movimento que conduzem a corrente. Seco e sólido ele NÃO conduz — os íons estão presos no retículo."],
+    ["Aula 02","Que tipo de estrutura os compostos iônicos formam?","ESTRUTURA CRISTALINA — figuras geométricas bem definidas. O sal de cozinha (NaCl) forma cubos. Também dá sólidos duros, quebradiços e de alto ponto de fusão."],
+    ["Aula 02","Monte a fórmula do composto entre Mg²⁺ e Cl⁻","MgCl₂. O magnésio tem 2 elétrons para doar e cada cloro só aceita 1 — logo, dois cloros. (Regra prática: as cargas trocam de lugar como índices.)"],
+    ["Aula 02","Monte a fórmula do composto entre Al³⁺ e O²⁻","Al₂O₃. Cruzando as cargas: o 3 do alumínio vira índice do oxigênio e o 2 do oxigênio vira índice do alumínio."],
+    ["Aula 02","Por que o cálcio se liga a DOIS flúores (CaF₂)?","Porque o cálcio (família 2A) tem 2 elétrons para doar, e cada flúor (7A) só precisa receber 1 para completar o octeto. Um cálcio abastece dois flúores."],
+    ["Aula 02","Quando ocorre uma ligação COVALENTE?","Entre AMETAL e AMETAL, ou em QUALQUER ligação que envolva HIDROGÊNIO."],
+    ["Aula 02","O que acontece com os elétrons numa ligação covalente?","São COMPARTILHADOS: ninguém doa nem recebe definitivamente. Os elétrons do par ficam orbitando ao redor dos DOIS núcleos ao mesmo tempo. O resultado é uma MOLÉCULA, não íons."],
+    ["Aula 02","Qual a diferença essencial entre ligação iônica e covalente?","IÔNICA: TRANSFERÊNCIA de elétrons (metal + ametal) → forma ÍONS e retículo cristalino. COVALENTE: COMPARTILHAMENTO (ametal + ametal ou com H) → forma MOLÉCULAS."],
+    ["Aula 02","Por que a água precisa de DOIS hidrogênios?","O oxigênio tem 6 elétrons de valência e precisa de 2 para chegar a 8. Cada hidrogênio traz 1 elétron para compartilhar — então são necessários dois. E cada H fica com 2, que é o octeto dele."],
+    ["Aula 02","No Cl₂, por que os dois cloros se ligam?","Cada cloro tem 7 elétrons de valência e precisa de 1. Compartilhando UM par entre eles, os dois passam a contar 8 elétrons. Ligação covalente entre dois ametais iguais."],
+    ["Aula 02","O que é uma ligação covalente DATIVA (coordenada)?","É quando um átomo JÁ ESTÁVEL (com 8 elétrons) cede um PAR de elétrons seu, em empréstimo, para outro átomo que ainda precisa se estabilizar."],
+    ["Aula 02","Explique a formação do SO₂ com ligação dativa","Primeiro o enxofre compartilha um par com um oxigênio e ambos ficam com 8 (forma SO). Chega um segundo oxigênio precisando de elétrons: o enxofre, já estável, EMPRESTA um par a ele → SO₂, com uma ligação normal e uma dativa."],
+    ["Aula 02","O que diz a teoria da repulsão dos pares eletrônicos (VSEPR)?","Que os pares de elétrons da camada de valência — tanto os LIGANTES quanto os NÃO LIGANTES — se afastam o máximo possível uns dos outros. É isso que define a geometria da molécula."],
+    ["Aula 02","Qual a geometria do CO₂, da H₂O e do CH₄?","CO₂ = LINEAR (2 pares ligantes, nenhum livre). H₂O = ANGULAR (2 ligantes + 2 pares livres empurram). CH₄ = TETRAÉDRICA (4 ligantes)."],
+    ["Aula 02","Por que a água é ANGULAR e não linear?","Porque o oxigênio tem 2 pares de elétrons NÃO LIGANTES, que também se repelem e empurram os hidrogênios para baixo, entortando a molécula."],
+    ["Aula 02","Quando ocorre uma ligação METÁLICA?","Entre METAL e METAL. Os cátions ficam fixos e os elétrons livres circulam entre eles — o modelo do \"mar de elétrons\"."],
+    ["Aula 02","Por que os metais conduzem eletricidade no estado sólido?","Porque na ligação metálica os ELÉTRONS ficam LIVRES, circulando entre os cátions (mar de elétrons). Nos compostos iônicos, os íons estão presos e só conduzem quando dissolvidos ou fundidos."],
+    ["Aula 02","O que é uma liga metálica? Dê exemplos.","Uma mistura de metais (ou metal + não metal) formada por ligação metálica: AÇO (ferro + carbono), BRONZE (cobre + estanho), LATÃO (cobre + zinco)."],
+    ["Aula 02","Resuma as três ligações em uma linha cada","IÔNICA: metal + ametal, TRANSFERE elétron, forma íons. COVALENTE: ametal + ametal (ou com H), COMPARTILHA, forma moléculas. METÁLICA: metal + metal, mar de ELÉTRONS LIVRES."],
+    ["Aula 02","Qual a diferença entre soluto e solvente?","SOLVENTE é quem dissolve e está em MAIOR quantidade (geralmente a água). SOLUTO é quem é dissolvido e está em MENOR quantidade."],
+    ["Aula 02","Toda mistura é uma solução?","NÃO. Só é SOLUÇÃO quando o soluto se dissolve totalmente, formando mistura HOMOGÊNEA (sal em água). Se não dissolve, é uma DISPERSÃO, mistura heterogênea (areia em água)."],
+    ["Aula 02","Água + areia: solução ou dispersão?","DISPERSÃO — mistura heterogênea. A areia não se dissolve: dá para ver o soluto separado do solvente."],
+    ["Aula 02","Qual a fórmula e a unidade da concentração comum?","C = massa do soluto ÷ volume da solução. Unidade: g/L (grama por litro)."],
+    ["Aula 02","Qual a fórmula e a unidade da molaridade?","M = nº de mols do soluto ÷ volume da solução. Unidade: mol/L. Também chamada de concentração molar."],
+    ["Aula 02","Tenho a MASSA do soluto e quero a molaridade. Que fórmula uso?","M = m ÷ (MM × V), onde MM é a MASSA MOLAR do soluto em g/mol. É preciso da massa molar para converter gramas em mols."],
+    ["Aula 02","Calcule: 20 g de sal em 1 L de água. Qual a concentração comum?","C = 20 ÷ 1 = 20 g/L."],
+    ["Aula 02","Calcule: 20 g de NaCl (MM = 58,44 g/mol) em 1 L. Qual a molaridade?","M = 20 ÷ (58,44 × 1) = 0,34 mol/L."],
+    ["Aula 02","Qual a fórmula da fração molar do soluto?","X₁ = n₁ ÷ (n₁ + n₂) — mols do soluto divididos pelo total de mols (soluto + solvente). Não tem unidade."],
+    ["Aula 02","Quanto sempre vale a soma de todas as frações molares?","SEMPRE 1. A soma das frações molares de todos os solutos mais o solvente é igual a 1. Serve de conferência do resultado."],
+    ["Aula 02","2 mols de açúcar + 8 mols de água. Quais são as frações molares?","X(açúcar) = 2/10 = 0,2 e X(água) = 8/10 = 0,8. Conferindo: 0,2 + 0,8 = 1 ✓"],
+    ["Aula 02","Qual a fórmula da diluição?","C₁ · V₁ = C₂ · V₂. O índice 1 é antes e o 2 é depois de adicionar solvente. A quantidade de soluto não muda — só fica mais espalhada."],
+    ["Aula 02","100 mL a 2 mol/L completados até 200 mL. Qual a nova concentração?","2 × 100 = C₂ × 200 → C₂ = 1 mol/L. Dobrou o volume, a concentração caiu à metade."],
+    ["Aula 02","Ao diluir uma solução, o que aumenta e o que diminui?","O VOLUME aumenta e a CONCENTRAÇÃO diminui. A quantidade de soluto continua exatamente a mesma — só está espalhada em mais solvente."],
+    ["Aula 02","O exercício dá o volume em mL. O que fazer antes de calcular a molaridade?","Converter para LITROS (dividir por 1000): 250 mL = 0,25 L. Molaridade é mol/L. (Na fórmula da diluição as unidades se cancelam e dá para deixar em mL.)"],
+    ["Aula 02","O que é uma solução INSATURADA?","A que ainda não chegou no limite de solubilidade: todo o soluto se dissolveu e ainda daria para dissolver mais."],
+    ["Aula 02","O que é uma solução SATURADA?","A que chegou EXATAMENTE no limite de solubilidade daquele soluto naquele solvente. Um grão a mais já não dissolve."],
+    ["Aula 02","O que é solução saturada COM CORPO DE FUNDO?","A que passou do limite de solubilidade: o excesso de soluto PRECIPITA no fundo do recipiente e não dissolve."],
+    ["Aula 02","O que é uma solução SUPERSATURADA?","A que tem MAIS soluto dissolvido do que seria possível em condições normais. É INSTÁVEL — só existe porque a pressão ou a temperatura foram alteradas."],
+    ["Aula 02","Por que o refrigerante é uma solução supersaturada?","Porque o CO₂ só se mantém dissolvido naquela quantidade por causa da ALTA PRESSÃO na garrafa. Ao abrir, a pressão cai e o gás escapa — a solução era instável."],
+    ["Aula 02","Como dissolver mais soluto do que o limite de solubilidade?","Mudando as CONDIÇÕES: aumentando a temperatura ou a pressão. Nas condições normais, o excesso simplesmente precipita."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>
+
+<!-- ================================================ EXERCÍCIOS ========== -->
+<section id="s10">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9997;</div>
+    <div>
+      <h2>Exercícios comentados</h2>
+      <p>14 questões. As de cálculo são as que mais aparecem nas atividades.</p>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">1</span><span class="q-tema">Octeto</span></div>
+    <p class="q-enun">A regra do octeto afirma que os átomos se ligam buscando:</p>
+    <ul class="alts">
+      <li><b>a)</b> 2 elétrons na camada de valência.</li>
+      <li><b>b)</b> 8 elétrons na camada de valência.</li>
+      <li><b>c)</b> 8 prótons no núcleo.</li>
+      <li><b>d)</b> perder todos os elétrons.</li>
+      <li><b>e)</b> 8 camadas eletrônicas.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Oito elétrons na <b>camada de valência</b> &mdash; a
+      configuração estável dos gases nobres. A alternativa (a) descreve a exceção do
+      <b>hidrogênio</b> e do hélio.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">2</span><span class="q-tema">Exceções</span></div>
+    <p class="q-enun">Qual elemento é a principal exceção à regra do octeto, estabilizando-se com
+    apenas 2 elétrons e fazendo sempre uma única ligação?</p>
+    <ul class="alts">
+      <li><b>a)</b> oxigênio &nbsp;&nbsp;<b>b)</b> carbono &nbsp;&nbsp;<b>c)</b> hidrogênio
+        &nbsp;&nbsp;<b>d)</b> cloro &nbsp;&nbsp;<b>e)</b> sódio</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> O <b>hidrogênio</b> estabiliza com 2 elétrons e faz
+      sempre 1 ligação. (Berílio, boro e alumínio também são exceções, mas o H é a que importa aqui.)</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">3</span><span class="q-tema">Íons</span></div>
+    <p class="q-enun">Um átomo neutro de magnésio (família 2A) perde seus 2 elétrons de valência.
+    Ele se transforma em:</p>
+    <ul class="alts">
+      <li><b>a)</b> ânion <span class="f">Mg<sup>2&minus;</sup></span></li>
+      <li><b>b)</b> cátion <span class="f">Mg<sup>2+</sup></span></li>
+      <li><b>c)</b> cátion <span class="f">Mg<sup>&minus;</sup></span></li>
+      <li><b>d)</b> continua neutro</li>
+      <li><b>e)</b> ânion <span class="f">Mg<sup>+</sup></span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <b>Perdeu</b> elétron &rarr; <b>cátion</b>, carga positiva.
+      Perdeu <b>2</b> &rarr; carga <b>2+</b>. A carga é sempre o número de elétrons trocados.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">4</span><span class="q-tema">Tipo de ligação</span></div>
+    <p class="q-enun">A ligação formada entre um <b>metal</b> e um <b>ametal</b>, com transferência
+    definitiva de elétrons, é chamada de:</p>
+    <ul class="alts">
+      <li><b>a)</b> covalente &nbsp;&nbsp;<b>b)</b> metálica &nbsp;&nbsp;<b>c)</b> dativa
+        &nbsp;&nbsp;<b>d)</b> iônica &nbsp;&nbsp;<b>e)</b> de hidrogênio</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> <b>Iônica</b> &mdash; o nome vem da formação de
+      <b>íons</b> (cátion + ânion). Metal doa, ametal recebe.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">5</span><span class="q-tema">Condutividade</span></div>
+    <p class="q-enun">Por que o sal de cozinha sólido <b>não</b> conduz corrente elétrica, mas a
+    solução de sal em água conduz?</p>
+    <ul class="alts">
+      <li><b>a)</b> porque a água é que conduz.</li>
+      <li><b>b)</b> porque no sólido os íons estão presos no retículo, e em solução ficam livres para se movimentar.</li>
+      <li><b>c)</b> porque o sal vira metal em água.</li>
+      <li><b>d)</b> porque a ligação passa a ser covalente.</li>
+      <li><b>e)</b> porque a água tem elétrons livres.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Quem conduz são os <b>íons em movimento</b>
+      (<span class="f">Na<sup>+</sup></span> e <span class="f">Cl<sup>&minus;</sup></span>).
+      No cristal sólido eles estão travados. Compare com o <b>metal</b>, que conduz sólido porque
+      lá são os <b>elétrons</b> que estão livres.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">6</span><span class="q-tema">Troca de cargas</span></div>
+    <p class="q-enun">Qual é a fórmula do composto iônico formado entre
+    <span class="f">Al<sup>3+</sup></span> e <span class="f">O<sup>2&minus;</sup></span>?</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">AlO</span> &nbsp;&nbsp;<b>b)</b> <span class="f">Al₃O₂</span>
+        &nbsp;&nbsp;<b>c)</b> <span class="f">Al₂O₃</span> &nbsp;&nbsp;<b>d)</b> <span class="f">AlO₃</span>
+        &nbsp;&nbsp;<b>e)</b> <span class="f">Al₃O</span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> As cargas <b>trocam de lugar</b> como índices:
+      o 3 do alumínio vai para o oxigênio e o 2 do oxigênio vai para o alumínio &rarr;
+      <span class="f">Al₂O₃</span>. Confira: 2 &times; (+3) = +6 e 3 &times; (&minus;2) = &minus;6 &rarr; neutro &#10004;</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">7</span><span class="q-tema">Covalente</span></div>
+    <p class="q-enun">Assinale a alternativa que apresenta apenas compostos formados por ligação
+    <b>covalente</b>:</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">NaCl</span>, <span class="f">KBr</span>, <span class="f">CaF₂</span></li>
+      <li><b>b)</b> <span class="f">H₂O</span>, <span class="f">Cl₂</span>, <span class="f">CO₂</span></li>
+      <li><b>c)</b> <span class="f">Fe</span>, <span class="f">Cu</span>, <span class="f">Al</span></li>
+      <li><b>d)</b> <span class="f">MgO</span>, <span class="f">H₂O</span>, <span class="f">Cu</span></li>
+      <li><b>e)</b> <span class="f">NaCl</span>, <span class="f">H₂O</span>, <span class="f">Fe</span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <span class="f">H₂O</span> (tem H),
+      <span class="f">Cl₂</span> (ametal + ametal) e <span class="f">CO₂</span> (ametal + ametal).
+      Em (a) todos são iônicos (metal + ametal); em (c) todos são metálicos.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">8</span><span class="q-tema">Dativa</span></div>
+    <p class="q-enun">Na formação do <span class="f">SO₂</span>, a ligação covalente <b>dativa</b> ocorre porque:</p>
+    <ul class="alts">
+      <li><b>a)</b> o enxofre rouba elétrons do oxigênio.</li>
+      <li><b>b)</b> o enxofre, já estável com 8 elétrons, empresta um par a um segundo oxigênio que precisa se estabilizar.</li>
+      <li><b>c)</b> o oxigênio doa definitivamente 2 elétrons.</li>
+      <li><b>d)</b> formam-se íons.</li>
+      <li><b>e)</b> a ligação é metálica.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Primeiro forma-se <span class="f">SO</span> (os dois com 8).
+      Chega um segundo oxigênio precisando de elétrons e o enxofre, <b>já estável</b>,
+      <b>empresta</b> um par a ele &rarr; <span class="f">SO₂</span>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">9</span><span class="q-tema">Geometria</span></div>
+    <p class="q-enun">A molécula de água é <b>angular</b>, e não linear, porque:</p>
+    <ul class="alts">
+      <li><b>a)</b> o oxigênio é muito grande.</li>
+      <li><b>b)</b> há dois pares de elétrons não ligantes no oxigênio que repelem os hidrogênios.</li>
+      <li><b>c)</b> a ligação é iônica.</li>
+      <li><b>d)</b> o hidrogênio tem 8 elétrons.</li>
+      <li><b>e)</b> a água é uma solução.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Pela teoria <b>VSEPR</b>, os pares <b>não ligantes</b>
+      também se repelem e empurram os hidrogênios, entortando a molécula. No
+      <span class="f">CO₂</span> não há pares livres no carbono &mdash; nada empurra, e a molécula fica linear.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">10</span><span class="q-tema">Metálica</span></div>
+    <p class="q-enun">Sobre a ligação metálica, é correto afirmar:</p>
+    <ul class="alts">
+      <li><b>a)</b> ocorre entre metal e ametal.</li>
+      <li><b>b)</b> forma moléculas isoladas.</li>
+      <li><b>c)</b> é descrita como cátions mergulhados num mar de elétrons livres, o que explica a condução no estado sólido.</li>
+      <li><b>d)</b> os metais só conduzem quando dissolvidos.</li>
+      <li><b>e)</b> não permite deformação sem ruptura.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Cátions fixos + elétrons livres circulando.
+      Isso explica de uma vez a condução <b>no sólido</b>, a maleabilidade, a ductilidade e o brilho.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">11</span><span class="q-tema">Soluções</span></div>
+    <p class="q-enun">A mistura de água com areia é classificada como:</p>
+    <ul class="alts">
+      <li><b>a)</b> solução homogênea &nbsp;&nbsp;<b>b)</b> dispersão heterogênea
+        &nbsp;&nbsp;<b>c)</b> solução saturada &nbsp;&nbsp;<b>d)</b> liga metálica
+        &nbsp;&nbsp;<b>e)</b> solução supersaturada</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> A areia <b>não se dissolve</b>: dá para ver o soluto
+      separado do solvente. Mistura <b>heterogênea</b> = <b>dispersão</b>, não solução.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">12</span><span class="q-tema">Molaridade</span></div>
+    <p class="q-enun">Qual a molaridade de uma solução com 20 g de <span class="f">NaCl</span>
+    (MM = 58,44 g/mol) em 1 L de água?</p>
+    <ul class="alts">
+      <li><b>a)</b> 20 mol/L &nbsp;&nbsp;<b>b)</b> 58,44 mol/L &nbsp;&nbsp;<b>c)</b> 2,92 mol/L
+        &nbsp;&nbsp;<b>d)</b> 0,34 mol/L &nbsp;&nbsp;<b>e)</b> 1,17 mol/L</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> M = m &divide; (MM &times; V) = 20 &divide; (58,44 &times; 1)
+      = <b>0,34 mol/L</b>. Erro clássico: dividir a massa molar pela massa (daria 2,92) &mdash;
+      é a massa <em>em cima</em>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">13</span><span class="q-tema">Diluição</span></div>
+    <p class="q-enun">200 mL de uma solução 3 mol/L são diluídos até 600 mL. A nova concentração é:</p>
+    <ul class="alts">
+      <li><b>a)</b> 9 mol/L &nbsp;&nbsp;<b>b)</b> 3 mol/L &nbsp;&nbsp;<b>c)</b> 1,5 mol/L
+        &nbsp;&nbsp;<b>d)</b> 1 mol/L &nbsp;&nbsp;<b>e)</b> 0,5 mol/L</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> C₁V₁ = C₂V₂ &rarr; 3 &times; 200 = C₂ &times; 600 &rarr;
+      C₂ = 600 &divide; 600 = <b>1 mol/L</b>. O volume triplicou, a concentração caiu a um terço.
+      (Aqui dá para deixar em mL: as unidades se cancelam.)</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">14</span><span class="q-tema">Solubilidade</span></div>
+    <p class="q-enun">O gás carbônico dissolvido num refrigerante fechado constitui uma solução:</p>
+    <ul class="alts">
+      <li><b>a)</b> insaturada &nbsp;&nbsp;<b>b)</b> saturada &nbsp;&nbsp;<b>c)</b> saturada com corpo de fundo
+        &nbsp;&nbsp;<b>d)</b> supersaturada &nbsp;&nbsp;<b>e)</b> heterogênea</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> <b>Supersaturada</b> e portanto <b>instável</b>:
+      só cabe tanto <span class="f">CO₂</span> por causa da <b>alta pressão</b> na garrafa.
+      Ao abrir, a pressão cai e o gás escapa.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ================================================ PEGADINHAS ========== -->
+<section id="s11">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#128680;</div>
+    <div>
+      <h2>Pegadinhas de prova</h2>
+      <p>Onde este conteúdo derruba mais gente.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th style="width:44%">O erro</th><th>O certo</th></tr></thead>
+      <tbody>
+        <tr><td>&ldquo;Composto iônico conduz eletricidade&rdquo;, sem ressalva</td>
+            <td>Conduz <b>dissolvido ou fundido</b>. <b>Sólido e seco NÃO conduz</b> &mdash;
+            os íons estão presos no retículo.</td></tr>
+        <tr><td>Achar que metal conduz &ldquo;pelo mesmo motivo&rdquo; que o sal</td>
+            <td>Metal conduz <b>sólido</b>, pelos <b>elétrons</b> livres. Sal conduz
+            <b>dissolvido</b>, pelos <b>íons</b> livres.</td></tr>
+        <tr><td>Esquecer os pares <b>não ligantes</b> na geometria</td>
+            <td>Eles também repelem. É o que faz a água ser <b>angular</b> e não linear.</td></tr>
+        <tr><td>Usar covalente para <b>metal + ametal</b></td>
+            <td>Metal + ametal = <b>iônica</b>. Covalente é ametal + ametal, ou <b>qualquer coisa com H</b>.</td></tr>
+        <tr><td>Confundir <b>dativa</b> com iônica</td>
+            <td>Dativa é <b>covalente</b>: é empréstimo de um par, não transferência definitiva.</td></tr>
+        <tr><td>Chamar <b>toda mistura</b> de solução</td>
+            <td>Solução exige mistura <b>homogênea</b>. Água + areia é <b>dispersão</b>.</td></tr>
+        <tr><td>Deixar o volume em <b>mL</b> na molaridade</td>
+            <td>Molaridade é <b>mol/L</b>: converta (250 mL = 0,25 L).
+            Só na diluição as unidades se cancelam.</td></tr>
+        <tr><td>Inverter a fórmula: MM &divide; m</td>
+            <td><b>M = m &divide; (MM &times; V)</b> &mdash; a massa fica <b>em cima</b>.</td></tr>
+        <tr><td>Achar que a diluição muda a quantidade de soluto</td>
+            <td>A quantidade de soluto é <b>a mesma</b>. Só o volume aumenta, então a
+            concentração cai.</td></tr>
+        <tr><td>Confundir <b>saturada</b> com <b>supersaturada</b></td>
+            <td>Saturada = no limite exato. Supersaturada = <b>acima</b> do limite,
+            só possível alterando pressão/temperatura, e é <b>instável</b>.</td></tr>
+        <tr><td>Trocar as cargas de cátion e ânion</td>
+            <td>Perdeu &rarr; <b>cátion +</b>. Ganhou &rarr; <b>ânion &minus;</b>.
+            (Ganhou elétron, que é negativo &rarr; fica negativo.)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================================================== LINKS =========== -->
+<section id="slinks">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#128279;</div>
+    <div>
+      <h2>Links e simuladores</h2>
+      <p>O de &ldquo;Concentração&rdquo; é o mais útil para as atividades.</p>
+    </div>
+  </div>
+
+  <div class="links">
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/concentration" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#129514;</span>
+      <span><span class="tit">PhET &mdash; Concentração</span>
+      <span class="desc">Adicione soluto, adicione água, evapore, e veja a molaridade mudar no medidor.
+      Mostra o C₁V₁ = C₂V₂ e o momento exato em que satura e precipita.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/molecule-shapes" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128142;</span>
+      <span><span class="tit">PhET &mdash; Formas Moleculares</span>
+      <span class="desc">Monte a molécula e veja a geometria se ajustar em tempo real, com os pares
+      ligantes e não ligantes se repelindo. É a teoria VSEPR na tela.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/sugar-and-salt-solutions" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#127850;</span>
+      <span><span class="tit">PhET &mdash; Açúcar e Sal em Solução</span>
+      <span class="desc">Compara um composto iônico (sal, que se dissocia e conduz) com um molecular
+      (açúcar, que não). Amarra a parte 1 com a parte 2 da aula.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/molecule-polarity" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#129517;</span>
+      <span><span class="tit">PhET &mdash; Polaridade Molecular</span>
+      <span class="desc">Aumente a diferença de eletronegatividade entre dois átomos e veja a
+      ligação passar de covalente pura a iônica. Liga a aula 01 com a 02.</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================================================== COLA =========== -->
+<section id="s12">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.14); border-color:rgba(232,147,63,.35)">&#128203;</div>
+    <div>
+      <h2>Cola de uma página</h2>
+      <p>As quatro fórmulas e as três ligações.</p>
+    </div>
+  </div>
+
+  <div class="card cola">
+    <div class="cola-grid">
+      <div class="cola-bloco">
+        <h5>Octeto</h5>
+        <ul>
+          <li>meta: <b>8</b> e⁻ na valência</li>
+          <li><b>H e He: 2</b></li>
+          <li>8A já tem 8 &rarr; inerte</li>
+          <li>família = e⁻ de valência</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Íons</h5>
+        <ul>
+          <li>perdeu &rarr; <b>cátion +</b></li>
+          <li>ganhou &rarr; <b>ânion &minus;</b></li>
+          <li>carga = n° de e⁻ trocados</li>
+          <li>metal doa, ametal recebe</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Iônica</h5>
+        <ul>
+          <li>metal + ametal</li>
+          <li><b>transfere</b> elétron</li>
+          <li>cristal, PF alto</li>
+          <li>conduz só dissolvido/fundido</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Covalente</h5>
+        <ul>
+          <li>ametal + ametal, ou com <b>H</b></li>
+          <li><b>compartilha</b> par</li>
+          <li>forma <b>moléculas</b></li>
+          <li>geometria variável</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Metálica</h5>
+        <ul>
+          <li>metal + metal</li>
+          <li><b>mar de elétrons</b></li>
+          <li>conduz <b>sólido</b></li>
+          <li>ligas: aço, bronze, latão</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Dativa</h5>
+        <ul>
+          <li>é <b>covalente</b></li>
+          <li>quem já tem 8 <b>empresta</b> um par</li>
+          <li>exemplo: <b>SO₂</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Troca de cargas</h5>
+        <ul>
+          <li>Ca²⁺ + F⁻ &rarr; <b>CaF₂</b></li>
+          <li>Mg²⁺ + Cl⁻ &rarr; <b>MgCl₂</b></li>
+          <li>Al³⁺ + O²⁻ &rarr; <b>Al₂O₃</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Geometria</h5>
+        <ul>
+          <li>linear <b>CO₂</b></li>
+          <li>angular <b>H₂O</b></li>
+          <li>trigonal plana BF₃</li>
+          <li>piramidal NH₃</li>
+          <li>tetraédrica <b>CH₄</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Solução x dispersão</h5>
+        <ul>
+          <li>solução = <b>homogênea</b></li>
+          <li>dispersão = heterogênea</li>
+          <li>solvente = maior quantidade</li>
+          <li>soluto = menor quantidade</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>As 4 fórmulas</h5>
+        <ul>
+          <li><b>C = m / V</b> &nbsp;(g/L)</li>
+          <li><b>M = n / V</b> &nbsp;(mol/L)</li>
+          <li><b>M = m / (MM &middot; V)</b></li>
+          <li><b>X₁ = n₁ / (n₁+n₂)</b></li>
+          <li><b>C₁V₁ = C₂V₂</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Solubilidade</h5>
+        <ul>
+          <li>insaturada: cabe mais</li>
+          <li>saturada: no limite</li>
+          <li>c/ corpo de fundo: precipitou</li>
+          <li>supersaturada: instável (CO₂)</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Não confundir</h5>
+        <ul>
+          <li>volume em <b>LITROS</b></li>
+          <li>massa fica <b>em cima</b> na fórmula</li>
+          <li>pares livres contam na geometria</li>
+          <li>dativa é covalente, não iônica</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Aula 02 &mdash; Ligações Químicas e Soluções</b> &middot; Química Geral e Experimental &middot; Módulo 53/2026<br>
+  Material de estudo montado a partir da aula ao vivo (1h35), com complementos de geometria molecular,
+  ligas metálicas e conversão de unidades.</p>
+  <p style="margin-bottom:0">Plataforma Bueno &middot; Cérebro Digital</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -32,3 +32,6 @@ dist-ssr
 .env.*.local
 
 .vercel
+
+# Cache do deploy do Firebase (gerado pelo firebase deploy)
+.firebase

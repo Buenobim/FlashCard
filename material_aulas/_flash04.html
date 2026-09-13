@@ -1,0 +1,124 @@
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#A78BFA1f; border-color:#A78BFA52">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 04</h2>
+      <p>51 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 04","Quantos elétrons de valência tem o carbono?","QUATRO. Z = 6, distribuição 1s² 2s² 2p² → camada 2 com 2 + 2 = 4 elétrons de valência."],
+    ["Aula 04","Quantas ligações o carbono faz?","SEMPRE QUATRO — não importa com qual elemento. É a TETRAVALÊNCIA, o 1º postulado de Kekulé."],
+    ["Aula 04","Que tipo de ligação o carbono faz?","Sempre COVALENTE (compartilhamento), porque o carbono é um AMETAL."],
+    ["Aula 04","Quais combinações de ligações o carbono pode ter?","4 simples · 1 dupla + 2 simples · 1 tripla + 1 simples · 2 duplas. A dupla conta como 2 das 4 e a tripla como 3 — sempre totalizando quatro."],
+    ["Aula 04","Por que o carbono faz 4 ligações se tem só 2 elétrons desemparelhados?","Por causa da HIBRIDIZAÇÃO: um elétron do 2s salta para o 2p, ficando 4 elétrons desemparelhados, e os orbitais s e p se misturam formando orbitais híbridos."],
+    ["Aula 04","Por que a química orgânica é tão importante?","Porque praticamente tudo na vida é feito de compostos de CARBONO — os seres vivos, o petróleo e seus derivados, os fármacos, os plásticos e o próprio DNA."],
+    ["Aula 04","O que é hibridização sp³? Que ligações e geometria dá?","1 orbital s + 3 orbitais p. Dá 4 LIGAÇÕES SIMPLES e geometria TETRAÉDRICA. Exemplo: CH₄ (gás metano)."],
+    ["Aula 04","O que é hibridização sp²? Que ligações e geometria dá?","1 orbital s + 2 orbitais p (sobra 1 p puro). Dá 1 DUPLA + 2 simples e geometria TRIGONAL PLANA. Exemplo: formaldeído H₂C=O."],
+    ["Aula 04","O que é hibridização sp? Que ligações e geometria dá?","1 orbital s + 1 orbital p (sobram 2 p puros). Dá 1 TRIPLA + 1 simples OU 2 DUPLAS, e geometria LINEAR. Exemplos: HCN e CO₂."],
+    ["Aula 04","Qual a geometria do CO₂ e qual a hibridização do carbono nele?","Geometria LINEAR, hibridização sp — porque o carbono faz DUAS DUPLAS (O=C=O)."],
+    ["Aula 04","Numa molécula só com ligações simples, qual a hibridização do carbono?","sp³ — e a geometria é TETRAÉDRICA. É o atalho: vá pela ligação, não pela conta de orbitais."],
+    ["Aula 04","Numa molécula com uma ligação DUPLA, qual a hibridização e a geometria?","Hibridização sp², geometria TRIGONAL PLANA."],
+    ["Aula 04","Quem faz as ligações simples e quem faz as duplas/triplas, nos orbitais?","Os orbitais HÍBRIDOS fazem as ligações SIMPLES. Os orbitais p que sobraram, NÃO hibridizados, fazem as DUPLAS e TRIPLAS."],
+    ["Aula 04","Quais são os três postulados de Kekulé?","1) O carbono é TETRAVALENTE (4 ligações sempre). 2) As 4 ligações são EQUIVALENTES. 3) O carbono forma CADEIAS com outros carbonos."],
+    ["Aula 04","O que significa dizer que as ligações do carbono são \"equivalentes\"?","Que todas as 4 têm o mesmo valor: não importa se o carbono está ligado a um hidrogênio, a um flúor ou a outro carbono."],
+    ["Aula 04","O que significa \"gasolina de alta octanagem\"?","Que a maior parte da composição é realmente OCTANO — a cadeia de 8 carbonos —, com pouca contaminação de cadeias de 7 ou 9. É alto grau de pureza."],
+    ["Aula 04","Qual a diferença entre fórmula molecular e estrutural?","A MOLECULAR (C₃H₆) só diz quantos átomos de cada tipo existem. A ESTRUTURAL mostra TODOS os átomos e TODAS as ligações — dá para tirar a hibridização e a geometria dela."],
+    ["Aula 04","Na fórmula de BASTÃO, o que representa cada vértice?","Cada vértice ou ponta do risco é um átomo de CARBONO. Os carbonos e os hidrogênios ficam implícitos — não se escreve nenhum deles."],
+    ["Aula 04","Como se representa uma ligação dupla na fórmula de bastão?","Com um risco PARALELO ao lado do primeiro, entre os dois carbonos."],
+    ["Aula 04","O que é um hidrocarboneto?","Composto orgânico formado APENAS por CARBONO e HIDROGÊNIO — o carbono só está ligado a outros carbonos e a hidrogênios."],
+    ["Aula 04","Qual a diferença entre alcano, alceno e alcino?","ALCANO (infixo AN): só ligações simples. ALCENO (EN): tem pelo menos uma DUPLA. ALCINO (IN): tem uma TRIPLA."],
+    ["Aula 04","Quais são os prefixos de 1 a 10 carbonos?","1 met · 2 et · 3 prop · 4 but · 5 pent · 6 hex · 7 hept · 8 oct · 9 non · 10 dec."],
+    ["Aula 04","Quais são os três infixos e o que significam?","AN = só ligações simples · EN = uma ligação dupla · IN = uma ligação tripla."],
+    ["Aula 04","Qual sufixo indica que o composto é um hidrocarboneto?","O sufixo O. Todo nome de hidrocarboneto termina em -O: butano, propeno, etino. (Álcool termina em -OL.)"],
+    ["Aula 04","Decomponha o nome PENTANO","PENT (5 carbonos) + AN (só ligações simples) + O (hidrocarboneto). Logo: cadeia de 5 carbonos, saturada."],
+    ["Aula 04","Decomponha o nome PROPENO","PROP (3 carbonos) + EN (uma ligação dupla) + O (hidrocarboneto). Logo: 3 carbonos com uma dupla."],
+    ["Aula 04","Quantas ligações duplas um alceno precisa ter?","Pelo menos UMA. Não precisa que todas sejam duplas — basta uma para já ser alceno."],
+    ["Aula 04","Por qual carbono se começa a numerar a cadeia?","Pelo carbono MAIS PRÓXIMO DA INSATURAÇÃO (da dupla ou da tripla) — não simplesmente pela ponta da esquerda."],
+    ["Aula 04","O que são ciclanos?","Hidrocarbonetos de cadeia FECHADA (cíclica) e SATURADA — só com ligações simples, nenhuma dupla."],
+    ["Aula 04","O que caracteriza um composto AROMÁTICO?","Cadeia cíclica com ligações duplas ALTERNADAS (simples, dupla, simples, dupla...). O representante é o BENZENO, um anel de 6 carbonos."],
+    ["Aula 04","Benzeno + 1 radical CH₃ é o quê? E dois anéis de benzeno unidos?","Benzeno + 1 CH₃ = TOLUENO (com 2 CH₃ = xileno). Dois anéis de benzeno unidos = NAFTALENO, que é a naftalina."],
+    ["Aula 04","Como se reconhece um ÁLCOOL?","Pelo grupo OH ligado a uma cadeia carbônica (R–OH). Exemplo: o ETANOL. O sufixo do nome é -OL."],
+    ["Aula 04","Como se reconhece um ÁCIDO CARBOXÍLICO?","Pelo grupo COOH (carbono com dupla ligação a um O e ligação simples a um OH). Exemplo: o ÁCIDO ACÉTICO, que é o vinagre."],
+    ["Aula 04","Qual função orgânica é o vinagre, e qual a concentração usual?","ÁCIDO CARBOXÍLICO — o ácido acético, CH₃COOH. O vinagre de cozinha tem cerca de 4%; existem versões de 6% a 8%."],
+    ["Aula 04","Como se reconhece uma AMINA?","Pelo NITROGÊNIO ligado a cadeias carbônicas (R–NH₂ ou R–NH–R'). Só nitrogênio e cadeia, sem oxigênio de dupla."],
+    ["Aula 04","Como se reconhece uma AMIDA?","Pelo carbono com DUPLA ao oxigênio E ligado a um NITROGÊNIO (R–CO–NH₂). Exemplo: a UREIA."],
+    ["Aula 04","Como se reconhece um ÉTER?","Pelo oxigênio ENTRE duas cadeias carbônicas: R–O–R'. Sem OH e sem dupla no oxigênio."],
+    ["Aula 04","Qual a diferença entre ALDEÍDO e CETONA?","Os dois têm C com dupla ao O. No ALDEÍDO esse carbono tem também um HIDROGÊNIO (R–CHO); na CETONA ele está entre DUAS cadeias carbônicas (R–CO–R')."],
+    ["Aula 04","Uma molécula pode ter mais de uma função orgânica?","SIM, e é o mais comum nas moléculas grandes. A vitamina C tem álcool, éster e enol; o aspartame tem éter, amida, amina e ácido carboxílico."],
+    ["Aula 04","Qual função orgânica é a ureia?","AMIDA — um carbono com dupla ligação ao oxigênio ligado a dois grupos amina."],
+    ["Aula 04","O que diz a Lei de Lavoisier?","\"Na natureza nada se cria, nada se perde, tudo se transforma.\" Os mesmos átomos que entram nos reagentes têm que sair nos produtos — só reorganizados."],
+    ["Aula 04","O que é uma reação química?","A transformação de um material em outro: as ligações antigas são QUEBRADAS e novas ligações são FORMADAS, gerando substâncias de constituição diferente."],
+    ["Aula 04","O que é um coeficiente estequiométrico?","O número escrito na FRENTE de cada substância na equação química. É o único que se pode alterar ao balancear (nunca os índices)."],
+    ["Aula 04","O que significa balancear uma reação?","Ajustar os coeficientes até que a quantidade de CADA átomo seja igual nos reagentes e nos produtos — exigência da Lei de Lavoisier."],
+    ["Aula 04","Qual a ordem para balancear uma reação? (regra MACHO)","M-A-C-H-O: METAIS, AMETAIS, CARBONO, HIDROGÊNIO, OXIGÊNIO. Nessa ordem o oxigênio quase sempre fecha sozinho no fim."],
+    ["Aula 04","Ao balancear, o que se pode e o que NÃO se pode alterar?","Pode alterar os COEFICIENTES (números na frente). NÃO se pode alterar os ÍNDICES (números embaixo) — isso mudaria a substância."],
+    ["Aula 04","Balanceie: H₂ + O₂ → H₂O","2 H₂ + O₂ → 2 H₂O. Conferindo: H = 4 → 4 ✓ e O = 2 → 2 ✓"],
+    ["Aula 04","Balanceie a combustão do metano: CH₄ + O₂ →","CH₄ + 2 O₂ → CO₂ + 2 H₂O. C: 1→1 · H: 4→4 · O: 4→4 ✓"],
+    ["Aula 04","Balanceie: N₂ + H₂ → NH₃","N₂ + 3 H₂ → 2 NH₃. N: 2→2 ✓ · H: 6→6 ✓"],
+    ["Aula 04","É permitido coeficiente fracionário no balanceamento?","SIM. 2 Al + 3/2 O₂ → Al₂O₃ está correto. Para deixar tudo inteiro, multiplique a reação INTEIRA por 2: 4 Al + 3 O₂ → 2 Al₂O₃."],
+    ["Aula 04","Ao conferir Ca₃(PO₄)₂, quantos fósforos e oxigênios há?","2 fósforos e 8 oxigênios. O índice de fora do parêntese multiplica tudo o que está dentro: P 1×2 = 2 e O 4×2 = 8. É a distributiva da matemática."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>

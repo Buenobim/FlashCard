@@ -244,8 +244,8 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
           {/* INSTRUÇÃO RÁPIDA */}
           <p style={styles.gameInstruction}>Associe cada termo à sua definição clicando neles!</p>
 
-          {/* A GRADE DE CARTÕES DO JOGO */}
-          <div style={styles.gameGrid}>
+          {/* A GRADE DE CARTÕES DO JOGO (Estruturada para nunca sobrepor) */}
+          <div style={styles.gameGrid} className="gameGrid match-game-grid">
             {gridItems.map((item) => {
               // Lógica de cores e estados do cartão na grade
               const isSelected = item.id === selectedId;
@@ -253,7 +253,7 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
               
               // Se já combinou o par, o cartão fica invisível e some da grade suavemente!
               if (item.matched) {
-                return <div key={item.id} style={styles.matchedPlaceholder} />;
+                return <div key={item.id} style={styles.matchedPlaceholder} className="gameCard match-card" />;
               }
 
               let cardStyle = { ...styles.gameCard };
@@ -273,10 +273,10 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
                   key={item.id}
                   onClick={() => handleCardClick(item)}
                   style={cardStyle}
-                  className={`match-card-hover ${classEffect}`}
+                  className={`gameCard match-card match-card-hover ${classEffect}`}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%' }}>
-                    <span style={styles.cardText}>{item.text}</span>
+                    <span style={styles.cardText} className="cardText match-card-text">{item.text}</span>
                     {item.image && (
                       <img 
                         src={item.image} 
@@ -287,7 +287,7 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
                           borderRadius: '4px',
                           border: '1px solid rgba(255, 255, 255, 0.1)',
                           objectFit: 'contain',
-                          background: '#090d16',
+                          background: '#0B0C0E',
                           cursor: 'zoom-in',
                         }} 
                         onClick={(e) => {
@@ -337,7 +337,7 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
               <>
                 <div style={styles.scoreDivider} />
                 <div style={styles.scoreItem}>
-                  <span style={{ ...styles.scoreVal, color: '#94a3b8' }}>
+                  <span style={{ ...styles.scoreVal, color: '#99A1AC' }}>
                     {stats.bestMatchTime.toFixed(2)}s
                   </span>
                   <span style={styles.scoreLabel}>Seu Recorde</span>
@@ -348,7 +348,7 @@ export default function MatchMode({ set, stats, onNavigate, onSaveRecord }) {
 
           {isNewRecord && (
             <div style={styles.recordCongratsBox}>
-              <Sparkles size={16} color="#f59e0b" />
+              <Sparkles size={16} color="#EEA53D" />
               <span>Você superou a sua marca anterior! Parabéns pela velocidade mental!</span>
             </div>
           )}
@@ -431,7 +431,7 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     fontSize: '15px',
-    color: '#f8fafc',
+    color: '#F4F5F7',
   },
   timerVal: {
     fontSize: '18px',
@@ -443,10 +443,10 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     fontSize: '14px',
-    color: '#94a3b8',
+    color: '#99A1AC',
   },
   gameInstruction: {
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontSize: '14px',
     textAlign: 'center',
     fontWeight: '500',
@@ -460,7 +460,7 @@ const styles = {
     marginTop: '10px',
   },
   gameCard: {
-    background: 'rgba(19, 26, 48, 0.6)',
+    background: 'rgba(21, 23, 26, 0.6)',
     border: '1px solid rgba(255, 255, 255, 0.06)',
     borderRadius: '16px',
     padding: '24px 16px',
@@ -490,14 +490,14 @@ const styles = {
   },
   selectedCardStyle: {
     borderColor: 'var(--primary-color)',
-    background: 'rgba(99, 102, 241, 0.12)',
+    background: 'rgba(232, 147, 63, 0.12)',
     boxShadow: 'var(--box-shadow-glow)',
     transform: 'scale(1.03)',
   },
   mismatchedCardStyle: {
     borderColor: 'var(--color-danger)',
-    background: 'rgba(244, 63, 94, 0.12)',
-    boxShadow: '0 0 15px rgba(244, 63, 94, 0.25)',
+    background: 'rgba(229, 72, 77, 0.12)',
+    boxShadow: '0 0 15px rgba(229, 72, 77, 0.25)',
   },
   finishedCard: {
     maxWidth: '600px',
@@ -515,17 +515,17 @@ const styles = {
     alignItems: 'center',
   },
   recordAwardIcon: {
-    color: '#f59e0b',
+    color: '#EEA53D',
     marginBottom: '16px',
-    filter: 'drop-shadow(0 0 15px rgba(245, 158, 11, 0.5))',
+    filter: 'drop-shadow(0 0 15px rgba(238, 165, 61, 0.5))',
     animation: 'successPulse 1.5s infinite ease-in-out',
   },
   recordTitle: {
     fontSize: '26px',
     fontWeight: '800',
-    color: '#f59e0b',
+    color: '#EEA53D',
     letterSpacing: '1px',
-    textShadow: '0 0 10px rgba(245, 158, 11, 0.3)',
+    textShadow: '0 0 10px rgba(238, 165, 61, 0.3)',
     marginBottom: '6px',
   },
   finishedTitle: {
@@ -534,7 +534,7 @@ const styles = {
     marginBottom: '6px',
   },
   finishedSubtitle: {
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontSize: '15px',
     marginBottom: '32px',
   },
@@ -558,7 +558,7 @@ const styles = {
   },
   scoreLabel: {
     fontSize: '12px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '600',
     textTransform: 'uppercase',
     marginTop: '4px',
@@ -572,12 +572,12 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    background: 'rgba(245, 158, 11, 0.08)',
-    border: '1px solid rgba(245, 158, 11, 0.15)',
+    background: 'rgba(238, 165, 61, 0.08)',
+    border: '1px solid rgba(238, 165, 61, 0.15)',
     borderRadius: '10px',
     padding: '12px 16px',
     fontSize: '13px',
-    color: '#f59e0b',
+    color: '#EEA53D',
     fontWeight: '600',
     maxWidth: '400px',
     marginBottom: '32px',
@@ -600,7 +600,7 @@ const styles = {
     padding: '14px 20px',
     background: 'transparent',
     borderColor: 'transparent',
-    color: '#94a3b8',
+    color: '#99A1AC',
   }
 };
 
@@ -612,14 +612,24 @@ const extraMatchStyles = `
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
 }
-@media (max-width: 480px) {
+.gameGrid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.gameCard {
+  box-sizing: border-box !important;
+}
+@media (max-width: 520px) {
   .gameGrid {
-    grid-templateColumns: repeat(2, 1fr) !important; /* Sempre 2 colunas no celular para caber perfeitamente */
+    grid-template-columns: repeat(2, 1fr) !important; /* Sempre 2 colunas organizadas no celular */
     gap: 10px !important;
   }
   .gameCard {
-    min-height: 90px !important;
-    padding: 12px 8px !important;
+    min-height: 85px !important;
+    padding: 10px 6px !important;
   }
   .cardText {
     font-size: 13px !important;

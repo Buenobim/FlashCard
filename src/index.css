@@ -1,70 +1,56 @@
 /*
   =============================================================================
-  ARQUIVO: src/index.css
-  PARA QUE SERVE: Este é o "Salão de Beleza e Alfaiataria" do nosso sistema. Aqui nós 
-  definimos a cor do fundo (um tema escuro premium), as fontes das letras (estilo moderno), 
-  as bordas arredondadas, os botões que acendem ao passar o mouse e a famosa física de 
-  fazer as cartas girarem em 3D, além de garantir que tudo caiba perfeitamente na tela 
-  do celular ou do computador.
+  ARQUIVO: src/index.css — Design System da Plataforma Bueno
+  Identidade visual: fundo quase-preto quente, superfícies sólidas com bordas
+  sutis, tipografia serifada (Fraunces) nos títulos + Manrope no corpo, e um
+  âmbar quente como cor principal. Sem gradientes berrantes, sem vidro borrado.
+  As classes antigas (glass-panel, btn-primary, form-input, flip-card...) foram
+  mantidas com o mesmo nome para que todas as telas herdem o novo visual.
   =============================================================================
 */
 
-/* 
-  1. IMPORTANDO A FONTE DO GOOGLE:
-  Buscamos a fonte "Plus Jakarta Sans" diretamente da internet para que o texto fique 
-  extremamente legível, elegante e com aparência de aplicativo caro de alta tecnologia.
-*/
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
-/* 
-  2. VARIÁVEIS DE DESIGN:
-  Pense nessas variáveis como "potes de tinta" que guardamos em um só lugar. Se um dia 
-  quisermos mudar o azul para verde, só precisamos trocar o valor aqui e todo o site muda!
-*/
 :root {
-  --font-main: 'Plus Jakarta Sans', sans-serif;
-  
-  /* Cores de fundo (Paleta Escura Premium e Suave) */
-  --bg-primary: #0a0e1a;      /* Azul escuro profundo (fundo do app) */
-  --bg-secondary: #131a30;    /* Azul ardósia (cor dos cartões e contêineres) */
-  --bg-tertiary: #1b2542;     /* Azul um pouco mais claro para dar destaque/hover */
-  
-  /* Cores de Destaque Neon */
-  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); /* Gradiente roxo-azul */
-  --primary-color: #6366f1;   /* Roxo Indigo para bordas e textos */
-  --accent-color: #a855f7;    /* Roxo Neon para efeitos especiais */
-  
-  /* Cores de Feedback (Erros, Acertos e Avisos) */
-  --color-success: #10b981;   /* Verde esmeralda (resposta correta) */
-  --color-danger: #f43f5e;    /* Vermelho cereja (resposta errada ou exclusão) */
-  --color-warning: #f59e0b;   /* Dourado/Amarelo (recordes e estrelas) */
-  
-  /* Cores de Texto */
-  --text-white: #f8fafc;      /* Texto principal brilhante */
-  --text-muted: #94a3b8;      /* Texto de apoio cinza-azulado */
-  
-  /* Bordas e Sombras */
-  --border-radius-sm: 8px;
-  --border-radius-md: 16px;
-  --border-radius-lg: 24px;
-  --box-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.25);
-  --box-shadow-glow: 0 0 20px rgba(99, 102, 241, 0.35);
-  
-  /* Velocidades de Transição */
+  --font-main: 'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  /* Superfícies */
+  --bg-primary: #0C0D0F;
+  --bg-secondary: #15171A;
+  --bg-tertiary: #1E2126;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+
+  /* Cor principal (âmbar quente) */
+  --primary-color: #E8933F;
+  --accent-color: #E77950;
+  --primary-gradient: linear-gradient(135deg, #E8933F 0%, #D96C3F 100%);
+
+  /* Feedback */
+  --color-success: #3ECF8E;
+  --color-danger: #E5484D;
+  --color-warning: #EEA53D;
+
+  /* Texto */
+  --text-white: #F4F5F7;
+  --text-muted: #99A1AC;
+
+  --border-radius-sm: 10px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 20px;
+  --box-shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.35);
+  --box-shadow-glow: 0 6px 20px rgba(232, 147, 63, 0.25);
+
   --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 
-  3. RESET BÁSICO E CONFIGURAÇÕES GERAIS:
-  Zera margens padrão do navegador e garante que tudo seja calculado de forma justa (box-sizing).
-*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: var(--font-main);
-  -webkit-tap-highlight-color: transparent; /* Evita quadrado cinza chato ao clicar no celular */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -72,314 +58,289 @@ body {
   color: var(--text-white);
   min-height: 100vh;
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 
-  4. ESTILO DA BARRA DE ROLAGEM:
-  Deixa a barra de rolagem fininha e estilosa combinando com o tema escuro.
-*/
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+/* Títulos com a serifa da casa */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-/* 
-  5. LAYOUTS UTILITÁRIOS E CONTÊINERES:
-  Layouts pré-prontos para colocar as coisas de forma organizada.
-*/
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #2A2E35; }
+
 .app-container {
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
   min-height: calc(100vh - 70px);
 }
 
-/* Efeito Vidro Embaçado (Glassmorphism) */
+/* Cartão padrão (antigo "glass-panel" — agora superfície sólida elegante) */
 .glass-panel {
-  background: rgba(19, 26, 48, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-soft);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, var(--box-shadow-soft);
 }
 
-/* 
-  6. BOTÕES MODERNOS:
-  Estilos prontos para botões elegantes que acendem com gradiente.
-*/
+/* Botões */
 .btn-primary {
-  background: var(--primary-gradient);
-  color: var(--text-white);
+  background: var(--primary-color);
+  color: #17120B;
   border: none;
   border-radius: var(--border-radius-sm);
-  padding: 12px 24px;
-  font-weight: 600;
-  font-size: 15px;
+  padding: 12px 22px;
+  font-weight: 800;
+  font-size: 14px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: var(--transition-normal);
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
+.btn-primary:hover { background: #F0A458; transform: translateY(-1px); box-shadow: var(--box-shadow-glow); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--box-shadow-glow);
+/* Botão discreto usado sobre o Cérebro Digital e em diálogos escuros. */
+.btn-glass {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid rgba(154, 164, 220, 0.24);
+  border-radius: 10px;
+  background: rgba(21, 23, 48, 0.9);
+  color: #e9ecff;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
-
-.btn-primary:active {
-  transform: translateY(0);
+.btn-glass:hover {
+  background: rgba(36, 39, 75, 0.96);
+  border-color: rgba(168, 151, 255, 0.48);
+  transform: translateY(-1px);
+}
+.btn-glass:active { transform: translateY(0); }
+.btn-glass:focus-visible {
+  outline: 2px solid #a797ff;
+  outline-offset: 2px;
 }
 
 .btn-secondary {
   background: var(--bg-tertiary);
   color: var(--text-white);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--border-radius-sm);
-  padding: 12px 24px;
-  font-weight: 600;
-  font-size: 15px;
+  padding: 12px 22px;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: var(--transition-normal);
 }
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
-}
+.btn-secondary:hover { background: #262A31; transform: translateY(-1px); }
 
 .btn-danger {
-  background: rgba(244, 63, 94, 0.1);
+  background: rgba(229, 72, 77, 0.1);
   color: var(--color-danger);
-  border: 1px solid rgba(244, 63, 94, 0.2);
+  border: 1px solid rgba(229, 72, 77, 0.25);
   border-radius: var(--border-radius-sm);
   padding: 10px 20px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: var(--transition-normal);
 }
+.btn-danger:hover { background: var(--color-danger); color: #fff; }
 
-.btn-danger:hover {
-  background: var(--color-danger);
-  color: var(--text-white);
-  transform: translateY(-2px);
+/* Chip / pílula reutilizável */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.chip:hover { color: var(--text-white); border-color: rgba(255,255,255,0.16); }
+.chip.chip-active {
+  background: var(--primary-color);
+  color: #17120B;
+  border-color: var(--primary-color);
 }
 
-/* 
-  7. EFEITOS INTERATIVOS 3D DOS FLASHCARDS (Efeito Virar o Cartão):
-  Isto é a "Física Tridimensional" aplicada em código. Quando o usuário clica 
-  no cartão, ele rotaciona 180 graus no eixo Y, revelando a resposta de trás.
-*/
+/* Flashcards 3D (Efeito de virar a carta sem sobreposição de frente e verso) */
 .flip-card-container {
-  perspective: 1200px; /* Dá a sensação de profundidade 3D */
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
   width: 100%;
   max-width: 650px;
   height: 380px;
   margin: 0 auto;
   cursor: pointer;
+  position: relative;
 }
-
 .flip-card-inner {
   position: relative;
   width: 100%;
   height: 100%;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d; /* Diz ao navegador para manter o espaço 3D */
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
-
-/* Quando o cartão recebe a classe "flipped", ele gira! */
 .flip-card-inner.flipped {
   transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
 }
-
+/* Frente e verso do cartão fiquem isolados e nunca vazem um sobre o outro */
 .flip-card-front, .flip-card-back {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; /* Esconde a parte de trás enquanto estiver na frente */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border-radius: var(--border-radius-lg);
   padding: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
   box-shadow: var(--box-shadow-soft);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
-
-/* Lado da Frente */
+.flip-card-front::-webkit-scrollbar, .flip-card-back::-webkit-scrollbar { width: 4px; }
+.flip-card-front::-webkit-scrollbar-thumb, .flip-card-back::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary); border-radius: 4px;
+}
+/* Lado da frente (Pergunta) */
 .flip-card-front {
-  background: radial-gradient(circle at top left, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  background: var(--bg-secondary);
   color: var(--text-white);
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
 }
-
-.flip-card-front::after {
-  content: 'Clique para virar 🔄';
-  position: absolute;
-  bottom: 24px;
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-/* Lado de Trás (Inicialmente girado a 180 graus de costas) */
+/* Lado de trás (Resposta) com rotação espelhada perfeita */
 .flip-card-back {
-  background: radial-gradient(circle at bottom right, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+  background: #1A1C20;
   color: var(--text-white);
-  transform: rotateY(180deg); /* Mantém este lado de costas de antemão */
-  border-color: rgba(99, 102, 241, 0.2);
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  border-color: rgba(232, 147, 63, 0.35);
 }
 
-.flip-card-back::after {
-  content: 'Clique para voltar 🔄';
-  position: absolute;
-  bottom: 24px;
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-
-/* 
-  8. ANIMAÇÕES DE ERRO (Shake) E ACERTO (Success Pulse):
-  Essas classes criam respostas táteis visuais para enriquecer o game.
-*/
-
-/* Tremedeira quando erra */
+/* Animações de feedback */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20%, 60% { transform: translateX(-8px); }
   40%, 80% { transform: translateX(8px); }
 }
-
 .animate-shake {
   animation: shake 0.4s ease;
   border-color: var(--color-danger) !important;
-  box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+  box-shadow: 0 0 15px rgba(229, 72, 77, 0.2);
 }
-
-/* Efeito piscar de sucesso */
 @keyframes successPulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
-
 .animate-success {
   animation: successPulse 0.4s ease;
   border-color: var(--color-success) !important;
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 15px rgba(62, 207, 142, 0.2);
 }
-
-/* 
-  9. INPUTS E FORMULÁRIOS DE TEXTO:
-  Faz os formulários parecerem modernos e muito responsivos.
-*/
-.form-group {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.animate-pulse { animation: pulseSoft 1.6s ease infinite; }
 
+/* Formulários */
+.form-group { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
 .form-label {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 800;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
-
 .form-input {
-  background: var(--bg-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--border-radius-sm);
-  padding: 14px 16px;
+  padding: 13px 16px;
   color: var(--text-white);
-  font-size: 16px;
+  font-size: 15px;
   transition: var(--transition-normal);
   width: 100%;
 }
-
 .form-input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-  background: var(--bg-tertiary);
+  box-shadow: 0 0 0 3px rgba(232, 147, 63, 0.15);
+}
+.form-input::placeholder { color: #5B636E; }
+
+/* Estado vazio padrão */
+.empty-state {
+  padding: 56px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* 
-  10. AJUSTES RESPONSIVOS (CELULAR):
-  Aqui ajustamos o tamanho das letras, das margens e dos cartões 
-  quando a tela do celular é pequena (menos de 768px de largura).
-*/
+/* Responsivo */
 @media (max-width: 768px) {
-  .app-container {
-    padding: 12px;
-  }
-  
-  .flip-card-container {
-    height: 320px; /* Reduz altura do cartão no celular */
-  }
-  
-  .flip-card-front, .flip-card-back {
-    padding: 24px;
-  }
-  
-  h1 {
-    font-size: 24px;
-  }
-  
-  h2 {
-    font-size: 20px;
-  }
-  
-  .btn-primary, .btn-secondary {
-    padding: 10px 18px;
-    font-size: 14px;
-    width: 100%; /* Botões ocupam a largura total no mobile para facilitar o toque */
-    justify-content: center;
-  }
-  
-  .glass-panel {
-    border-radius: var(--border-radius-sm);
-  }
+  .app-container { padding: 14px; }
+  .flip-card-container { height: 320px; }
+  .flip-card-front, .flip-card-back { padding: 24px; }
+  h1 { font-size: 26px; }
+  h2 { font-size: 21px; }
+  .app-container .btn-primary, .app-container .btn-secondary { padding: 11px 18px; font-size: 14px; width: 100%; justify-content: center; }
+  .glass-panel { border-radius: var(--border-radius-sm); }
 }
 
-/* 
-  11. LIGHTBOX DE IMAGEM PREMIUM (AMPLIADOR):
-  Esta seção cria o efeito de cinema (fundo escuro borrado) que aparece quando 
-  o usuário clica em qualquer foto dentro dos cartões ou simulados.
-*/
+/* Lightbox de imagem */
 .image-lightbox-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(3, 7, 18, 0.9);
-  backdrop-filter: blur(8px);
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(7, 8, 10, 0.92);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -387,7 +348,6 @@ body {
   cursor: zoom-out;
   animation: fadeIn 0.2s ease-out;
 }
-
 .image-lightbox-img {
   max-width: 90%;
   max-height: 90%;
@@ -399,9 +359,26 @@ body {
   transform: scale(0.95);
   animation: zoomIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
+@keyframes zoomIn { to { transform: scale(1); } }
 
-@keyframes zoomIn {
-  to {
-    transform: scale(1);
-  }
+/*
+  ISOLAMENTO DO EXCALIDRAW: Garante que os estilos globais do app (font-family
+  no seletor *, scrollbar customizada, cores de fundo, etc.) não interfiram
+  nos elementos internos do canvas Excalidraw, evitando bugs visuais como
+  fontes erradas ou scrollbars quebradas.
+*/
+.excalidraw * {
+  font-family: revert;
 }
+.excalidraw ::-webkit-scrollbar {
+  width: revert;
+  height: revert;
+}
+.excalidraw ::-webkit-scrollbar-track {
+  background: revert;
+}
+.excalidraw ::-webkit-scrollbar-thumb {
+  background: revert;
+  border-radius: revert;
+}
+

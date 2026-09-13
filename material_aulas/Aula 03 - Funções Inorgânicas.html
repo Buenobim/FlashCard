@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 03 — Funções Inorgânicas | Química Geral e Experimental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   PALETA — as mesmas cores da Plataforma Bueno (src/index.css + as esferas do
+   Sub-Cerebro). Cada funcao inorganica ganhou a cor de uma esfera, para o olho
+   ja saber onde esta: acido = rosa (Aula), base = azul (Anotacao),
+   sal = verde (Exercicios), oxido = violeta (Caderno), NOX = ambar (Link).
+   ========================================================================= */
+:root{
+  --bg-0:#0C0D0F; --bg-1:#15171A; --bg-2:#1E2126;
+  --border:rgba(255,255,255,.07); --border-2:rgba(255,255,255,.12);
+  --laranja:#E8933F; --laranja-2:#E77950;
+  --verde:#3ECF8E;  --vermelho:#E5484D; --amarelo:#EEA53D;
+  --rosa:#F472B6;   --azul:#60A5FA;     --violeta:#A78BFA;
+  --esmeralda:#34D399; --ambar:#F59E0B;
+  --txt:#F4F5F7; --txt-2:#C3C9D2; --mut:#99A1AC;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;
+  --r-s:10px; --r-m:14px; --r-l:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg-0); color:var(--txt); font-family:var(--sans);
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(680px 480px at 12% -6%, rgba(167,139,250,.16), transparent 60%),
+    radial-gradient(620px 520px at 92% 4%, rgba(244,114,182,.13), transparent 62%),
+    radial-gradient(760px 620px at 50% 108%, rgba(232,147,63,.10), transparent 64%);
+}
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 22px 90px}
+
+/* ---------------------------------------------------------------- CAPA -- */
+.capa{padding:52px 0 30px; text-align:center}
+.selo{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 16px;
+  border:1px solid rgba(244,114,182,.35); border-radius:999px;
+  background:rgba(244,114,182,.10); color:#FBCFE8;
+  font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+}
+.capa h1{
+  font-family:var(--serif); font-weight:700; margin:20px 0 8px;
+  font-size:clamp(30px,5.4vw,54px); line-height:1.08; letter-spacing:-.02em;
+  background:linear-gradient(120deg,#fff 8%,#F9C58D 52%,#F472B6 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.capa .sub{color:var(--txt-2); font-size:17px; max-width:660px; margin:0 auto}
+.chips{display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:24px}
+.chip{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 14px;
+  border:1px solid var(--border-2); border-radius:999px; background:rgba(255,255,255,.04);
+  font-size:12.5px; font-weight:600; color:var(--txt-2);
+}
+.chip b{color:var(--txt); font-weight:800}
+
+/* -------------------------------------------------------------- SUMARIO -- */
+.sumario{
+  margin:34px 0 8px; padding:20px; border:1px solid var(--border);
+  border-radius:var(--r-l); background:linear-gradient(180deg,rgba(30,33,38,.9),rgba(21,23,26,.72));
+  backdrop-filter:blur(8px);
+}
+.sumario h2{margin:0 0 14px; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mut)}
+.sumario ol{margin:0; padding:0; list-style:none; display:grid; gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.sumario a{
+  display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:var(--r-s);
+  border:1px solid transparent; color:var(--txt-2); text-decoration:none;
+  font-size:14.5px; font-weight:600; transition:.18s;
+}
+.sumario a:hover{background:rgba(255,255,255,.05); border-color:var(--border-2); color:#fff; transform:translateX(3px)}
+.sumario .num{
+  flex:0 0 26px; height:26px; display:grid; place-items:center; border-radius:8px;
+  background:rgba(232,147,63,.14); color:var(--laranja); font-size:12px; font-weight:800;
+}
+
+/* ------------------------------------------------------------- SECCOES -- */
+section{scroll-margin-top:18px; margin-top:46px}
+.sec-cab{display:flex; align-items:flex-start; gap:15px; margin-bottom:20px}
+.sec-ico{
+  flex:0 0 46px; height:46px; border-radius:14px; display:grid; place-items:center;
+  font-size:22px; border:1px solid var(--border-2); background:rgba(255,255,255,.04);
+}
+.sec-cab h2{
+  font-family:var(--serif); font-weight:700; margin:0; letter-spacing:-.01em;
+  font-size:clamp(22px,3.2vw,30px); line-height:1.2;
+}
+.sec-cab p{margin:5px 0 0; color:var(--mut); font-size:14.5px}
+
+.card{
+  border:1px solid var(--border); border-radius:var(--r-m); padding:20px 22px;
+  background:linear-gradient(180deg,rgba(30,33,38,.72),rgba(21,23,26,.55)); margin:16px 0;
+}
+.grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+h3{font-size:18px; margin:26px 0 10px; letter-spacing:-.01em}
+h4{font-size:15px; margin:18px 0 8px; color:var(--txt)}
+p{margin:0 0 12px; color:var(--txt-2)}
+ul,ol{color:var(--txt-2); padding-left:22px; margin:0 0 12px}
+li{margin-bottom:7px}
+b,strong{color:var(--txt)}
+a{color:var(--laranja)}
+
+.tag{display:inline-block; padding:2px 9px; border-radius:6px; font-size:12px; font-weight:800; letter-spacing:.03em}
+.t-acido{background:rgba(244,114,182,.16); color:#F9A8D4}
+.t-base{background:rgba(96,165,250,.16); color:#93C5FD}
+.t-sal{background:rgba(52,211,153,.16); color:#6EE7B7}
+.t-oxido{background:rgba(167,139,250,.16); color:#C4B5FD}
+.t-nox{background:rgba(245,158,11,.16); color:#FCD34D}
+
+.f{font-family:'Menlo','Consolas',monospace; font-weight:700; color:#fff; white-space:nowrap}
+.f sub{font-size:.72em; font-weight:700}
+.f sup{font-size:.72em; font-weight:700}
+.eq{
+  font-family:'Menlo','Consolas',monospace; font-size:15px; font-weight:700; color:#fff;
+  background:rgba(0,0,0,.34); border:1px solid var(--border-2); border-left:3px solid var(--laranja);
+  border-radius:var(--r-s); padding:13px 16px; margin:12px 0; overflow-x:auto; line-height:2;
+}
+.eq small{display:block; font-family:var(--sans); font-weight:600; color:var(--mut); font-size:12.5px; margin-top:6px}
+
+.box{border-radius:var(--r-m); padding:15px 18px; margin:16px 0; border:1px solid; font-size:14.5px}
+.box .tit{display:flex; align-items:center; gap:9px; font-weight:800; margin-bottom:7px; font-size:14px; letter-spacing:.02em}
+.box p:last-child{margin-bottom:0}
+.b-dica{border-color:rgba(62,207,142,.3); background:rgba(62,207,142,.07)} .b-dica .tit{color:var(--verde)}
+.b-atencao{border-color:rgba(238,165,61,.32); background:rgba(238,165,61,.07)} .b-atencao .tit{color:var(--amarelo)}
+.b-pegadinha{border-color:rgba(229,72,77,.32); background:rgba(229,72,77,.07)} .b-pegadinha .tit{color:#F87171}
+.b-prova{border-color:rgba(167,139,250,.32); background:rgba(167,139,250,.07)} .b-prova .tit{color:var(--violeta)}
+.b-aula{border-color:rgba(244,114,182,.30); background:rgba(244,114,182,.06)} .b-aula .tit{color:var(--rosa)}
+
+.tab-rol{overflow-x:auto; margin:16px 0; border:1px solid var(--border); border-radius:var(--r-m)}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:480px}
+thead th{
+  background:rgba(255,255,255,.045); color:var(--mut); text-align:left; padding:11px 14px;
+  font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:800;
+  border-bottom:1px solid var(--border-2); white-space:nowrap;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--txt-2); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(255,255,255,.028)}
+td .f{color:#fff}
+
+.ph-barra{
+  display:flex; height:42px; border-radius:10px; overflow:hidden; margin:8px 0 4px;
+  border:1px solid var(--border-2); font-size:11px; font-weight:800;
+}
+.ph-barra div{flex:1; display:grid; place-items:center; color:rgba(0,0,0,.62)}
+.ph-legenda{display:flex; justify-content:space-between; color:var(--mut); font-size:12px; font-weight:700}
+.ph-lista{display:grid; gap:7px; margin-top:16px}
+.ph-item{
+  display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:12px;
+  padding:9px 13px; border-radius:var(--r-s); background:rgba(255,255,255,.032);
+  border:1px solid var(--border); font-size:14px;
+}
+.ph-val{font-family:'Menlo','Consolas',monospace; font-weight:800; font-size:15px; text-align:center;
+  padding:3px 0; border-radius:6px; color:#0C0D0F}
+.ph-cat{font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--mut)}
+
+.fc-grid{display:grid; gap:13px; grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+.fc{
+  position:relative; min-height:160px; cursor:pointer; perspective:1200px;
+  background:none; border:0; padding:0; text-align:left; font-family:inherit;
+}
+.fc-int{position:relative; width:100%; height:100%; min-height:160px; transition:transform .5s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d}
+.fc.virado .fc-int{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border:1px solid var(--border-2); border-radius:var(--r-m); padding:16px 17px;
+  display:flex; flex-direction:column; justify-content:center; gap:8px; overflow:auto;
+}
+.fc-frente{background:linear-gradient(160deg,rgba(232,147,63,.16),rgba(30,33,38,.92))}
+.fc-tras{background:linear-gradient(160deg,rgba(62,207,142,.14),rgba(21,23,26,.97)); transform:rotateY(180deg)}
+.fc-tema{font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja)}
+.fc-tras .fc-tema{color:var(--verde)}
+.fc-txt{font-size:15px; font-weight:700; color:#fff; line-height:1.45}
+.fc-tras .fc-txt{font-weight:600; font-size:14.5px; color:var(--txt-2)}
+.fc-tras .fc-txt strong{color:#fff}
+.fc-pista{font-size:11px; color:var(--mut); font-weight:600}
+.fc-barra{display:flex; flex-wrap:wrap; gap:9px; align-items:center; margin:6px 0 18px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:10px;
+  border:1px solid var(--border-2); background:rgba(255,255,255,.05); color:var(--txt);
+  font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; transition:.18s;
+}
+.btn:hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
+.btn-l{background:linear-gradient(135deg,#E8933F,#D96C3F); border-color:transparent; color:#170F06}
+
+.q{border:1px solid var(--border); border-radius:var(--r-m); padding:17px 19px; margin:13px 0;
+  background:linear-gradient(180deg,rgba(30,33,38,.66),rgba(21,23,26,.5))}
+.q-cab{display:flex; align-items:center; gap:10px; margin-bottom:11px}
+.q-n{flex:0 0 28px; height:28px; border-radius:9px; display:grid; place-items:center;
+  background:rgba(167,139,250,.16); color:var(--violeta); font-size:12.5px; font-weight:800}
+.q-tema{font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mut)}
+.q-enun{color:var(--txt); font-size:15px; margin:0 0 11px; font-weight:600}
+.alts{list-style:none; padding:0; margin:0 0 12px; display:grid; gap:6px}
+.alts li{padding:8px 12px; border-radius:8px; background:rgba(255,255,255,.03);
+  border:1px solid var(--border); font-size:14px; color:var(--txt-2)}
+.alts li b{color:var(--laranja); margin-right:6px}
+details{border-top:1px dashed var(--border-2); padding-top:11px}
+details summary{
+  cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:8px;
+  font-size:13px; font-weight:800; color:var(--verde); letter-spacing:.02em;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"\25B8"; transition:.2s}
+details[open] summary::before{transform:rotate(90deg)}
+details .resp{margin-top:11px; font-size:14.5px; color:var(--txt-2);
+  background:rgba(62,207,142,.06); border:1px solid rgba(62,207,142,.22);
+  border-radius:var(--r-s); padding:13px 15px}
+details .resp b{color:#6EE7B7}
+
+.links{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.link{
+  display:flex; gap:13px; padding:15px 16px; border:1px solid var(--border); border-radius:var(--r-m);
+  background:rgba(245,158,11,.045); text-decoration:none; transition:.18s;
+}
+.link:hover{border-color:rgba(245,158,11,.4); background:rgba(245,158,11,.09); transform:translateY(-2px)}
+.link .ico{flex:0 0 38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  background:rgba(245,158,11,.14); font-size:18px}
+.link .tit{color:#fff; font-weight:700; font-size:14.5px; display:block; margin-bottom:3px}
+.link .desc{color:var(--mut); font-size:12.5px; display:block; line-height:1.45}
+
+.cola{border:1px solid rgba(232,147,63,.3); background:rgba(232,147,63,.055)}
+.cola-grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.cola-bloco{border:1px solid var(--border); border-radius:var(--r-s); padding:13px 15px; background:rgba(12,13,15,.5)}
+.cola-bloco h5{margin:0 0 8px; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--laranja)}
+.cola-bloco ul{margin:0; padding-left:17px; font-size:13.5px}
+.cola-bloco li{margin-bottom:5px}
+
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--border); text-align:center;
+  color:var(--mut); font-size:12.5px}
+footer b{color:var(--txt-2)}
+
+@media(max-width:620px){
+  .wrap{padding:0 15px 70px}
+  .ph-item{grid-template-columns:56px 1fr}
+  .ph-cat{grid-column:1/-1}
+  .sec-cab{gap:11px} .sec-ico{flex:0 0 38px; height:38px; font-size:18px}
+}
+@media print{
+  body::before{display:none}
+  .fc-int{transform:none!important}
+  details .resp{display:block}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<!-- ====================================================== CAPA ========== -->
+<header class="capa">
+  <span class="selo">&#9679; Aula 03 &middot; Semana 3 &middot; Módulo 53/2026</span>
+  <h1>Funções Inorgânicas</h1>
+  <p class="sub">Ácidos, bases, sais e óxidos: como reconhecer, como nomear, como reagem &mdash;
+  e o número de oxidação (NOX), que é a chave que abre todas as nomenclaturas.</p>
+  <div class="chips">
+    <span class="chip">&#128218; <b>Química Geral e Experimental</b></span>
+    <span class="chip">&#127891; Aula ao vivo 03</span>
+    <span class="chip">&#9201; <b>1h24</b> de aula</span>
+    <span class="chip">&#129504; 6 blocos + 68 flashcards</span>
+    <span class="chip">&#9997; 15 questões com gabarito</span>
+  </div>
+</header>
+
+<!-- =================================================== SUMÁRIO ========== -->
+<nav class="sumario">
+  <h2>Mapa da aula</h2>
+  <ol>
+    <li><a href="#s0"><span class="num">0</span> Recados da semana 3</a></li>
+    <li><a href="#s1"><span class="num">1</span> A escala de pH</a></li>
+    <li><a href="#s2"><span class="num">2</span> NOX &mdash; número de oxidação</a></li>
+    <li><a href="#s3"><span class="num">3</span> Ácidos</a></li>
+    <li><a href="#s4"><span class="num">4</span> Bases (hidróxidos)</a></li>
+    <li><a href="#s5"><span class="num">5</span> Neutralização e Sais</a></li>
+    <li><a href="#s6"><span class="num">6</span> Óxidos</a></li>
+    <li><a href="#s7"><span class="num">7</span> Tabela de íons</a></li>
+    <li><a href="#s8"><span class="num">8</span> Flashcards (68)</a></li>
+    <li><a href="#s9"><span class="num">9</span> Exercícios comentados</a></li>
+    <li><a href="#s10"><span class="num">10</span> Pegadinhas de prova</a></li>
+    <li><a href="#s11"><span class="num">11</span> Links e simuladores</a></li>
+    <li><a href="#s12"><span class="num">12</span> Cola de uma página</a></li>
+  </ol>
+</nav>
+
+<!-- ================================================== RECADOS =========== -->
+<section id="s0">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(244,114,182,.10); border-color:rgba(244,114,182,.3)">&#128226;</div>
+    <div>
+      <h2>Recados da semana 3</h2>
+      <p>O que vale nota e o que precisa de anexo &mdash; dos primeiros 5 minutos da aula.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">&#127942; Semana de Conhecimentos Gerais</h4>
+      <p style="margin-bottom:0">Liberada nesta semana 3. Assistir às palestras rende <b>horas complementares</b>;
+      responder à atividade objetiva vale <b>até 1 ponto na nota final</b>.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#128206; MAPA e Estudo 1</h4>
+      <p style="margin-bottom:0">Liberadas desde a semana 1, as duas com <b>envio de anexo</b>.
+      Use obrigatoriamente o <b>template</b> da pasta &ldquo;Material da disciplina&rdquo;.
+      Há vídeo explicativo postado para cada uma.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#128296; Ambiente &ldquo;Prepare-se&rdquo;</h4>
+      <p style="margin-bottom:0">Espaço formativo contínuo no Studeo. Dois caminhos: o <b>banner da página inicial</b>
+      ou o fim da página, na aba <b>Palestras, nivelamento e outros ambientes</b>.
+      Tem e-books, vídeos, questionários, atividades de revisão e <b>simulados</b> (pasta Material da disciplina).</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#128172; Dúvidas</h4>
+      <p style="margin-bottom:0">Conteúdo da aula &rarr; <b>chat da aula ao vivo</b>.
+      Qualquer outra coisa (prazos, notas, acesso) &rarr; <b>Fale com o Mediador</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== pH ============ -->
+<section id="s1">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:linear-gradient(135deg,rgba(229,72,77,.18),rgba(96,165,250,.18)); border-color:var(--border-2)">&#127777;</div>
+    <div>
+      <h2>1. A escala de pH</h2>
+      <p>O termômetro do caráter ácido ou básico. Sem ele, nada do resto da aula faz sentido.</p>
+    </div>
+  </div>
+
+  <div class="ph-barra">
+    <div style="background:#B91C1C">0</div><div style="background:#DC2626">1</div>
+    <div style="background:#EF4444">2</div><div style="background:#F97316">3</div>
+    <div style="background:#F59E0B">4</div><div style="background:#EAB308">5</div>
+    <div style="background:#A3E635">6</div><div style="background:#22C55E">7</div>
+    <div style="background:#14B8A6">8</div><div style="background:#06B6D4">9</div>
+    <div style="background:#3B82F6">10</div><div style="background:#6366F1">11</div>
+    <div style="background:#8B5CF6">12</div><div style="background:#A855F7">13</div>
+    <div style="background:#C026D3">14</div>
+  </div>
+  <div class="ph-legenda">
+    <span>&#9664; ÁCIDO &mdash; pH &lt; 7</span><span>NEUTRO = 7</span><span>BÁSICO / ALCALINO &mdash; pH &gt; 7 &#9654;</span>
+  </div>
+
+  <div class="card">
+    <p style="margin-bottom:6px"><b>Básico e alcalino são a mesma coisa.</b> A professora usou os dois nomes
+    na aula justamente para você não estranhar na prova.</p>
+    <ul style="margin-bottom:0">
+      <li><b>pH &lt; 7</b> &rarr; ácido. Quanto mais perto de 0, mais ácido.</li>
+      <li><b>pH = 7</b> &rarr; neutro. Só a água <b>pura</b> a 25&nbsp;°C. A água da torneira não é pura: tem sais, cloro, etc.</li>
+      <li><b>pH &gt; 7</b> &rarr; básico. Quanto mais perto de 14, mais básico.</li>
+      <li><b>Atenção:</b> não existe &ldquo;pH igual a 7 e um pouco ácido&rdquo;. Se é <em>menor</em> que 7, já é ácido &mdash;
+      mesmo que seja 6,99.</li>
+    </ul>
+  </div>
+
+  <h3>O pH das coisas que você conhece</h3>
+  <p>Esta lista é ouro de prova: quase toda questão de pH usa um destes exemplos.</p>
+
+  <div class="ph-lista">
+    <div class="ph-item"><span class="ph-val" style="background:#B91C1C; color:#fff">0&ndash;1</span>
+      <span>Solução aquosa de <span class="f">HCl</span> (ácido clorídrico / muriático)</span><span class="ph-cat">ácido fortíssimo</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#DC2626; color:#fff">1&ndash;3</span>
+      <span>Suco gástrico &mdash; é por isso que o refluxo <b>arde</b> no peito</span><span class="ph-cat">muito ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#EF4444; color:#fff">2,0</span>
+      <span>Suco de limão (ácido cítrico)</span><span class="ph-cat">muito ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#EF4444; color:#fff">2,5</span>
+      <span>Refrigerante de cola (ácido carbônico + ácido fosfórico)</span><span class="ph-cat">muito ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#F97316">2,4&ndash;3,4</span>
+      <span>Vinagre &mdash; solução de <b>ácido acético a 4%</b> (existem de 3% a 8%)</span><span class="ph-cat">ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#F59E0B">3,5&ndash;4</span>
+      <span>Suco de laranja</span><span class="ph-cat">ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#EAB308">4,9&ndash;5,1</span>
+      <span>Café &mdash; o médico manda cortar de quem tem refluxo por causa disso</span><span class="ph-cat">ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#A3E635">5,6</span>
+      <span>Chuva &ldquo;normal&rdquo; &mdash; já é ácida por causa do <span class="f">CO<sub>2</sub></span> do ar</span><span class="ph-cat">levemente ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#A3E635">6,5</span>
+      <span>Leite</span><span class="ph-cat">levemente ácido</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#22C55E">7,0</span>
+      <span><b>Água pura</b> a 25&nbsp;°C &mdash; a referência da escala</span><span class="ph-cat">neutro</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#14B8A6">7,35&ndash;7,45</span>
+      <span>Sangue humano &mdash; tecnicamente <b>básico</b>, mas quase neutro</span><span class="ph-cat">levemente básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#06B6D4">8,0</span>
+      <span>Água do mar</span><span class="ph-cat">básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#06B6D4">8,3</span>
+      <span>Bicarbonato de sódio em água &mdash; o antiácido caseiro</span><span class="ph-cat">básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#3B82F6; color:#fff">8&ndash;9</span>
+      <span>Creme dental &mdash; não é neutro! É alcalino de propósito</span><span class="ph-cat">básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#3B82F6; color:#fff">10,5</span>
+      <span>Leite de magnésia &mdash; <span class="f">Mg(OH)<sub>2</sub></span>, antiácido e laxante</span><span class="ph-cat">muito básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#8B5CF6; color:#fff">12,4</span>
+      <span>Água de cal &mdash; <span class="f">Ca(OH)<sub>2</sub></span></span><span class="ph-cat">muito básico</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#A855F7; color:#fff">13</span>
+      <span>Desentupidor de ralo &mdash; <b>base quase pura</b></span><span class="ph-cat">básico fortíssimo</span></div>
+    <div class="ph-item"><span class="ph-val" style="background:#C026D3; color:#fff">14</span>
+      <span>Solução concentrada de <span class="f">NaOH</span> (soda cáustica)</span><span class="ph-cat">básico fortíssimo</span></div>
+  </div>
+
+  <div class="box b-aula">
+    <div class="tit">&#128161; Por que o bicarbonato corta a azia</div>
+    <p>O suco gástrico é <b>ácido</b> (pH 1&ndash;3). O bicarbonato e o leite de magnésia são <b>básicos</b>.
+    Juntando ácido com base acontece <b>neutralização</b> &mdash; o assunto do bloco 5.
+    Não é &ldquo;remédio mágico&rdquo;: é química de função inorgânica agindo no seu estômago.</p>
+  </div>
+
+  <h3>O que acontece quando você dilui</h3>
+  <p>No simulador da aula, adicionar água no refrigerante levou o pH de <b>2,5</b> para <b>2,76</b> e seguiu subindo.
+  A regra é simples:</p>
+  <div class="eq">
+    diluir ÁCIDO com água &rarr; pH <b>sobe</b>, caminhando para 7<br>
+    diluir BASE com água &rarr; pH <b>desce</b>, caminhando para 7
+    <small>Diluir aproxima o pH da água (7). Diluir NUNCA atravessa o 7: ácido diluído continua ácido.</small>
+  </div>
+
+  <h3>A conta do pH (o &ldquo;menos log&rdquo; que o Ricardo perguntou no chat)</h3>
+  <p>A professora deixou em aberto se entraria na disciplina. Fica aqui porque cai em prova e explica a escala:</p>
+  <div class="eq">
+    pH = &minus;log [H<sub>3</sub>O<sup>+</sup>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pOH = &minus;log [OH<sup>&minus;</sup>]<br>
+    <b>pH + pOH = 14</b>&nbsp;&nbsp;(a 25&nbsp;°C)<br>
+    K<sub>w</sub> = [H<sub>3</sub>O<sup>+</sup>] &middot; [OH<sup>&minus;</sup>] = 1,0 &times; 10<sup>&minus;14</sup>
+    <small>Exemplos: [H+] = 10⁻³ mol/L &rarr; pH 3 (ácido). [H+] = 10⁻¹⁰ &rarr; pH 10 (básico). [OH⁻] = 10⁻² &rarr; pOH 2 &rarr; pH 12.</small>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; A escala é logarítmica</div>
+    <p>Cada degrau de pH vale <b>10 vezes</b>. pH 2 não é &ldquo;um pouco mais ácido&rdquo; que pH 3 &mdash; é <b>dez vezes</b>
+    mais ácido. Do pH 5 (café) para o pH 2 (refrigerante) são <b>mil vezes</b> mais íons H<sup>+</sup>.</p>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128300; H<sup>+</sup> ou H<sub>3</sub>O<sup>+</sup>?</div>
+    <p>São a mesma coisa na prática. O <span class="f">H<sup>+</sup></span> solto não existe em água: ele se
+    prende numa molécula de água e forma o <b>hidrônio</b> <span class="f">H<sub>3</sub>O<sup>+</sup></span>
+    (<span class="f">H<sup>+</sup> + H<sub>2</sub>O &rarr; H<sub>3</sub>O<sup>+</sup></span>).
+    Por isso o simulador mostra H<sub>3</sub>O<sup>+</sup>: leia como H<sup>+</sup> e siga a vida.</p>
+  </div>
+</section>
+
+<!-- ===================================================== NOX ============ -->
+<section id="s2">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#9889;</div>
+    <div>
+      <h2>2. NOX &mdash; número de oxidação</h2>
+      <p>&ldquo;Sem saber o NOX destes elementos, você não descobre o NOX do que falta.&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p style="margin-bottom:0"><b>Definição.</b> O NOX é a propriedade que indica o <b>grau de oxidação</b> de um átomo
+    numa molécula ou íon. Na prática, ele diz <b>quantos elétrons</b> aquele átomo
+    <b>perdeu, ganhou ou compartilhou</b> na ligação:
+    ligação <b>iônica</b> &rarr; ganhou ou perdeu de verdade; ligação <b>covalente</b> &rarr; compartilhou
+    (e o NOX conta como se o átomo mais eletronegativo tivesse ficado com os elétrons).</p>
+  </div>
+
+  <h3>As duas regras que resolvem tudo</h3>
+  <div class="grid">
+    <div class="card" style="border-color:rgba(62,207,142,.28)">
+      <h4 style="margin-top:0; color:var(--verde)">1. Molécula neutra &rarr; soma = 0</h4>
+      <p style="margin-bottom:0">Toda substância sem carga tem a <b>soma</b> dos NOX igual a <b>zero</b>.
+      Vale para <span class="f">H<sub>2</sub>O</span>, <span class="f">H<sub>2</sub>SO<sub>4</sub></span>,
+      <span class="f">CO<sub>2</sub></span>, <span class="f">NaCl</span>&hellip; e para substâncias simples
+      (<span class="f">O<sub>2</sub></span>, <span class="f">Fe</span>, <span class="f">Cl<sub>2</sub></span>), onde cada átomo vale 0.</p>
+    </div>
+    <div class="card" style="border-color:rgba(96,165,250,.28)">
+      <h4 style="margin-top:0; color:var(--azul)">2. Íon &rarr; soma = a própria carga</h4>
+      <p style="margin-bottom:0">Num íon, a soma dos NOX é igual à <b>carga do íon</b>.
+      <span class="f">Na<sup>+</sup></span> &rarr; NOX = +1.
+      <span class="f">Ca<sup>2+</sup></span> &rarr; NOX = +2.
+      <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span> &rarr; a soma de tudo lá dentro dá &minus;2.</p>
+    </div>
+  </div>
+
+  <h3>Os NOX fixos &mdash; estes você decora</h3>
+  <p>São o ponto de apoio. Todos os outros elementos têm <b>NOX variável</b> e são descobertos por conta.</p>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Elemento / grupo</th><th>NOX fixo</th><th>Exemplos</th><th>Exceção que cai em prova</th></tr></thead>
+      <tbody>
+        <tr><td><b>Família 1A</b> (Li, Na, K, Rb, Cs) + prata <span class="f">Ag</span></td>
+            <td><span class="tag t-nox">+1</span></td>
+            <td><span class="f">NaCl</span>, <span class="f">KOH</span>, <span class="f">AgNO<sub>3</sub></span></td><td>&mdash;</td></tr>
+        <tr><td><b>Família 2A</b> (Be, Mg, Ca, Sr, Ba) + zinco <span class="f">Zn</span></td>
+            <td><span class="tag t-nox">+2</span></td>
+            <td><span class="f">CaO</span>, <span class="f">MgCl<sub>2</sub></span>, <span class="f">ZnO</span></td><td>&mdash;</td></tr>
+        <tr><td><b>Família 3A</b> &mdash; alumínio <span class="f">Al</span></td>
+            <td><span class="tag t-nox">+3</span></td>
+            <td><span class="f">Al<sub>2</sub>O<sub>3</sub></span>, <span class="f">Al(OH)<sub>3</sub></span></td><td>&mdash;</td></tr>
+        <tr><td><b>Hidrogênio</b> <span class="f">H</span></td>
+            <td><span class="tag t-nox">+1</span></td>
+            <td><span class="f">HCl</span>, <span class="f">H<sub>2</sub>O</span>, <span class="f">H<sub>2</sub>SO<sub>4</sub></span></td>
+            <td><b>&minus;1</b> em hidretos metálicos: <span class="f">NaH</span>, <span class="f">CaH<sub>2</sub></span></td></tr>
+        <tr><td><b>Oxigênio</b> <span class="f">O</span></td>
+            <td><span class="tag t-nox">&minus;2</span></td>
+            <td><span class="f">H<sub>2</sub>O</span>, <span class="f">CO<sub>2</sub></span>, <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span></td>
+            <td><b>&minus;1</b> em peróxidos (<span class="f">H<sub>2</sub>O<sub>2</sub></span>);
+                <b>+2</b> em <span class="f">OF<sub>2</sub></span></td></tr>
+        <tr><td><b>Flúor</b> <span class="f">F</span></td>
+            <td><span class="tag t-nox">&minus;1</span></td>
+            <td><span class="f">HF</span>, <span class="f">NaF</span></td>
+            <td>Nenhuma &mdash; é o elemento mais eletronegativo que existe</td></tr>
+        <tr><td>Demais halogênios (Cl, Br, I) <em>quando são o mais eletronegativo</em></td>
+            <td><span class="tag t-nox">&minus;1</span></td>
+            <td><span class="f">HCl</span>, <span class="f">KBr</span></td>
+            <td>Ficam <b>positivos</b> ao lado do oxigênio: <span class="f">HClO<sub>4</sub></span> (Cl = +7)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; O jingle para nunca esquecer</div>
+    <p><b>1A vale +1 &middot; 2A vale +2 &middot; Al vale +3 &middot; H vale +1 &middot; O vale &minus;2 &middot; F vale &minus;1.</b><br>
+    Com esses seis, você resolve o NOX de qualquer fórmula que aparecer na prova.</p>
+  </div>
+
+  <h3>Calculando na prática</h3>
+
+  <h4>Exemplo 1 &mdash; água <span class="f">H<sub>2</sub>O</span> (molécula neutra)</h4>
+  <div class="eq">
+    2 &times; (+1) + 1 &times; (&minus;2) = +2 &minus; 2 = <b>0</b> &#10004;
+    <small>Dois hidrogênios (+1 cada) e um oxigênio (−2). Fecha em zero: confirma que a molécula é neutra.</small>
+  </div>
+
+  <h4>Exemplo 2 &mdash; sulfato <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span> (o do slide da aula)</h4>
+  <div class="eq">
+    x + 4 &times; (&minus;2) = &minus;2<br>
+    x &minus; 8 = &minus;2<br>
+    <b>x = +6</b> &nbsp;&rarr;&nbsp; o enxofre tem NOX +6 no sulfato
+    <small>Note que igualamos a −2 (a carga do íon), não a zero. Esse é o erro mais comum aqui.</small>
+  </div>
+
+  <h4>Exemplo 3 &mdash; permanganato de potássio <span class="f">KMnO<sub>4</sub></span></h4>
+  <div class="eq">
+    (+1) + x + 4 &times; (&minus;2) = 0&nbsp;&nbsp;&rarr;&nbsp;&nbsp;x &minus; 7 = 0&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<b>Mn = +7</b>
+    <small>K é da família 1A (+1), O vale −2. Sobrou o manganês: NOX variável, descoberto pela conta.</small>
+  </div>
+
+  <h4>Exemplo 4 &mdash; dicromato <span class="f">Cr<sub>2</sub>O<sub>7</sub><sup>2&minus;</sup></span></h4>
+  <div class="eq">
+    2x + 7 &times; (&minus;2) = &minus;2&nbsp;&nbsp;&rarr;&nbsp;&nbsp;2x = +12&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<b>Cr = +6</b>
+    <small>São DOIS cromos: o x vem multiplicado por 2 e no fim divide. Esquecer o índice mata a questão.</small>
+  </div>
+
+  <h4>Exemplo 5 &mdash; ácido nítrico <span class="f">HNO<sub>3</sub></span></h4>
+  <div class="eq">
+    (+1) + x + 3 &times; (&minus;2) = 0&nbsp;&nbsp;&rarr;&nbsp;&nbsp;x &minus; 5 = 0&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<b>N = +5</b>
+    <small>O NOX +5 do nitrogênio é o que dá o sufixo −ICO ao nome &ldquo;ácido nítrico&rdquo;.</small>
+  </div>
+
+  <h4>Exemplo 6 &mdash; a exceção: peróxido de hidrogênio <span class="f">H<sub>2</sub>O<sub>2</sub></span></h4>
+  <div class="eq">
+    2 &times; (+1) + 2x = 0&nbsp;&nbsp;&rarr;&nbsp;&nbsp;<b>O = &minus;1</b>
+    <small>Água oxigenada. Aqui o oxigênio NÃO vale −2: é peróxido, vale −1. Cai muito em prova.</small>
+  </div>
+
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Erro clássico</div>
+    <p>NOX <b>não</b> é o mesmo que número de átomos. Em <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span>
+    o oxigênio aparece 4 vezes, mas o NOX dele continua <b>&minus;2</b> &mdash; o 4 entra como <em>multiplicador</em>
+    na soma, nunca como valor de NOX.</p>
+  </div>
+
+  <div class="box b-prova">
+    <div class="tit">&#127891; Por que isso importa</div>
+    <p>O NOX não é conta por conta. Ele decide o <b>nome</b> da substância:
+    <span class="f">HClO</span> é &ldquo;hipoclor<b>oso</b>&rdquo; e <span class="f">HClO<sub>4</sub></span> é
+    &ldquo;<b>per</b>clór<b>ico</b>&rdquo; &mdash; mesma dupla de elementos, nomes diferentes,
+    <b>só porque o NOX do cloro mudou</b>. Sem NOX, não há nomenclatura.</p>
+  </div>
+</section>
+<!-- =================================================== ÁCIDOS =========== -->
+<section id="s3">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(244,114,182,.12); border-color:rgba(244,114,182,.32)">&#129371;</div>
+    <div>
+      <h2>3. Ácidos</h2>
+      <p>Começam com <b>H</b>. Em água, soltam <b>H<sup>+</sup></b>. pH &lt; 7. Sabor azedo.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(244,114,182,.28)">
+    <h4 style="margin-top:0; color:var(--rosa)">Definição de Arrhenius</h4>
+    <p style="margin-bottom:0">Ácido é toda substância que, <b>em solução aquosa</b>, sofre <b>ionização</b>
+    liberando como único cátion o <b>H<sup>+</sup></b> (hidrônio, <span class="f">H<sub>3</sub>O<sup>+</sup></span>).</p>
+  </div>
+
+  <div class="eq">
+    HCl&nbsp;&nbsp;<span style="color:var(--laranja)">+ H<sub>2</sub>O</span>&nbsp;&nbsp;&rarr;&nbsp;&nbsp;H<sup>+</sup> + Cl<sup>&minus;</sup><br>
+    H<sub>2</sub>SO<sub>4</sub>&nbsp;&nbsp;<span style="color:var(--laranja)">+ H<sub>2</sub>O</span>&nbsp;&nbsp;&rarr;&nbsp;&nbsp;2 H<sup>+</sup> + SO<sub>4</sub><sup>2&minus;</sup>
+    <small>O ácido só é ácido EM ÁGUA. HCl puro gasoso não tem H⁺ solto: a água é quem faz a ionização.</small>
+  </div>
+
+  <h3>Como reconhecer de bate-pronto</h3>
+  <div class="box b-dica">
+    <div class="tit">&#128064; Fórmula geral: H<sub>x</sub>A</div>
+    <p><b>Todo ácido começa com H.</b> Bateu o olho e a fórmula abre com hidrogênio? Provavelmente é ácido.
+    <span class="f">HCl</span>, <span class="f">HNO<sub>3</sub></span>,
+    <span class="f">H<sub>2</sub>SO<sub>4</sub></span>, <span class="f">H<sub>3</sub>PO<sub>4</sub></span>.</p>
+  </div>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; A pergunta do chat: e a água, que também começa com H?</div>
+    <p>A <span class="f">H<sub>2</sub>O</span> começa com <b>H</b> (cara de ácido) e termina com <b>OH</b> (cara de base).
+    Ela é <b>anfótera</b>: libera <span class="f">H<sup>+</sup></span> e
+    <span class="f">OH<sup>&minus;</sup></span> na <em>mesma</em> quantidade
+    (<span class="f">2 H<sub>2</sub>O &#8646; H<sub>3</sub>O<sup>+</sup> + OH<sup>&minus;</sup></span>).
+    Um cancela o outro &rarr; <b>pH = 7</b>. É justamente a junção de um ácido e uma base.</p>
+  </div>
+
+  <h3>Classificação 1 &mdash; pela presença de oxigênio</h3>
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0"><span class="tag t-acido">HIDRÁCIDOS</span> &mdash; sem oxigênio</h4>
+      <p style="margin-bottom:0"><span class="f">HCl</span> clorídrico &middot;
+      <span class="f">HF</span> fluorídrico &middot;
+      <span class="f">HBr</span> bromídrico &middot;
+      <span class="f">HI</span> iodídrico &middot;
+      <span class="f">H<sub>2</sub>S</span> sulfídrico &middot;
+      <span class="f">HCN</span> cianídrico</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0"><span class="tag t-acido">OXIÁCIDOS</span> &mdash; com oxigênio</h4>
+      <p style="margin-bottom:0"><span class="f">H<sub>2</sub>SO<sub>4</sub></span> sulfúrico &middot;
+      <span class="f">HNO<sub>3</sub></span> nítrico &middot;
+      <span class="f">H<sub>3</sub>PO<sub>4</sub></span> fosfórico &middot;
+      <span class="f">H<sub>2</sub>CO<sub>3</sub></span> carbônico &middot;
+      <span class="f">HClO</span> hipocloroso</p>
+    </div>
+  </div>
+  <p><b>Por que separar?</b> Porque a <b>nomenclatura é diferente</b> para cada grupo. Primeira coisa a fazer
+  numa questão: olhar se tem oxigênio na fórmula.</p>
+
+  <h3>Classificação 2 &mdash; pelo número de H ionizáveis</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Classificação</th><th>Libera</th><th>Exemplo</th><th>Ionização</th></tr></thead>
+      <tbody>
+        <tr><td><b>Monoácido</b></td><td>1 H<sup>+</sup></td><td><span class="f">HCl</span></td>
+            <td><span class="f">HCl &rarr; H<sup>+</sup> + Cl<sup>&minus;</sup></span></td></tr>
+        <tr><td><b>Diácido</b></td><td>2 H<sup>+</sup></td><td><span class="f">H<sub>2</sub>SO<sub>4</sub></span></td>
+            <td><span class="f">H<sub>2</sub>SO<sub>4</sub> &rarr; 2 H<sup>+</sup> + SO<sub>4</sub><sup>2&minus;</sup></span></td></tr>
+        <tr><td><b>Triácido</b></td><td>3 H<sup>+</sup></td><td><span class="f">H<sub>3</sub>PO<sub>4</sub></span></td>
+            <td><span class="f">H<sub>3</sub>PO<sub>4</sub> &rarr; 3 H<sup>+</sup> + PO<sub>4</sub><sup>3&minus;</sup></span></td></tr>
+        <tr><td><b>Tetrácido</b></td><td>4 H<sup>+</sup></td><td><span class="f">H<sub>4</sub>P<sub>2</sub>O<sub>7</sub></span></td>
+            <td>pirofosfórico &mdash; raro, mas existe</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; &ldquo;H ionizável&rdquo; não é &ldquo;todo H da fórmula&rdquo;</div>
+    <p>O ácido fosforoso <span class="f">H<sub>3</sub>PO<sub>3</sub></span> tem 3 hidrogênios, mas só <b>2</b> saem:
+    é <b>diácido</b>. O ácido acético <span class="f">CH<sub>3</sub>COOH</span> tem 4 hidrogênios e é
+    <b>monoácido</b> &mdash; só o do grupo &ndash;COOH sai. Conte os que <em>ionizam</em>.</p>
+  </div>
+
+  <h3>Classificação 3 &mdash; pela força (grau de ionização &alpha;)</h3>
+  <p>Quando você joga o ácido na água, <b>nem tudo</b> se desfaz. Parte fica na forma de molécula inteira.
+  O <b>grau de ionização &alpha;</b> mede essa proporção:</p>
+  <div class="eq">
+    &alpha; = <span style="display:inline-block; text-align:center; vertical-align:middle">
+      n° de moléculas ionizadas<br>
+      <span style="border-top:1px solid #fff; display:block; padding-top:2px">n° de moléculas dissolvidas</span>
+    </span> &nbsp;&times; 100%
+    <small>É como se a reação não se completasse: parte do HCl fica HCl mesmo, sem virar H⁺ + Cl⁻.</small>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Força</th><th>Grau &alpha;</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--vermelho)">FORTE</b></td><td>50% a 100%</td>
+            <td><span class="f">HCl</span>, <span class="f">HBr</span>, <span class="f">HI</span>,
+                <span class="f">H<sub>2</sub>SO<sub>4</sub></span>, <span class="f">HNO<sub>3</sub></span>,
+                <span class="f">HClO<sub>4</sub></span></td></tr>
+        <tr><td><b style="color:var(--amarelo)">MODERADO</b></td><td>5% a 50%</td>
+            <td><span class="f">HF</span>, <span class="f">H<sub>3</sub>PO<sub>4</sub></span>,
+                <span class="f">HNO<sub>2</sub></span>, <span class="f">H<sub>2</sub>SO<sub>3</sub></span></td></tr>
+        <tr><td><b style="color:var(--verde)">FRACO</b></td><td>0% a 5%</td>
+            <td><span class="f">HCN</span>, <span class="f">H<sub>2</sub>CO<sub>3</sub></span>,
+                <span class="f">H<sub>2</sub>S</span>, <span class="f">HClO</span>,
+                <span class="f">H<sub>3</sub>BO<sub>3</sub></span>, <span class="f">CH<sub>3</sub>COOH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; Truque de prova: força de OXIÁCIDO em 3 segundos</div>
+    <p>Faça <b>n° de O &minus; n° de H</b>:</p>
+    <ul style="margin-bottom:0">
+      <li>resultado <b>&ge; 2</b> &rarr; <b>forte</b>. <span class="f">HClO<sub>4</sub></span> (4&minus;1 = 3),
+        <span class="f">H<sub>2</sub>SO<sub>4</sub></span> (4&minus;2 = 2), <span class="f">HNO<sub>3</sub></span> (3&minus;1 = 2)</li>
+      <li>resultado <b>= 1</b> &rarr; <b>moderado</b>. <span class="f">H<sub>3</sub>PO<sub>4</sub></span> (4&minus;3 = 1),
+        <span class="f">HNO<sub>2</sub></span> (2&minus;1 = 1)</li>
+      <li>resultado <b>= 0</b> &rarr; <b>fraco</b>. <span class="f">HClO</span> (1&minus;1 = 0),
+        <span class="f">H<sub>3</sub>BO<sub>3</sub></span> (3&minus;3 = 0)</li>
+      <li><b>Exceção famosa:</b> <span class="f">H<sub>2</sub>CO<sub>3</sub></span> daria 1 (moderado),
+        mas é <b>fraco</b> &mdash; ele se decompõe em <span class="f">CO<sub>2</sub></span> + <span class="f">H<sub>2</sub>O</span> e escapa.</li>
+    </ul>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Hidrácidos: a regra é uma frase</div>
+    <p><b>Fortes:</b> HCl, HBr, HI. &nbsp;<b>Moderado:</b> só o HF. &nbsp;<b>Fracos:</b> todos os outros.<br>
+    <em>&ldquo;Cloro, bromo e iodo são fortes; o flúor é moderado; o resto é fraco.&rdquo;</em></p>
+  </div>
+
+  <h3>Concentrado &ne; forte</h3>
+  <p>São coisas diferentes e a prova adora confundir:</p>
+  <div class="grid">
+    <div class="card"><h4 style="margin-top:0">Forte / fraco</h4>
+      <p style="margin-bottom:0">Fala do <b>&alpha;</b> &mdash; <em>quanto</em> daquele ácido ioniza.
+      É característica da <b>substância</b>. Não muda com a diluição.</p></div>
+    <div class="card"><h4 style="margin-top:0">Concentrado / diluído</h4>
+      <p style="margin-bottom:0">Fala de <b>quanta</b> substância existe por litro de solução.
+      É característica da <b>mistura</b>. Muda quando você põe água.</p></div>
+  </div>
+  <p>No simulador da aula: mantendo a <b>mesma concentração</b> e trocando ácido fraco por ácido forte,
+  o pH despencou. Mesmo número de moléculas &mdash; muito mais H<sup>+</sup> liberado.</p>
+
+  <h3>Nomenclatura dos HIDRÁCIDOS (sem oxigênio)</h3>
+  <div class="eq">
+    ácido + nome do elemento + <b>ÍDRICO</b>
+    <small>Sempre. Não tem exceção, não depende de NOX. É a nomenclatura mais fácil da aula.</small>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>Nome</th><th>Ânion formado</th><th>Onde você encontra</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">HCl</span></td><td>ácido clorídrico</td><td>cloreto <span class="f">Cl<sup>&minus;</sup></span></td><td>ácido muriático, suco gástrico</td></tr>
+        <tr><td><span class="f">HF</span></td><td>ácido fluorídrico</td><td>fluoreto <span class="f">F<sup>&minus;</sup></span></td><td>gravação em vidro</td></tr>
+        <tr><td><span class="f">HBr</span></td><td>ácido bromídrico</td><td>brometo <span class="f">Br<sup>&minus;</sup></span></td><td>síntese de fármacos</td></tr>
+        <tr><td><span class="f">HI</span></td><td>ácido iodídrico</td><td>iodeto <span class="f">I<sup>&minus;</sup></span></td><td>reagente de laboratório</td></tr>
+        <tr><td><span class="f">H<sub>2</sub>S</span></td><td>ácido sulf<b>í</b>drico</td><td>sulfeto <span class="f">S<sup>2&minus;</sup></span></td><td>cheiro de ovo podre, esgoto</td></tr>
+        <tr><td><span class="f">HCN</span></td><td>ácido cianídrico</td><td>cianeto <span class="f">CN<sup>&minus;</sup></span></td><td>altamente tóxico</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Sulf<em>í</em>drico, não &ldquo;sulforídrico&rdquo;</div>
+    <p>O prefixo do enxofre é <b>sulf</b> (do latim <em>sulphur</em>), não &ldquo;enxofr&ndash;&rdquo;.
+    <span class="f">H<sub>2</sub>S</span> = ácido <b>sulf</b>ídrico.</p>
+  </div>
+
+  <h3>Nomenclatura dos OXIÁCIDOS (com oxigênio) &mdash; aqui entra o NOX</h3>
+  <div class="eq">
+    ácido + [<b>HIPO</b> / &mdash; / <b>PER</b>] + nome do elemento central + [<b>OSO</b> / <b>ICO</b>]
+    <small>O prefixo e o sufixo saem do NOX do elemento central. Sem calcular o NOX, você não acerta o nome.</small>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>NOX do elemento central</th><th>Prefixo + sufixo</th><th>Exemplo com cloro</th></tr></thead>
+      <tbody>
+        <tr><td>+1 (o mais baixo)</td><td><b>HIPO</b> &hellip; <b>OSO</b></td>
+            <td><span class="f">HClO</span> &rarr; ácido <b>hipo</b>clor<b>oso</b></td></tr>
+        <tr><td>+3</td><td>&mdash; &hellip; <b>OSO</b></td>
+            <td><span class="f">HClO<sub>2</sub></span> &rarr; ácido clor<b>oso</b></td></tr>
+        <tr><td>+5 (o padrão)</td><td>&mdash; &hellip; <b>ICO</b></td>
+            <td><span class="f">HClO<sub>3</sub></span> &rarr; ácido clór<b>ico</b></td></tr>
+        <tr><td>+7 (o mais alto)</td><td><b>PER</b> &hellip; <b>ICO</b></td>
+            <td><span class="f">HClO<sub>4</sub></span> &rarr; ácido <b>per</b>clór<b>ico</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-aula">
+    <div class="tit">&#128161; O exemplo mais didático da aula</div>
+    <p>Olhe a família do cloro acima: as fórmulas são <b>quase idênticas</b> &mdash; muda só a quantidade de oxigênio.
+    Mas os nomes são completamente diferentes. Por quê? Porque <b>cada oxigênio a mais empurra o NOX do cloro
+    em +2</b> (+1, +3, +5, +7) e o NOX é quem manda no nome.</p>
+  </div>
+
+  <h4>Como achar o prefixo/sufixo de qualquer oxiácido</h4>
+  <ol>
+    <li>Calcule o <b>NOX do elemento central</b> (H = +1, O = &minus;2, soma = 0).</li>
+    <li>Compare com o padrão da família:
+      <b>3A</b> &rarr; ICO em +3; <b>4A</b> &rarr; ICO em +4;
+      <b>5A</b> &rarr; ICO em +5; <b>6A</b> &rarr; ICO em +6; <b>7A</b> &rarr; ICO em +5.</li>
+    <li><b>2 abaixo</b> do ICO &rarr; troque para OSO. <b>4 abaixo</b> &rarr; HIPO&hellip;OSO. <b>2 acima</b> &rarr; PER&hellip;ICO.</li>
+  </ol>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>NOX do central</th><th>Nome</th><th>Ânion</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">H<sub>2</sub>SO<sub>4</sub></span></td><td>S = <b>+6</b></td><td>ácido sulfúrico</td><td>sulfato <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span></td></tr>
+        <tr><td><span class="f">H<sub>2</sub>SO<sub>3</sub></span></td><td>S = <b>+4</b></td><td>ácido sulfuroso</td><td>sulfito <span class="f">SO<sub>3</sub><sup>2&minus;</sup></span></td></tr>
+        <tr><td><span class="f">HNO<sub>3</sub></span></td><td>N = <b>+5</b></td><td>ácido nítrico</td><td>nitrato <span class="f">NO<sub>3</sub><sup>&minus;</sup></span></td></tr>
+        <tr><td><span class="f">HNO<sub>2</sub></span></td><td>N = <b>+3</b></td><td>ácido nitroso</td><td>nitrito <span class="f">NO<sub>2</sub><sup>&minus;</sup></span></td></tr>
+        <tr><td><span class="f">H<sub>3</sub>PO<sub>4</sub></span></td><td>P = <b>+5</b></td><td>ácido fosfórico</td><td>fosfato <span class="f">PO<sub>4</sub><sup>3&minus;</sup></span></td></tr>
+        <tr><td><span class="f">H<sub>2</sub>CO<sub>3</sub></span></td><td>C = <b>+4</b></td><td>ácido carbônico</td><td>carbonato <span class="f">CO<sub>3</sub><sup>2&minus;</sup></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Onde os ácidos aparecem na vida real</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Ácido</th><th>Nome popular</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">HCl</span></td><td>ácido muriático</td><td>Limpeza pesada, decapagem de metais; é o ácido do nosso suco gástrico</td></tr>
+        <tr><td><span class="f">H<sub>2</sub>SO<sub>4</sub></span></td><td>&mdash;</td><td>Indústria de tintas, refino de açúcar, <b>fertilizantes</b>, bateria de automóvel. É o químico mais produzido do mundo</td></tr>
+        <tr><td><span class="f">CH<sub>3</sub>COOH</span></td><td>vinagre (4%)</td><td>Tempero, conservante, limpeza doméstica</td></tr>
+        <tr><td><span class="f">H<sub>2</sub>CO<sub>3</sub></span></td><td>gás do refrigerante</td><td>Bebidas gaseificadas &mdash; forma-se quando o <span class="f">CO<sub>2</sub></span> se dissolve na água</td></tr>
+        <tr><td><span class="f">HNO<sub>3</sub></span></td><td>&mdash;</td><td>Explosivos e fertilizantes nitrogenados</td></tr>
+        <tr><td><span class="f">H<sub>3</sub>PO<sub>4</sub></span></td><td>&mdash;</td><td>Acidulante de refrigerante de cola, fertilizantes</td></tr>
+        <tr><td><span class="f">HF</span></td><td>&mdash;</td><td>Ataca vidro &mdash; usado para gravar e fosquear vidro</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================================================== BASES =========== -->
+<section id="s4">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(96,165,250,.12); border-color:rgba(96,165,250,.32)">&#129380;</div>
+    <div>
+      <h2>4. Bases (hidróxidos)</h2>
+      <p>Terminam com <b>OH</b>. Em água, soltam <b>OH<sup>&minus;</sup></b>. pH &gt; 7. Sabor adstringente.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(96,165,250,.28)">
+    <h4 style="margin-top:0; color:var(--azul)">Definição de Arrhenius</h4>
+    <p style="margin-bottom:0">Base (ou hidróxido) é toda substância que, <b>em solução aquosa</b>, sofre
+    <b>dissociação iônica</b> liberando como único ânion a <b>hidroxila</b>
+    <span class="f">OH<sup>&minus;</sup></span>.</p>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Ionização ou dissociação?</div>
+    <p><b>Ácido ioniza</b> (a molécula covalente se <em>quebra</em> e cria íons que não existiam).<br>
+    <b>Base dissocia</b> (os íons já existiam no retículo cristalino; a água só os <em>separa</em>).<br>
+    Termo trocado é ponto perdido em prova objetiva.</p>
+  </div>
+
+  <div class="eq">
+    NaOH&nbsp;&nbsp;<span style="color:var(--azul)">+ H<sub>2</sub>O</span>&nbsp;&nbsp;&rarr;&nbsp;&nbsp;Na<sup>+</sup> + OH<sup>&minus;</sup><br>
+    Ca(OH)<sub>2</sub>&nbsp;&nbsp;<span style="color:var(--azul)">+ H<sub>2</sub>O</span>&nbsp;&nbsp;&rarr;&nbsp;&nbsp;Ca<sup>2+</sup> + 2 OH<sup>&minus;</sup>
+    <small>Fórmula geral: B(OH)y — um cátion metálico ligado a uma ou mais hidroxilas.</small>
+  </div>
+
+  <h3>Classificação 1 &mdash; pelo número de hidroxilas</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Classificação</th><th>Libera</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td><b>Monobase</b></td><td>1 OH<sup>&minus;</sup></td>
+            <td><span class="f">NaOH</span>, <span class="f">KOH</span>, <span class="f">NH<sub>4</sub>OH</span></td></tr>
+        <tr><td><b>Dibase</b></td><td>2 OH<sup>&minus;</sup></td>
+            <td><span class="f">Ca(OH)<sub>2</sub></span>, <span class="f">Mg(OH)<sub>2</sub></span>, <span class="f">Ba(OH)<sub>2</sub></span></td></tr>
+        <tr><td><b>Tribase</b></td><td>3 OH<sup>&minus;</sup></td>
+            <td><span class="f">Al(OH)<sub>3</sub></span>, <span class="f">Fe(OH)<sub>3</sub></span></td></tr>
+        <tr><td><b>Tetrabase</b></td><td>4 OH<sup>&minus;</sup></td>
+            <td><span class="f">Pb(OH)<sub>4</sub></span>, <span class="f">Sn(OH)<sub>4</sub></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Classificação 2 &mdash; pela força</h3>
+  <p>Nas bases não se usa &ldquo;moderada&rdquo;: <b>ou é forte, ou é fraca</b>. Como a professora resumiu,
+  <em>é 8 ou 80</em>.</p>
+  <div class="grid">
+    <div class="card" style="border-color:rgba(229,72,77,.28)">
+      <h4 style="margin-top:0; color:var(--vermelho)">FORTES &mdash; &alpha; perto de 100%</h4>
+      <p style="margin-bottom:0">Hidróxidos das famílias <b>1A e 2A</b>:
+      <span class="f">NaOH</span>, <span class="f">KOH</span>, <span class="f">LiOH</span>,
+      <span class="f">Ca(OH)<sub>2</sub></span>, <span class="f">Ba(OH)<sub>2</sub></span>,
+      <span class="f">Sr(OH)<sub>2</sub></span>.<br>
+      <b>Exceções:</b> <span class="f">Be(OH)<sub>2</sub></span> e <span class="f">Mg(OH)<sub>2</sub></span> são fracas.</p>
+    </div>
+    <div class="card" style="border-color:rgba(62,207,142,.28)">
+      <h4 style="margin-top:0; color:var(--verde)">FRACAS &mdash; &alpha; menor que 5%</h4>
+      <p style="margin-bottom:0">Todas as outras: <span class="f">NH<sub>4</sub>OH</span>,
+      <span class="f">Al(OH)<sub>3</sub></span>, <span class="f">Fe(OH)<sub>2</sub></span>,
+      <span class="f">Fe(OH)<sub>3</sub></span>, <span class="f">Cu(OH)<sub>2</sub></span>,
+      <span class="f">Zn(OH)<sub>2</sub></span>, <span class="f">Pb(OH)<sub>2</sub></span>.</p>
+    </div>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Regra de bolso</div>
+    <p><b>Metal de 1A ou 2A &rarr; base forte</b> (fora Be e Mg). <b>Qualquer outro metal &rarr; base fraca.</b>
+    E o <span class="f">NH<sub>4</sub>OH</span> é o esquisito: <b>fraco mas solúvel</b>.</p>
+  </div>
+
+  <h3>Classificação 3 &mdash; pela solubilidade</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Solubilidade</th><th>Quem</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td><b>Solúveis</b></td><td>Família <b>1A</b> + <span class="f">NH<sub>4</sub>OH</span></td>
+            <td>Somem na água sem deixar resíduo</td></tr>
+        <tr><td><b>Pouco solúveis</b></td><td>Família <b>2A</b></td>
+            <td>Fazem aquela &ldquo;água leitosa&rdquo; &mdash; é o caso da água de cal e do leite de magnésia</td></tr>
+        <tr><td><b>Praticamente insolúveis</b></td><td>Todas as demais</td>
+            <td>Precipitam no fundo do tubo de ensaio</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Força e solubilidade são coisas SEPARADAS</div>
+    <p><span class="f">Ca(OH)<sub>2</sub></span> é <b>base forte</b> (dissocia quase tudo) e ao mesmo tempo
+    <b>pouco solúvel</b> (pouco dela consegue entrar em solução). Não é contradição:
+    <em>força</em> é sobre o que dissocia; <em>solubilidade</em> é sobre o quanto dissolve.</p>
+  </div>
+
+  <h3>Nomenclatura das bases &mdash; a mais simples da aula</h3>
+  <div class="eq">
+    <b>NOX fixo:</b> hidróxido <b>de</b> + nome do cátion<br>
+    <b>NOX variável:</b> hidróxido <b>de</b> + nome do cátion + <b>carga em algarismo romano</b>
+    <small>Alternativa antiga para NOX variável: sufixo -OSO (menor NOX) e -ICO (maior NOX).</small>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>NOX do metal</th><th>Nome oficial</th><th>Nome antigo / popular</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">NaOH</span></td><td>fixo +1</td><td>hidróxido de sódio</td><td>soda cáustica</td></tr>
+        <tr><td><span class="f">KOH</span></td><td>fixo +1</td><td>hidróxido de potássio</td><td>potassa cáustica</td></tr>
+        <tr><td><span class="f">Ca(OH)<sub>2</sub></span></td><td>fixo +2</td><td>hidróxido de cálcio</td><td>cal hidratada / água de cal</td></tr>
+        <tr><td><span class="f">Mg(OH)<sub>2</sub></span></td><td>fixo +2</td><td>hidróxido de magnésio</td><td>leite de magnésia</td></tr>
+        <tr><td><span class="f">Al(OH)<sub>3</sub></span></td><td>fixo +3</td><td>hidróxido de alumínio</td><td>&mdash;</td></tr>
+        <tr><td><span class="f">Fe(OH)<sub>2</sub></span></td><td><b>variável +2</b></td><td>hidróxido de ferro <b>II</b></td><td>hidróxido ferr<b>oso</b></td></tr>
+        <tr><td><span class="f">Fe(OH)<sub>3</sub></span></td><td><b>variável +3</b></td><td>hidróxido de ferro <b>III</b></td><td>hidróxido férr<b>ico</b></td></tr>
+        <tr><td><span class="f">NH<sub>4</sub>OH</span></td><td>&mdash;</td><td>hidróxido de amônio</td><td>amoníaco / amônia em água</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Como o NOX aparece na fórmula da base</div>
+    <p>Olhe o número de OH: ele <b>é</b> o NOX do metal.
+    <span class="f">Fe(OH)<sub>2</sub></span> &rarr; 2 hidroxilas &rarr; ferro <b>+2</b> &rarr; ferro II.
+    <span class="f">Al(OH)<sub>3</sub></span> &rarr; 3 hidroxilas &rarr; alumínio <b>+3</b>.
+    Não precisa fazer conta nenhuma.</p>
+  </div>
+
+  <h3>Onde as bases aparecem na vida real</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Base</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">NaOH</span></td><td>Fabricação de <b>sabão</b> (saponificação), indústria de corantes, papel, desentupidor de ralo</td></tr>
+        <tr><td><span class="f">Mg(OH)<sub>2</sub></span></td><td>Leite de magnésia: <b>antiácido e laxante</b></td></tr>
+        <tr><td><span class="f">Al(OH)<sub>3</sub></span></td><td><b>Antiácido</b> estomacal (muitas vezes junto com o de magnésio), antitranspirante</td></tr>
+        <tr><td><span class="f">Ca(OH)<sub>2</sub></span></td><td><b>Argamassa</b> e caiação, correção de acidez do solo, tratamento de água</td></tr>
+        <tr><td><span class="f">NH<sub>4</sub>OH</span></td><td>Fertilizantes, produtos de limpeza; a amônia também é <b>gás de refrigeração</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- ========================================= NEUTRALIZAÇÃO E SAIS ======= -->
+<section id="s5">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(52,211,153,.12); border-color:rgba(52,211,153,.32)">&#129474;</div>
+    <div>
+      <h2>5. Neutralização e Sais</h2>
+      <p>A pergunta do chat: &ldquo;e quando junta base com ácido?&rdquo; &rarr; sai <b>sal + água</b>.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(52,211,153,.28)">
+    <h4 style="margin-top:0; color:var(--esmeralda)">A reação de neutralização</h4>
+    <div class="eq" style="border-left-color:var(--esmeralda); margin-bottom:0">
+      ÁCIDO + BASE &nbsp;&rarr;&nbsp; <b>SAL + ÁGUA</b>
+      <small>Vale sempre, forte ou fraco. O H⁺ do ácido casa com o OH⁻ da base e forma H₂O. O que sobra (o cátion da base + o ânion do ácido) forma o sal.</small>
+    </div>
+  </div>
+
+  <h3>Como montar o sal em 3 passos</h3>
+  <ol>
+    <li>Separe os <b>quatro</b> íons: do ácido saem <span class="f">H<sup>+</sup></span> e o ânion; da base saem o cátion e <span class="f">OH<sup>&minus;</sup></span>.</li>
+    <li>Junte <span class="f">H<sup>+</sup> + OH<sup>&minus;</sup></span> &rarr; <span class="f">H<sub>2</sub>O</span>.</li>
+    <li><b>O que sobrou</b> (cátion da base + ânion do ácido) é o <b>sal</b>. Acerte as cargas e balanceie.</li>
+  </ol>
+
+  <h4>Exemplo 1 &mdash; o mais simples</h4>
+  <div class="eq">
+    HCl + NaOH &nbsp;&rarr;&nbsp; <b>NaCl</b> + H<sub>2</sub>O
+    <small>Ácido forte + base forte. Sobrou Na⁺ e Cl⁻ → cloreto de sódio, o sal de cozinha. Proporção 1:1.</small>
+  </div>
+
+  <h4>Exemplo 2 &mdash; triácido com monobase (o do slide)</h4>
+  <div class="eq">
+    H<sub>3</sub>PO<sub>4</sub> + <b>3</b> NaOH &nbsp;&rarr;&nbsp; Na<sub>3</sub>PO<sub>4</sub> + <b>3</b> H<sub>2</sub>O
+    <small>O ácido fosfórico solta 3 H⁺, então precisa de 3 OH⁻ — ou seja, 3 moléculas de NaOH. Sai fosfato de sódio.</small>
+  </div>
+
+  <h4>Exemplo 3 &mdash; diácido com dibase</h4>
+  <div class="eq">
+    H<sub>2</sub>SO<sub>4</sub> + Ca(OH)<sub>2</sub> &nbsp;&rarr;&nbsp; CaSO<sub>4</sub> + <b>2</b> H<sub>2</sub>O
+    <small>2 H⁺ encontram 2 OH⁻: bate 1:1 e forma duas águas. Sai sulfato de cálcio — o gesso.</small>
+  </div>
+
+  <h4>Exemplo 4 &mdash; o mais difícil de balancear</h4>
+  <div class="eq">
+    <b>2</b> H<sub>3</sub>PO<sub>4</sub> + <b>3</b> Ca(OH)<sub>2</sub> &nbsp;&rarr;&nbsp; Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + <b>6</b> H<sub>2</sub>O
+    <small>3 H⁺ de um lado, 2 OH⁻ do outro: o mínimo comum é 6. Sai fosfato de cálcio, o mineral do osso.</small>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Atalho da &ldquo;troca de índices&rdquo;</div>
+    <p>Para montar a fórmula do sal, o número de H<sup>+</sup> do ácido vira índice do cátion e o número de OH<sup>&minus;</sup>
+    da base vira índice do ânion:<br>
+    <span class="f">Ca<sup>2+</sup></span> + <span class="f">PO<sub>4</sub><sup>3&minus;</sup></span>
+    &rarr; troca as cargas &rarr; <span class="f">Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub></span>.</p>
+  </div>
+
+  <h3>O que é um sal, afinal</h3>
+  <div class="card">
+    <p style="margin-bottom:0"><b>Definição.</b> Sal é o composto <b>iônico</b> que, em água, libera pelo menos um
+    <b>cátion diferente de H<sup>+</sup></b> e pelo menos um <b>ânion diferente de OH<sup>&minus;</sup></b>.
+    Por isso, na fórmula típica, <b>não</b> aparece H no começo nem OH no fim: só um cátion casado com um ânion.</p>
+  </div>
+
+  <h3>Nomenclatura dos sais</h3>
+  <div class="eq">
+    nome do <b>ÂNION</b> + &ldquo;de&rdquo; + nome do <b>CÁTION</b>
+    <small>Escreve-se o cátion primeiro na fórmula, mas fala-se o ânion primeiro no nome. Isso confunde meio mundo.</small>
+  </div>
+  <p>E o nome do ânion sai do sufixo do ácido de origem &mdash; esta é <b>a</b> tabela para decorar:</p>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Sufixo do ácido</th><th>vira</th><th>Sufixo do ânion</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td>ácido &hellip;&nbsp;<b>ÍDRICO</b></td><td>&rarr;</td><td><b>ETO</b></td>
+            <td>clor<b>ídrico</b> &rarr; clor<b>eto</b> (<span class="f">Cl<sup>&minus;</sup></span>)</td></tr>
+        <tr><td>ácido &hellip;&nbsp;<b>OSO</b></td><td>&rarr;</td><td><b>ITO</b></td>
+            <td>nitr<b>oso</b> &rarr; nitr<b>ito</b> (<span class="f">NO<sub>2</sub><sup>&minus;</sup></span>)</td></tr>
+        <tr><td>ácido &hellip;&nbsp;<b>ICO</b></td><td>&rarr;</td><td><b>ATO</b></td>
+            <td>nítr<b>ico</b> &rarr; nitr<b>ato</b> (<span class="f">NO<sub>3</sub><sup>&minus;</sup></span>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; A frase que salva</div>
+    <p><b>&ldquo;ÍDRICO virou ETO &middot; OSO virou ITO &middot; ICO virou ATO&rdquo;</b><br>
+    Os prefixos <b>HIPO</b> e <b>PER</b> continuam iguais:
+    ácido <b>hipo</b>cloroso &rarr; <b>hipo</b>clorito; ácido <b>per</b>clórico &rarr; <b>per</b>clorato.</p>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>Nome</th><th>Ácido de origem</th><th>Base de origem</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">NaCl</span></td><td>cloreto de sódio</td><td><span class="f">HCl</span></td><td><span class="f">NaOH</span></td></tr>
+        <tr><td><span class="f">Na<sub>2</sub>SO<sub>4</sub></span></td><td>sulfato de sódio</td><td><span class="f">H<sub>2</sub>SO<sub>4</sub></span></td><td><span class="f">NaOH</span></td></tr>
+        <tr><td><span class="f">FeCl<sub>3</sub></span></td><td>cloreto de ferro <b>III</b></td><td><span class="f">HCl</span></td><td><span class="f">Fe(OH)<sub>3</sub></span></td></tr>
+        <tr><td><span class="f">KNO<sub>3</sub></span></td><td>nitrato de potássio</td><td><span class="f">HNO<sub>3</sub></span></td><td><span class="f">KOH</span></td></tr>
+        <tr><td><span class="f">NaClO</span></td><td>hipoclorito de sódio</td><td><span class="f">HClO</span></td><td><span class="f">NaOH</span></td></tr>
+        <tr><td><span class="f">CaCO<sub>3</sub></span></td><td>carbonato de cálcio</td><td><span class="f">H<sub>2</sub>CO<sub>3</sub></span></td><td><span class="f">Ca(OH)<sub>2</sub></span></td></tr>
+        <tr><td><span class="f">NaF</span></td><td>fluoreto de sódio</td><td><span class="f">HF</span></td><td><span class="f">NaOH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Classificação dos sais</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Tipo</th><th>Como é</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b>Normal / neutro</b></td><td>Neutralização <b>total</b>: nem H ionizável nem OH sobraram</td>
+            <td><span class="f">NaCl</span>, <span class="f">CaSO<sub>4</sub></span></td></tr>
+        <tr><td><b>Ácido</b> (hidrogenossal)</td><td>Sobrou <b>H ionizável</b> na fórmula</td>
+            <td><span class="f">NaHCO<sub>3</sub></span> hidrogenocarbonato (bicarbonato) de sódio</td></tr>
+        <tr><td><b>Básico</b> (hidroxissal)</td><td>Sobrou <b>OH</b> na fórmula</td>
+            <td><span class="f">Ca(OH)Cl</span> hidroxicloreto de cálcio</td></tr>
+        <tr><td><b>Duplo / misto</b></td><td>Dois cátions diferentes (ou dois ânions)</td>
+            <td><span class="f">NaKSO<sub>4</sub></span> sulfato de sódio e potássio</td></tr>
+        <tr><td><b>Hidratado</b></td><td>Água presa na estrutura cristalina</td>
+            <td><span class="f">CuSO<sub>4</sub>&middot;5H<sub>2</sub>O</span> sulfato de cobre pentaidratado</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; A pegadinha favorita das provas</div>
+    <p>O bicarbonato de sódio <span class="f">NaHCO<sub>3</sub></span> é classificado como <b>SAL ÁCIDO</b>
+    (porque tem H ionizável na fórmula), mas a <b>solução dele é BÁSICA</b> (pH 8,3) &mdash;
+    e é justamente por isso que ele corta a azia. <b>Classificação do sal</b> e
+    <b>pH da solução do sal</b> são duas perguntas diferentes.</p>
+  </div>
+
+  <h3>O pH da solução de um sal (hidrólise salina)</h3>
+  <p>Quem manda é <b>a origem</b> do sal &mdash; qual ácido e qual base o formaram:</p>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Ácido de origem</th><th>Base de origem</th><th>Solução fica</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td>forte</td><td>forte</td><td><b style="color:var(--verde)">neutra</b> (pH 7)</td><td><span class="f">NaCl</span></td></tr>
+        <tr><td><b>forte</b></td><td>fraca</td><td><b style="color:var(--vermelho)">ácida</b></td><td><span class="f">NH<sub>4</sub>Cl</span></td></tr>
+        <tr><td>fraca</td><td><b>forte</b></td><td><b style="color:var(--azul)">básica</b></td><td><span class="f">NaHCO<sub>3</sub></span>, <span class="f">CH<sub>3</sub>COONa</span></td></tr>
+        <tr><td>fraco</td><td>fraca</td><td>depende de quem é mais forte</td><td><span class="f">NH<sub>4</sub>CN</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; A regra em uma frase</div>
+    <p><b>Quem é forte, manda.</b> Ácido forte + base fraca &rarr; solução ácida.
+    Base forte + ácido fraco &rarr; solução básica. Os dois fortes &rarr; empate, neutra.</p>
+  </div>
+
+  <h3>Onde os sais aparecem na vida real</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Sal</th><th>Nome popular</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">NaCl</span></td><td>sal de cozinha</td><td>Tempero, conservação, soro fisiológico</td></tr>
+        <tr><td><span class="f">KNO<sub>3</sub></span></td><td><b>salitre</b></td><td><b>Conservante de embutidos</b>, pólvora, fertilizante</td></tr>
+        <tr><td><span class="f">NaClO</span></td><td>água sanitária</td><td>Branqueamento de têxteis e papel, desinfecção</td></tr>
+        <tr><td><span class="f">NaF</span></td><td>&mdash;</td><td><b>Enxaguante bucal e creme dental</b> &mdash; inibe a perda de minerais do dente</td></tr>
+        <tr><td><span class="f">NaHCO<sub>3</sub></span></td><td>bicarbonato</td><td>Antiácido, fermento químico, extintor de pó</td></tr>
+        <tr><td><span class="f">CaCO<sub>3</sub></span></td><td>calcário / mármore</td><td>Cimento, vidro, carga de detergente, correção de solo</td></tr>
+        <tr><td><span class="f">CaSO<sub>4</sub></span></td><td>gesso</td><td><b>Giz escolar</b>, gesso ortopédico, drywall</td></tr>
+        <tr><td><span class="f">Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub></span></td><td>fosfato de cálcio</td><td>Fertilizante; é o mineral dos ossos e dentes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-aula">
+    <div class="tit">&#128161; Dica prática da aula</div>
+    <p>Olhe o rótulo de qualquer embutido. Aquele último item da lista, chamado de
+    <b>conservante</b> ou <b>regulador de acidez</b>, quase sempre é um <b>sal</b>.
+    A química da aula está no supermercado.</p>
+  </div>
+</section>
+
+<!-- =================================================== ÓXIDOS =========== -->
+<section id="s6">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#128293;</div>
+    <div>
+      <h2>6. Óxidos</h2>
+      <p>Dois elementos, e o <b>oxigênio</b> é o mais eletronegativo. Terminam em <b>O</b>.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(167,139,250,.28)">
+    <h4 style="margin-top:0; color:var(--violeta)">Definição</h4>
+    <p style="margin-bottom:0">Óxido é todo composto <b>binário</b> (só dois elementos) em que o
+    <b>oxigênio é o elemento mais eletronegativo</b>. Fórmula geral:
+    <span class="f">E<sub>x</sub>O<sub>y</sub></span> &mdash; a fórmula <b>termina em O</b>.</p>
+  </div>
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Por que a definição diz &ldquo;mais eletronegativo&rdquo;?</div>
+    <p>Porque existe <b>um</b> elemento mais eletronegativo que o oxigênio: o <b>flúor</b>.
+    Então <span class="f">OF<sub>2</sub></span> <b>não é óxido</b> &mdash; é fluoreto de oxigênio.
+    É a única exceção, e por isso mesmo é questão de prova.</p>
+  </div>
+
+  <h3>Nomenclatura &mdash; dois caminhos</h3>
+
+  <h4>Caminho A &mdash; óxidos MOLECULARES (oxigênio + ametal): use prefixos</h4>
+  <div class="eq">
+    (prefixo)<b>ÓXIDO de</b> + (prefixo)nome do elemento
+    <small>mono = 1 · di = 2 · tri = 3 · tetra = 4 · penta = 5 · hexa = 6 · hepta = 7</small>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>Nome</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">CO</span></td><td><b>mon</b>óxido de carbono</td><td>Gás tóxico da combustão incompleta</td></tr>
+        <tr><td><span class="f">CO<sub>2</sub></span></td><td><b>di</b>óxido de carbono</td><td>Gás carbônico, do refrigerante e da respiração</td></tr>
+        <tr><td><span class="f">SO<sub>2</sub></span></td><td><b>di</b>óxido de enxofre</td><td>Poluente, causa de chuva ácida</td></tr>
+        <tr><td><span class="f">SO<sub>3</sub></span></td><td><b>tri</b>óxido de enxofre</td><td>Forma ácido sulfúrico com água</td></tr>
+        <tr><td><span class="f">N<sub>2</sub>O<sub>5</sub></span></td><td><b>pent</b>óxido de <b>di</b>nitrogênio</td><td>Note o &ldquo;di&rdquo; no nitrogênio também</td></tr>
+        <tr><td><span class="f">N<sub>2</sub>O</span></td><td><b>mon</b>óxido de <b>di</b>nitrogênio</td><td>Gás hilariante, anestésico</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Caminho B &mdash; óxidos IÔNICOS (oxigênio + metal): use o NOX</h4>
+  <div class="eq">
+    <b>NOX fixo:</b> óxido <b>de</b> + nome do metal<br>
+    <b>NOX variável:</b> óxido <b>de</b> + nome do metal + <b>algarismo romano</b>
+  </div>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Fórmula</th><th>NOX do metal</th><th>Nome</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">Na<sub>2</sub>O</span></td><td>fixo +1</td><td>óxido de sódio</td></tr>
+        <tr><td><span class="f">CaO</span></td><td>fixo +2</td><td>óxido de cálcio (cal virgem)</td></tr>
+        <tr><td><span class="f">Al<sub>2</sub>O<sub>3</sub></span></td><td>fixo +3</td><td>óxido de alumínio (alumina)</td></tr>
+        <tr><td><span class="f">FeO</span></td><td><b>variável +2</b></td><td>óxido de ferro <b>II</b> (ferroso)</td></tr>
+        <tr><td><span class="f">Fe<sub>2</sub>O<sub>3</sub></span></td><td><b>variável +3</b></td><td>óxido de ferro <b>III</b> (férrico) &mdash; a ferrugem</td></tr>
+        <tr><td><span class="f">Cu<sub>2</sub>O</span></td><td><b>variável +1</b></td><td>óxido de cobre <b>I</b> (cuproso)</td></tr>
+        <tr><td><span class="f">CuO</span></td><td><b>variável +2</b></td><td>óxido de cobre <b>II</b> (cúprico)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Como achar o NOX rapidinho num óxido</div>
+    <p>Em <span class="f">Fe<sub>2</sub>O<sub>3</sub></span>: 3 oxigênios &times; (&minus;2) = &minus;6.
+    Dividido por 2 ferros = <b>+3</b> cada. &rarr; óxido de ferro III. Feito.</p>
+  </div>
+
+  <h3>Classificação dos óxidos &mdash; e como cada um reage</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Tipo</th><th>Quem forma</th><th>Exemplos</th><th>Reage com</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--azul)">BÁSICO</b></td><td>Metais de <b>1A e 2A</b> (NOX +1 e +2)</td>
+            <td><span class="f">Na<sub>2</sub>O</span>, <span class="f">CaO</span>, <span class="f">MgO</span></td>
+            <td>+ água &rarr; <b>base</b><br>+ ácido &rarr; sal + água</td></tr>
+        <tr><td><b style="color:var(--rosa)">ÁCIDO</b> (anidrido)</td><td>Ametais das famílias <b>5A, 6A e 7A</b></td>
+            <td><span class="f">CO<sub>2</sub></span>, <span class="f">SO<sub>2</sub></span>,
+                <span class="f">SO<sub>3</sub></span>, <span class="f">N<sub>2</sub>O<sub>5</sub></span></td>
+            <td>+ água &rarr; <b>ácido</b><br>+ base &rarr; sal + água</td></tr>
+        <tr><td><b style="color:var(--mut)">NEUTRO</b> (indiferente)</td><td>Ametais, NOX baixo</td>
+            <td><span class="f">CO</span>, <span class="f">NO</span>, <span class="f">N<sub>2</sub>O</span></td>
+            <td><b>Nada</b> &mdash; nem água, nem ácido, nem base</td></tr>
+        <tr><td><b style="color:var(--amarelo)">ANFÓTERO</b></td><td>Metais de transição / semimetais</td>
+            <td><span class="f">Al<sub>2</sub>O<sub>3</sub></span>, <span class="f">ZnO</span>,
+                <span class="f">PbO</span>, <span class="f">SnO</span></td>
+            <td>Ácido <b>ou</b> base, dependendo de quem chega</td></tr>
+        <tr><td><b style="color:var(--violeta)">PERÓXIDO</b></td><td>Oxigênio com NOX <b>&minus;1</b></td>
+            <td><span class="f">H<sub>2</sub>O<sub>2</sub></span>, <span class="f">Na<sub>2</sub>O<sub>2</sub></span></td>
+            <td>Se decompõem liberando O<sub>2</sub></td></tr>
+        <tr><td><b style="color:var(--esmeralda)">DUPLO / MISTO</b></td><td>Dois óxidos no mesmo composto</td>
+            <td><span class="f">Fe<sub>3</sub>O<sub>4</sub></span> (magnetita)</td>
+            <td>Comporta-se como a soma dos dois</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Decorar por lógica, não por lista</div>
+    <p><b>Metal &rarr; óxido básico. Ametal &rarr; óxido ácido.</b>
+    Faz sentido: metal forma base (<span class="f">NaOH</span>), ametal forma ácido (<span class="f">H<sub>2</sub>SO<sub>4</sub></span>).
+    O óxido só carrega o mesmo caráter de quem o formou.</p>
+  </div>
+
+  <h3>As quatro reações que você precisa saber escrever</h3>
+  <div class="eq">
+    <b>1.</b> óxido básico + água &rarr; base<br>
+    CaO + H<sub>2</sub>O &rarr; Ca(OH)<sub>2</sub>
+    <small>Cal virgem + água = cal hidratada. É a reação da caiação e da correção de acidez do solo (calagem).</small>
+  </div>
+  <div class="eq">
+    <b>2.</b> óxido ácido + água &rarr; ácido<br>
+    CO<sub>2</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>CO<sub>3</sub><br>
+    SO<sub>3</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>4</sub>
+    <small>É por isso que refrigerante é ácido — e por isso que a chuva é naturalmente ácida (pH 5,6).</small>
+  </div>
+  <div class="eq">
+    <b>3.</b> óxido básico + ácido &rarr; sal + água<br>
+    CaO + 2 HCl &rarr; CaCl<sub>2</sub> + H<sub>2</sub>O
+  </div>
+  <div class="eq">
+    <b>4.</b> óxido ácido + base &rarr; sal + água<br>
+    CO<sub>2</sub> + 2 NaOH &rarr; Na<sub>2</sub>CO<sub>3</sub> + H<sub>2</sub>O
+  </div>
+
+  <div class="box b-prova">
+    <div class="tit">&#127788; Chuva ácida &mdash; tema clássico de ENADE e prova discursiva</div>
+    <p>A queima de combustíveis fósseis solta <span class="f">SO<sub>2</sub></span> e óxidos de nitrogênio.
+    Na atmosfera úmida:</p>
+    <div class="eq" style="border-left-color:var(--violeta); margin-bottom:0">
+      SO<sub>2</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>3</sub>&nbsp;&nbsp;(ácido sulfuroso)<br>
+      SO<sub>3</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>4</sub>&nbsp;&nbsp;(ácido sulfúrico)<br>
+      2 NO<sub>2</sub> + H<sub>2</sub>O &rarr; HNO<sub>3</sub> + HNO<sub>2</sub>
+      <small>O pH da chuva cai de 5,6 para 4 ou menos. Corrói mármore (CaCO₃), acidifica lagos e mata plantação.
+      O combate no solo é com CaO ou CaCO₃ — óxido/sal básico neutralizando ácido.</small>
+    </div>
+  </div>
+
+  <h3>Onde os óxidos aparecem na vida real</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Óxido</th><th>Nome</th><th>Aplicação</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f">CaO</span></td><td>cal virgem</td><td><b>Correção do pH do solo</b> (calagem), cimento, siderurgia</td></tr>
+        <tr><td><span class="f">MnO<sub>2</sub></span></td><td>óxido de manganês IV</td><td><b>Fabricação de aço</b>, pilhas secas, vidro</td></tr>
+        <tr><td><span class="f">SnO<sub>2</sub></span></td><td>óxido de estanho IV</td><td><b>Latas</b> (folha de flandres), vidros condutores</td></tr>
+        <tr><td><span class="f">Fe<sub>2</sub>O<sub>3</sub></span></td><td>óxido de ferro III</td><td><b>Pigmentos</b> (o vermelho-terra), matéria-prima do ferro</td></tr>
+        <tr><td><span class="f">Al<sub>2</sub>O<sub>3</sub></span></td><td>alumina</td><td><b>Fabricação do alumínio</b> metálico, abrasivos, cerâmicas</td></tr>
+        <tr><td><span class="f">TiO<sub>2</sub></span></td><td>óxido de titânio IV</td><td>Pigmento branco de tinta, protetor solar</td></tr>
+        <tr><td><span class="f">CO<sub>2</sub></span></td><td>gás carbônico</td><td>Bebidas gaseificadas, extintores, gelo-seco</td></tr>
+        <tr><td><span class="f">CO</span></td><td>monóxido de carbono</td><td>Nenhuma útil &mdash; <b>gás tóxico</b>, se liga à hemoglobina</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================== TABELA DE ÍONS ======== -->
+<section id="s7">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.12); border-color:rgba(232,147,63,.32)">&#128203;</div>
+    <div>
+      <h2>7. Tabela de íons para consultar</h2>
+      <p>Decorados estes, você monta qualquer sal e nomeia qualquer ácido.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <h4>Cátions (positivos)</h4>
+      <div class="tab-rol">
+        <table style="min-width:0">
+          <thead><tr><th>Íon</th><th>Nome</th></tr></thead>
+          <tbody>
+            <tr><td><span class="f">H<sup>+</sup></span></td><td>hidrogênio / hidrônio</td></tr>
+            <tr><td><span class="f">Li<sup>+</sup></span> <span class="f">Na<sup>+</sup></span> <span class="f">K<sup>+</sup></span></td><td>lítio, sódio, potássio</td></tr>
+            <tr><td><span class="f">NH<sub>4</sub><sup>+</sup></span></td><td><b>amônio</b></td></tr>
+            <tr><td><span class="f">Ag<sup>+</sup></span></td><td>prata</td></tr>
+            <tr><td><span class="f">Mg<sup>2+</sup></span> <span class="f">Ca<sup>2+</sup></span> <span class="f">Ba<sup>2+</sup></span></td><td>magnésio, cálcio, bário</td></tr>
+            <tr><td><span class="f">Zn<sup>2+</sup></span></td><td>zinco</td></tr>
+            <tr><td><span class="f">Fe<sup>2+</sup></span> / <span class="f">Fe<sup>3+</sup></span></td><td>ferro II (ferroso) / ferro III (férrico)</td></tr>
+            <tr><td><span class="f">Cu<sup>+</sup></span> / <span class="f">Cu<sup>2+</sup></span></td><td>cobre I (cuproso) / cobre II (cúprico)</td></tr>
+            <tr><td><span class="f">Al<sup>3+</sup></span></td><td>alumínio</td></tr>
+            <tr><td><span class="f">Pb<sup>2+</sup></span> / <span class="f">Pb<sup>4+</sup></span></td><td>chumbo II / chumbo IV</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h4>Ânions (negativos)</h4>
+      <div class="tab-rol">
+        <table style="min-width:0">
+          <thead><tr><th>Íon</th><th>Nome</th></tr></thead>
+          <tbody>
+            <tr><td><span class="f">OH<sup>&minus;</sup></span></td><td><b>hidroxila</b></td></tr>
+            <tr><td><span class="f">F<sup>&minus;</sup></span> <span class="f">Cl<sup>&minus;</sup></span> <span class="f">Br<sup>&minus;</sup></span> <span class="f">I<sup>&minus;</sup></span></td><td>fluoreto, cloreto, brometo, iodeto</td></tr>
+            <tr><td><span class="f">S<sup>2&minus;</sup></span></td><td>sulfeto</td></tr>
+            <tr><td><span class="f">CN<sup>&minus;</sup></span></td><td>cianeto</td></tr>
+            <tr><td><span class="f">NO<sub>2</sub><sup>&minus;</sup></span> / <span class="f">NO<sub>3</sub><sup>&minus;</sup></span></td><td>nitrito / <b>nitrato</b></td></tr>
+            <tr><td><span class="f">SO<sub>3</sub><sup>2&minus;</sup></span> / <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span></td><td>sulfito / <b>sulfato</b></td></tr>
+            <tr><td><span class="f">CO<sub>3</sub><sup>2&minus;</sup></span></td><td><b>carbonato</b></td></tr>
+            <tr><td><span class="f">HCO<sub>3</sub><sup>&minus;</sup></span></td><td>hidrogenocarbonato (<b>bicarbonato</b>)</td></tr>
+            <tr><td><span class="f">PO<sub>4</sub><sup>3&minus;</sup></span></td><td><b>fosfato</b></td></tr>
+            <tr><td><span class="f">ClO<sup>&minus;</sup></span> <span class="f">ClO<sub>2</sub><sup>&minus;</sup></span> <span class="f">ClO<sub>3</sub><sup>&minus;</sup></span> <span class="f">ClO<sub>4</sub><sup>&minus;</sup></span></td>
+                <td>hipoclorito, clorito, clorato, perclorato</td></tr>
+            <tr><td><span class="f">MnO<sub>4</sub><sup>&minus;</sup></span></td><td>permanganato</td></tr>
+            <tr><td><span class="f">CH<sub>3</sub>COO<sup>&minus;</sup></span></td><td>acetato</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="s8">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.12); border-color:rgba(232,147,63,.32)">&#127183;</div>
+    <div>
+      <h2>8. Flashcards da aula 03</h2>
+      <p>68 cartões. Clique para virar. Embaralhe e repita até não errar mais nenhum.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  /* Os cartões da aula. [tema, pergunta, resposta] */
+  var CARTOES = [
+    ["pH","A escala de pH vai de quanto a quanto, e onde fica o neutro?","De <strong>0 a 14</strong>. Neutro = <strong>7</strong>. Abaixo de 7 é <strong>ácido</strong>; acima de 7 é <strong>básico (alcalino)</strong>."],
+    ["pH","&ldquo;Alcalino&rdquo; é a mesma coisa que o quê?","A mesma coisa que <strong>básico</strong>. Os dois termos são intercambiáveis."],
+    ["pH","Qual é o único líquido com pH exatamente 7?","<strong>Água pura</strong> a 25&nbsp;°C. Água de torneira tem sais e cloro, então não é 7 exatamente."],
+    ["pH","Suco gástrico: ácido ou básico? E qual pH?","<strong>Muito ácido</strong>, pH entre <strong>1 e 3</strong>. É o que causa a ardência do refluxo."],
+    ["pH","Por que bicarbonato de sódio corta a azia?","Porque ele é <strong>básico</strong> (pH 8,3) e <strong>neutraliza</strong> o suco gástrico, que é ácido."],
+    ["pH","Creme dental tem pH neutro?","<strong>Não.</strong> É <strong>alcalino</strong> (pH 8&ndash;9), de propósito &mdash; para neutralizar os ácidos da placa bacteriana."],
+    ["pH","Qual o pH do sangue humano, e ele é ácido ou básico?","<strong>7,35 a 7,45</strong> &mdash; tecnicamente <strong>levemente básico</strong>, mas praticamente neutro."],
+    ["pH","Se eu diluir um ácido com água, o pH sobe ou desce?","<strong>Sobe</strong>, caminhando para 7. Mas nunca passa de 7: ácido diluído continua ácido."],
+    ["pH","Qual a fórmula do pH e do pOH?","pH = &minus;log[H<sub>3</sub>O<sup>+</sup>] &nbsp;&middot;&nbsp; pOH = &minus;log[OH<sup>&minus;</sup>] &nbsp;&middot;&nbsp; <strong>pH + pOH = 14</strong>"],
+    ["pH","Se [H<sup>+</sup>] = 10<sup>&minus;3</sup> mol/L, qual o pH?","<strong>pH = 3</strong> &mdash; solução ácida. (O pH é só o expoente sem o sinal.)"],
+    ["pH","Quantas vezes o pH 2 é mais ácido que o pH 5?","<strong>1000 vezes</strong> (10³). A escala é logarítmica: cada degrau vale 10&times;."],
+    ["pH","H<sup>+</sup> e H<sub>3</sub>O<sup>+</sup>: qual a diferença?","Na prática, nenhuma. H<sup>+</sup> solto não existe em água: ele se liga a uma H<sub>2</sub>O e forma o <strong>hidrônio</strong> H<sub>3</sub>O<sup>+</sup>."],
+
+    ["NOX","O que o NOX indica?","O <strong>grau de oxidação</strong> de um átomo: quantos elétrons ele perdeu, ganhou ou compartilhou naquela ligação."],
+    ["NOX","Qual o NOX de uma molécula neutra?","<strong>Zero.</strong> A soma dos NOX de todos os átomos de uma molécula sem carga sempre dá 0."],
+    ["NOX","Qual o NOX de um íon?","Igual à <strong>sua própria carga</strong>. Na<sup>+</sup> &rarr; +1. Ca<sup>2+</sup> &rarr; +2. SO<sub>4</sub><sup>2&minus;</sup> &rarr; soma = &minus;2."],
+    ["NOX","Quais elementos têm NOX FIXO e quais são os valores?","<strong>1A = +1</strong> (e Ag) &middot; <strong>2A = +2</strong> (e Zn) &middot; <strong>Al = +3</strong> &middot; <strong>H = +1</strong> &middot; <strong>O = &minus;2</strong> &middot; <strong>F = &minus;1</strong>"],
+    ["NOX","Quando o oxigênio NÃO vale &minus;2?","Em <strong>peróxidos</strong> (vale &minus;1, como no H<sub>2</sub>O<sub>2</sub>) e no <strong>OF<sub>2</sub></strong> (vale +2, ao lado do flúor)."],
+    ["NOX","Quando o hidrogênio NÃO vale +1?","Em <strong>hidretos metálicos</strong>, onde vale <strong>&minus;1</strong>: NaH, CaH<sub>2</sub>."],
+    ["NOX","Qual elemento nunca muda de NOX?","O <strong>flúor</strong>: sempre &minus;1 (quando combinado). É o mais eletronegativo que existe."],
+    ["NOX","Calcule o NOX do S em SO<sub>4</sub><sup>2&minus;</sup>","x + 4(&minus;2) = &minus;2 &rarr; x &minus; 8 = &minus;2 &rarr; <strong>S = +6</strong>"],
+    ["NOX","Calcule o NOX do Mn em KMnO<sub>4</sub>","(+1) + x + 4(&minus;2) = 0 &rarr; <strong>Mn = +7</strong>"],
+    ["NOX","Calcule o NOX do Cr em Cr<sub>2</sub>O<sub>7</sub><sup>2&minus;</sup>","2x + 7(&minus;2) = &minus;2 &rarr; 2x = +12 &rarr; <strong>Cr = +6</strong> (são dois cromos: divide por 2)"],
+    ["NOX","Qual o NOX de átomos em substância simples (O<sub>2</sub>, Fe, Cl<sub>2</sub>)?","<strong>Zero.</strong> Não houve transferência de elétrons entre átomos diferentes."],
+    ["NOX","Para que serve saber o NOX nesta aula?","Para dar a <strong>nomenclatura</strong>. O NOX decide se é &ldquo;hipo&hellip;oso&rdquo;, &ldquo;oso&rdquo;, &ldquo;ico&rdquo; ou &ldquo;per&hellip;ico&rdquo;, e o número romano das bases, sais e óxidos."],
+
+    ["ÁCIDOS","Definição de ácido de Arrhenius","Substância que, <strong>em água</strong>, sofre <strong>ionização</strong> liberando como único cátion o <strong>H<sup>+</sup></strong>."],
+    ["ÁCIDOS","Como reconhecer um ácido pela fórmula?","<strong>Começa com H.</strong> Fórmula geral H<sub>x</sub>A. Ex.: HCl, HNO<sub>3</sub>, H<sub>2</sub>SO<sub>4</sub>."],
+    ["ÁCIDOS","A água começa com H. Ela é ácido?","<strong>Não</strong> &mdash; é <strong>anfótera</strong>. Libera H<sup>+</sup> e OH<sup>&minus;</sup> em quantidades iguais, então um cancela o outro e o pH fica 7."],
+    ["ÁCIDOS","Qual a diferença entre hidrácido e oxiácido?","<strong>Hidrácido</strong> não tem oxigênio (HCl, H<sub>2</sub>S). <strong>Oxiácido</strong> tem oxigênio (H<sub>2</sub>SO<sub>4</sub>, HNO<sub>3</sub>). A nomenclatura é diferente para cada um."],
+    ["ÁCIDOS","Como se nomeia um HIDRÁCIDO?","ácido + nome do elemento + <strong>ÍDRICO</strong>. HCl = ácido clor<strong>ídrico</strong>; H<sub>2</sub>S = ácido sulf<strong>ídrico</strong>."],
+    ["ÁCIDOS","O que é grau de ionização (&alpha;)?","&alpha; = (moléculas ionizadas &divide; moléculas dissolvidas) &times; 100%. Mede <strong>quanto</strong> do ácido realmente liberou H<sup>+</sup>."],
+    ["ÁCIDOS","Faixas de força dos ácidos pelo &alpha;","<strong>Forte:</strong> 50&ndash;100% &middot; <strong>Moderado:</strong> 5&ndash;50% &middot; <strong>Fraco:</strong> 0&ndash;5%"],
+    ["ÁCIDOS","Truque para saber a força de um OXIÁCIDO","<strong>n° de O &minus; n° de H</strong>: &ge;2 forte &middot; =1 moderado &middot; =0 fraco. Exceção: H<sub>2</sub>CO<sub>3</sub> é fraco."],
+    ["ÁCIDOS","Quais hidrácidos são fortes? E o moderado?","<strong>Fortes:</strong> HCl, HBr, HI. <strong>Moderado:</strong> só o HF. <strong>Fracos:</strong> todos os outros."],
+    ["ÁCIDOS","Nomes de HClO, HClO<sub>2</sub>, HClO<sub>3</sub>, HClO<sub>4</sub>","<strong>hipocloroso</strong> (Cl +1) &middot; <strong>cloroso</strong> (+3) &middot; <strong>clórico</strong> (+5) &middot; <strong>perclórico</strong> (+7)"],
+    ["ÁCIDOS","Concentrado é a mesma coisa que forte?","<strong>Não.</strong> Forte/fraco é o &alpha; da substância. Concentrado/diluído é quanta substância existe por litro. Um ácido fraco pode estar concentrado."],
+    ["ÁCIDOS","O vinagre é solução de qual ácido, e em qual concentração?","<strong>Ácido acético</strong> (CH<sub>3</sub>COOH), tipicamente a <strong>4%</strong> (há de 3% a 8%)."],
+    ["ÁCIDOS","Qual ácido é usado em tintas, refino de açúcar e fertilizantes?","<strong>Ácido sulfúrico</strong> H<sub>2</sub>SO<sub>4</sub> &mdash; o produto químico mais fabricado do mundo."],
+    ["ÁCIDOS","H<sub>3</sub>PO<sub>3</sub> tem 3 hidrogênios. É triácido?","<strong>Não</strong> &mdash; é <strong>diácido</strong>. Só 2 dos 3 hidrogênios são ionizáveis. Conte os que ionizam, não os da fórmula."],
+
+    ["BASES","Definição de base de Arrhenius","Substância que, em água, sofre <strong>dissociação</strong> liberando como único ânion a <strong>hidroxila OH<sup>&minus;</sup></strong>."],
+    ["BASES","Ácido ioniza ou dissocia? E base?","<strong>Ácido ioniza</strong> (cria íons que não existiam). <strong>Base dissocia</strong> (só separa íons que já existiam)."],
+    ["BASES","Como reconhecer uma base pela fórmula?","<strong>Termina com OH.</strong> Fórmula geral B(OH)<sub>y</sub>. Ex.: NaOH, Ca(OH)<sub>2</sub>, Al(OH)<sub>3</sub>."],
+    ["BASES","Quais bases são fortes?","Hidróxidos de <strong>1A e 2A</strong> &mdash; exceto <strong>Be(OH)<sub>2</sub> e Mg(OH)<sub>2</sub></strong>, que são fracas. Todas as outras bases são fracas."],
+    ["BASES","Por que nas bases não existe &ldquo;moderada&rdquo;?","Porque praticamente não há bases com &alpha; entre 5% e 50%. Ou é forte (&asymp;100%) ou fraca (&lt;5%) &mdash; &ldquo;é 8 ou 80&rdquo;."],
+    ["BASES","Ca(OH)<sub>2</sub> é base forte mas pouco solúvel. Contradição?","<strong>Não.</strong> Força = quanto do que dissolveu se dissocia. Solubilidade = quanto consegue dissolver. São propriedades independentes."],
+    ["BASES","Como nomear uma base com NOX variável?","hidróxido de + metal + <strong>algarismo romano</strong>. Fe(OH)<sub>2</sub> = hidróxido de ferro <strong>II</strong> (ou ferroso)."],
+    ["BASES","Como achar o NOX do metal numa base, sem conta?","É o <strong>número de OH</strong>. Al(OH)<sub>3</sub> &rarr; 3 hidroxilas &rarr; Al = +3."],
+    ["BASES","Qual base é o leite de magnésia, e para que serve?","<strong>Mg(OH)<sub>2</sub></strong> &mdash; hidróxido de magnésio. Usado como <strong>antiácido e laxante</strong>."],
+    ["BASES","Qual base é a soda cáustica e onde é usada?","<strong>NaOH</strong> &mdash; hidróxido de sódio. Fabricação de <strong>sabão</strong>, corantes, papel, desentupidor de ralo."],
+
+    ["SAIS","Ácido + base produz o quê?","<strong>SAL + ÁGUA</strong> &mdash; reação de <strong>neutralização</strong>. O H<sup>+</sup> casa com o OH<sup>&minus;</sup> e forma água; o resto forma o sal."],
+    ["SAIS","Balanceie: H<sub>3</sub>PO<sub>4</sub> + NaOH &rarr;","H<sub>3</sub>PO<sub>4</sub> + <strong>3</strong> NaOH &rarr; Na<sub>3</sub>PO<sub>4</sub> + <strong>3</strong> H<sub>2</sub>O"],
+    ["SAIS","Definição de sal","Composto <strong>iônico</strong> que em água libera um cátion <strong>diferente de H<sup>+</sup></strong> e um ânion <strong>diferente de OH<sup>&minus;</sup></strong>."],
+    ["SAIS","Como se nomeia um sal?","nome do <strong>ÂNION</strong> + de + nome do <strong>CÁTION</strong>. FeCl<sub>3</sub> = cloreto de ferro III."],
+    ["SAIS","Os três sufixos: ácido &rarr; ânion","<strong>ÍDRICO &rarr; ETO</strong> &middot; <strong>OSO &rarr; ITO</strong> &middot; <strong>ICO &rarr; ATO</strong>"],
+    ["SAIS","NaHCO<sub>3</sub> é sal ácido ou básico?","É classificado como <strong>sal ácido</strong> (tem H ionizável), mas a <strong>solução dele é básica</strong> (pH 8,3). Pegadinha clássica."],
+    ["SAIS","Sal de ácido forte + base fraca: solução fica como?","<strong>Ácida.</strong> Ex.: NH<sub>4</sub>Cl. Regra: <em>quem é forte, manda</em>."],
+    ["SAIS","O que é o salitre e para que serve?","<strong>KNO<sub>3</sub></strong> &mdash; nitrato de potássio. <strong>Conservante de embutidos</strong>, pólvora e fertilizante."],
+    ["SAIS","Qual sal faz o giz escolar?","<strong>CaSO<sub>4</sub></strong> &mdash; sulfato de cálcio (gesso)."],
+
+    ["ÓXIDOS","Definição de óxido","Composto <strong>binário</strong> em que o <strong>oxigênio é o mais eletronegativo</strong>. A fórmula termina em O."],
+    ["ÓXIDOS","OF<sub>2</sub> é óxido?","<strong>Não!</strong> O flúor é mais eletronegativo que o oxigênio. É <strong>fluoreto de oxigênio</strong>."],
+    ["ÓXIDOS","Como nomear óxido MOLECULAR (com ametal)?","Prefixos: CO = <strong>mon</strong>óxido de carbono &middot; N<sub>2</sub>O<sub>5</sub> = <strong>pent</strong>óxido de <strong>di</strong>nitrogênio."],
+    ["ÓXIDOS","Como nomear óxido IÔNICO de NOX variável?","óxido de + metal + romano. FeO = óxido de ferro <strong>II</strong>; Fe<sub>2</sub>O<sub>3</sub> = óxido de ferro <strong>III</strong>."],
+    ["ÓXIDOS","Quem forma óxido ÁCIDO e quem forma óxido BÁSICO?","<strong>Ametal (5A, 6A, 7A) &rarr; óxido ácido</strong> (anidrido). <strong>Metal de 1A/2A &rarr; óxido básico.</strong>"],
+    ["ÓXIDOS","Óxido ácido + água produz o quê? E óxido básico + água?","Óxido <strong>ácido</strong> + água &rarr; <strong>ácido</strong> (CO<sub>2</sub>+H<sub>2</sub>O&rarr;H<sub>2</sub>CO<sub>3</sub>).<br>Óxido <strong>básico</strong> + água &rarr; <strong>base</strong> (CaO+H<sub>2</sub>O&rarr;Ca(OH)<sub>2</sub>)."],
+    ["ÓXIDOS","O que são óxidos neutros? Dê exemplos.","Não reagem com água, ácido nem base: <strong>CO, NO, N<sub>2</sub>O</strong>."],
+    ["ÓXIDOS","O que é um óxido anfótero?","O que se comporta como ácido <strong>ou</strong> base, dependendo de quem reage com ele: <strong>Al<sub>2</sub>O<sub>3</sub>, ZnO, PbO, SnO</strong>."],
+    ["ÓXIDOS","Quais óxidos causam a chuva ácida?","<strong>SO<sub>2</sub>, SO<sub>3</sub> e NO<sub>2</sub></strong>. Com a água da chuva formam H<sub>2</sub>SO<sub>3</sub>, H<sub>2</sub>SO<sub>4</sub>, HNO<sub>3</sub>."],
+    ["ÓXIDOS","Qual óxido corrige o pH do solo, e por quê?","<strong>CaO</strong> (cal virgem) &mdash; é óxido <strong>básico</strong>, então neutraliza a acidez do solo. Chama-se calagem."],
+    ["ÓXIDOS","Qual óxido é a ferrugem?","<strong>Fe<sub>2</sub>O<sub>3</sub></strong> &mdash; óxido de ferro III. Também é pigmento vermelho-terra."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>
+<!-- ================================================ EXERCÍCIOS ========== -->
+<section id="s9">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9997;</div>
+    <div>
+      <h2>9. Exercícios comentados</h2>
+      <p>15 questões no estilo das objetivas da disciplina. Tente antes de abrir o gabarito.</p>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">1</span><span class="q-tema">pH</span></div>
+    <p class="q-enun">Uma solução apresenta pH = 4,0. Sobre ela, é correto afirmar que:</p>
+    <ul class="alts">
+      <li><b>a)</b> é básica, pois o pH é menor que 7.</li>
+      <li><b>b)</b> é ácida e tem dez vezes mais H<sup>+</sup> que uma solução de pH 5,0.</li>
+      <li><b>c)</b> é neutra, porque está próxima de 7.</li>
+      <li><b>d)</b> é ácida e tem quatro vezes mais H<sup>+</sup> que a água pura.</li>
+      <li><b>e)</b> tem pOH igual a 4,0.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> pH 4 &lt; 7 &rarr; ácida. A escala é logarítmica: de pH 5 para pH 4 a
+      concentração de H<sup>+</sup> aumenta <b>10 vezes</b>. Em (e), pOH = 14 &minus; 4 = <b>10</b>, não 4.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">2</span><span class="q-tema">NOX</span></div>
+    <p class="q-enun">Qual é o número de oxidação do enxofre no íon sulfato, <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span>?</p>
+    <ul class="alts">
+      <li><b>a)</b> &minus;2 &nbsp;&nbsp;<b>b)</b> +2 &nbsp;&nbsp;<b>c)</b> +4 &nbsp;&nbsp;<b>d)</b> +6 &nbsp;&nbsp;<b>e)</b> +8</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> O oxigênio vale &minus;2 e são 4 deles: 4 &times; (&minus;2) = &minus;8.
+      A soma tem que dar a carga do íon (&minus;2): x &minus; 8 = &minus;2 &rarr; <b>x = +6</b>.
+      Erro comum: igualar a zero em vez de &minus;2.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">3</span><span class="q-tema">NOX &mdash; exceção</span></div>
+    <p class="q-enun">Em qual das substâncias abaixo o oxigênio <b>não</b> apresenta NOX igual a &minus;2?</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">H<sub>2</sub>O</span> &nbsp;&nbsp;<b>b)</b> <span class="f">CO<sub>2</sub></span>
+        &nbsp;&nbsp;<b>c)</b> <span class="f">H<sub>2</sub>O<sub>2</sub></span>
+        &nbsp;&nbsp;<b>d)</b> <span class="f">CaO</span> &nbsp;&nbsp;<b>e)</b> <span class="f">SO<sub>3</sub></span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> <span class="f">H<sub>2</sub>O<sub>2</sub></span> é um <b>peróxido</b>:
+      2(+1) + 2x = 0 &rarr; x = <b>&minus;1</b>. É a exceção mais cobrada da regra do oxigênio.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">4</span><span class="q-tema">Ácidos</span></div>
+    <p class="q-enun">Segundo Arrhenius, ácido é toda substância que em solução aquosa libera:</p>
+    <ul class="alts">
+      <li><b>a)</b> apenas o ânion OH<sup>&minus;</sup></li>
+      <li><b>b)</b> apenas o cátion H<sup>+</sup></li>
+      <li><b>c)</b> um cátion diferente de H<sup>+</sup></li>
+      <li><b>d)</b> elétrons livres</li>
+      <li><b>e)</b> oxigênio gasoso</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Ácido de Arrhenius libera <b>como único cátion o H<sup>+</sup></b>
+      (na forma de hidrônio, H<sub>3</sub>O<sup>+</sup>). A alternativa (a) descreve uma base; a (c) descreve um sal.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">5</span><span class="q-tema">Classificação de ácidos</span></div>
+    <p class="q-enun">O ácido fosfórico, <span class="f">H<sub>3</sub>PO<sub>4</sub></span>, é classificado como:</p>
+    <ul class="alts">
+      <li><b>a)</b> hidrácido, monoácido e forte</li>
+      <li><b>b)</b> oxiácido, triácido e moderado</li>
+      <li><b>c)</b> oxiácido, diácido e forte</li>
+      <li><b>d)</b> hidrácido, triácido e fraco</li>
+      <li><b>e)</b> oxiácido, triácido e forte</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Tem oxigênio &rarr; <b>oxiácido</b>. Libera 3 H<sup>+</sup> &rarr; <b>triácido</b>.
+      Pela regra n°O &minus; n°H = 4 &minus; 3 = 1 &rarr; <b>moderado</b>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">6</span><span class="q-tema">Nomenclatura de ácidos</span></div>
+    <p class="q-enun">Associe corretamente fórmula e nome:</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">HClO<sub>4</sub></span> = ácido hipocloroso</li>
+      <li><b>b)</b> <span class="f">HClO</span> = ácido clórico</li>
+      <li><b>c)</b> <span class="f">HClO<sub>3</sub></span> = ácido clórico</li>
+      <li><b>d)</b> <span class="f">HClO<sub>2</sub></span> = ácido perclórico</li>
+      <li><b>e)</b> <span class="f">HCl</span> = ácido cloroso</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Em <span class="f">HClO<sub>3</sub></span>:
+      +1 + x + 3(&minus;2) = 0 &rarr; Cl = <b>+5</b>, que é o NOX do sufixo <b>&ndash;ICO</b> na família 7A &rarr;
+      ácido clórico. Sequência completa: HClO hipocloroso (+1), HClO<sub>2</sub> cloroso (+3),
+      HClO<sub>3</sub> clórico (+5), HClO<sub>4</sub> perclórico (+7). E HCl é clorídrico (hidrácido).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">7</span><span class="q-tema">Grau de ionização</span></div>
+    <p class="q-enun">Ao dissolver 500 moléculas de um ácido em água, 25 delas se ionizam.
+    O grau de ionização e a força desse ácido são, respectivamente:</p>
+    <ul class="alts">
+      <li><b>a)</b> 5% e fraco &nbsp;&nbsp;<b>b)</b> 5% e moderado &nbsp;&nbsp;<b>c)</b> 25% e moderado
+        &nbsp;&nbsp;<b>d)</b> 50% e forte &nbsp;&nbsp;<b>e)</b> 20% e forte</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> &alpha; = 25 &divide; 500 = 0,05 = <b>5%</b>.
+      A faixa de moderado começa <em>em</em> 5% (5% a 50%), então o ácido é <b>moderado</b> &mdash;
+      está exatamente na fronteira. Abaixo de 5% seria fraco.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">8</span><span class="q-tema">Bases</span></div>
+    <p class="q-enun">Assinale a alternativa que contém <b>apenas bases fortes</b>:</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">NaOH</span>, <span class="f">KOH</span>, <span class="f">Ba(OH)<sub>2</sub></span></li>
+      <li><b>b)</b> <span class="f">NaOH</span>, <span class="f">NH<sub>4</sub>OH</span>, <span class="f">Al(OH)<sub>3</sub></span></li>
+      <li><b>c)</b> <span class="f">Mg(OH)<sub>2</sub></span>, <span class="f">Fe(OH)<sub>3</sub></span>, <span class="f">KOH</span></li>
+      <li><b>d)</b> <span class="f">Cu(OH)<sub>2</sub></span>, <span class="f">Zn(OH)<sub>2</sub></span>, <span class="f">LiOH</span></li>
+      <li><b>e)</b> <span class="f">NH<sub>4</sub>OH</span>, <span class="f">Ca(OH)<sub>2</sub></span>, <span class="f">Pb(OH)<sub>2</sub></span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa A.</b> Todas de 1A e 2A. Em (b) e (e) o
+      <span class="f">NH<sub>4</sub>OH</span> é fraco; em (c) o <span class="f">Mg(OH)<sub>2</sub></span> é a
+      <b>exceção</b> fraca da 2A; em (d) cobre e zinco são fracos.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">9</span><span class="q-tema">Nomenclatura de bases</span></div>
+    <p class="q-enun">O nome correto de <span class="f">Fe(OH)<sub>3</sub></span> é:</p>
+    <ul class="alts">
+      <li><b>a)</b> hidróxido de ferro II &nbsp;&nbsp;<b>b)</b> trihidróxido de ferro
+        &nbsp;&nbsp;<b>c)</b> hidróxido de ferro III &nbsp;&nbsp;<b>d)</b> óxido férrico
+        &nbsp;&nbsp;<b>e)</b> ferrato de hidrogênio</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> O ferro tem NOX variável, e o número de hidroxilas revela o NOX:
+      3 OH &rarr; Fe = <b>+3</b> &rarr; hidróxido de ferro <b>III</b> (nome antigo: hidróxido férrico).
+      Prefixos numéricos (b) só se usam em óxidos moleculares.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">10</span><span class="q-tema">Neutralização</span></div>
+    <p class="q-enun">Considere a reação: <span class="f">H<sub>2</sub>SO<sub>4</sub> + Ca(OH)<sub>2</sub> &rarr; X + Y</span>.
+    Os produtos X e Y são:</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">CaS</span> + <span class="f">H<sub>2</sub>O</span></li>
+      <li><b>b)</b> <span class="f">CaSO<sub>4</sub></span> + 2 <span class="f">H<sub>2</sub>O</span></li>
+      <li><b>c)</b> <span class="f">CaSO<sub>3</sub></span> + <span class="f">H<sub>2</sub>O</span></li>
+      <li><b>d)</b> <span class="f">Ca(HSO<sub>4</sub>)<sub>2</sub></span> + <span class="f">H<sub>2</sub></span></li>
+      <li><b>e)</b> <span class="f">CaO</span> + <span class="f">H<sub>2</sub>SO<sub>3</sub></span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Ácido + base &rarr; sal + água. Sobram
+      <span class="f">Ca<sup>2+</sup></span> e <span class="f">SO<sub>4</sub><sup>2&minus;</sup></span> &rarr;
+      <span class="f">CaSO<sub>4</sub></span> (sulfato de cálcio). Os 2 H<sup>+</sup> encontram os 2 OH<sup>&minus;</sup>
+      e formam <b>2 águas</b>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">11</span><span class="q-tema">Sais</span></div>
+    <p class="q-enun">O nome do sal <span class="f">KNO<sub>3</sub></span> e sua aplicação mais conhecida na
+    indústria alimentícia são:</p>
+    <ul class="alts">
+      <li><b>a)</b> nitrito de potássio &mdash; corante</li>
+      <li><b>b)</b> nitrato de potássio &mdash; conservante de embutidos</li>
+      <li><b>c)</b> nitrato de potássio &mdash; adoçante</li>
+      <li><b>d)</b> potássio nítrico &mdash; espessante</li>
+      <li><b>e)</b> nitreto de potássio &mdash; acidulante</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Vem do ácido nítr<b>ico</b> &rarr; ânion nitr<b>ato</b>
+      (<span class="f">NO<sub>3</sub><sup>&minus;</sup></span>). Conhecido como <b>salitre</b>,
+      é o conservante clássico de carnes e embutidos. &ldquo;Nitrito&rdquo; seria
+      <span class="f">NO<sub>2</sub><sup>&minus;</sup></span>, do ácido nitr<b>oso</b>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">12</span><span class="q-tema">Sais &mdash; pegadinha</span></div>
+    <p class="q-enun">Sobre o bicarbonato de sódio, <span class="f">NaHCO<sub>3</sub></span>, é correto afirmar:</p>
+    <ul class="alts">
+      <li><b>a)</b> é um sal básico, e sua solução é ácida.</li>
+      <li><b>b)</b> é um sal ácido, e sua solução aquosa é básica.</li>
+      <li><b>c)</b> é um óxido anfótero.</li>
+      <li><b>d)</b> é uma base de Arrhenius, pois neutraliza ácidos.</li>
+      <li><b>e)</b> é um sal neutro, com solução de pH 7.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Ele tem H ionizável na fórmula &rarr; classificado como
+      <b>sal ácido</b> (hidrogenossal). Mas vem de ácido <b>fraco</b>
+      (<span class="f">H<sub>2</sub>CO<sub>3</sub></span>) com base <b>forte</b>
+      (<span class="f">NaOH</span>) &rarr; quem manda é o forte &rarr; <b>solução básica</b> (pH 8,3).
+      Por isso funciona como antiácido. Ele <em>neutraliza</em> ácido sem <em>ser</em> uma base.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">13</span><span class="q-tema">Óxidos</span></div>
+    <p class="q-enun">Qual das substâncias abaixo <b>não</b> é classificada como óxido?</p>
+    <ul class="alts">
+      <li><b>a)</b> <span class="f">CO<sub>2</sub></span> &nbsp;&nbsp;<b>b)</b> <span class="f">Fe<sub>2</sub>O<sub>3</sub></span>
+        &nbsp;&nbsp;<b>c)</b> <span class="f">OF<sub>2</sub></span> &nbsp;&nbsp;<b>d)</b> <span class="f">CaO</span>
+        &nbsp;&nbsp;<b>e)</b> <span class="f">SO<sub>3</sub></span></li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Óxido exige que o <b>oxigênio seja o mais eletronegativo</b>.
+      No <span class="f">OF<sub>2</sub></span> quem é mais eletronegativo é o <b>flúor</b> &mdash;
+      é fluoreto de oxigênio, e o O fica com NOX <b>+2</b>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">14</span><span class="q-tema">Óxidos &mdash; reações</span></div>
+    <p class="q-enun">A chuva ácida se forma principalmente porque óxidos de enxofre e de nitrogênio,
+    ao reagirem com a água atmosférica, produzem:</p>
+    <ul class="alts">
+      <li><b>a)</b> bases fortes, elevando o pH da chuva.</li>
+      <li><b>b)</b> ácidos, abaixando o pH da chuva.</li>
+      <li><b>c)</b> sais neutros, sem alterar o pH.</li>
+      <li><b>d)</b> peróxidos, que liberam oxigênio.</li>
+      <li><b>e)</b> nada &mdash; são óxidos neutros.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <span class="f">SO<sub>2</sub></span> e
+      <span class="f">SO<sub>3</sub></span> são <b>óxidos ácidos</b> (anidridos):
+      <span class="f">SO<sub>3</sub> + H<sub>2</sub>O &rarr; H<sub>2</sub>SO<sub>4</sub></span>.
+      Com <span class="f">NO<sub>2</sub></span>:
+      <span class="f">2 NO<sub>2</sub> + H<sub>2</sub>O &rarr; HNO<sub>3</sub> + HNO<sub>2</sub></span>.
+      O pH da chuva cai de 5,6 para 4 ou menos.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">15</span><span class="q-tema">Integradora</span></div>
+    <p class="q-enun">Classifique, na ordem, as substâncias
+    <span class="f">H<sub>2</sub>SO<sub>4</sub></span>, <span class="f">Ca(OH)<sub>2</sub></span>,
+    <span class="f">NaCl</span> e <span class="f">CO<sub>2</sub></span>:</p>
+    <ul class="alts">
+      <li><b>a)</b> base, ácido, óxido, sal</li>
+      <li><b>b)</b> ácido, base, sal, óxido</li>
+      <li><b>c)</b> ácido, sal, base, óxido</li>
+      <li><b>d)</b> óxido, base, ácido, sal</li>
+      <li><b>e)</b> sal, base, ácido, óxido</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Regra visual da aula inteira:
+      <b>começa com H</b> &rarr; ácido (<span class="f">H<sub>2</sub>SO<sub>4</sub></span>);
+      <b>termina com OH</b> &rarr; base (<span class="f">Ca(OH)<sub>2</sub></span>);
+      <b>cátion + ânion, sem H nem OH</b> &rarr; sal (<span class="f">NaCl</span>);
+      <b>binário terminando em O</b> &rarr; óxido (<span class="f">CO<sub>2</sub></span>).</div>
+    </details>
+  </div>
+</section>
+
+<!-- ================================================ PEGADINHAS ========== -->
+<section id="s10">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#128680;</div>
+    <div>
+      <h2>10. Pegadinhas de prova</h2>
+      <p>Os dez erros que fazem perder ponto neste conteúdo específico.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th style="width:44%">O erro</th><th>O certo</th></tr></thead>
+      <tbody>
+        <tr><td>Igualar o NOX de um <b>íon</b> a zero</td>
+            <td>Molécula neutra &rarr; soma <b>zero</b>. Íon &rarr; soma igual à <b>carga</b>.</td></tr>
+        <tr><td>Achar que o oxigênio é <b>sempre</b> &minus;2</td>
+            <td>Em <b>peróxido</b> vale &minus;1 (<span class="f">H<sub>2</sub>O<sub>2</sub></span>);
+                em <span class="f">OF<sub>2</sub></span> vale +2.</td></tr>
+        <tr><td>Contar <b>todos</b> os H da fórmula para classificar o ácido</td>
+            <td>Conte só os <b>ionizáveis</b>: <span class="f">H<sub>3</sub>PO<sub>3</sub></span> é
+                <b>diácido</b>; <span class="f">CH<sub>3</sub>COOH</span> é <b>monoácido</b>.</td></tr>
+        <tr><td>Confundir <b>forte</b> com <b>concentrado</b></td>
+            <td>Forte é o &alpha; da substância. Concentrado é quanta substância há por litro.</td></tr>
+        <tr><td>Dizer que ácido <b>dissocia</b> e base <b>ioniza</b></td>
+            <td>É o contrário: <b>ácido ioniza</b>, <b>base dissocia</b>.</td></tr>
+        <tr><td>Confundir <b>força</b> com <b>solubilidade</b> nas bases</td>
+            <td><span class="f">Ca(OH)<sub>2</sub></span> é <b>forte</b> e <b>pouco solúvel</b> ao mesmo tempo.</td></tr>
+        <tr><td>Esquecer que <span class="f">Mg(OH)<sub>2</sub></span> e
+            <span class="f">Be(OH)<sub>2</sub></span> são da 2A</td>
+            <td>São a <b>exceção</b>: apesar de 2A, são bases <b>fracas</b>.</td></tr>
+        <tr><td>Dizer que <span class="f">NaHCO<sub>3</sub></span> tem solução ácida porque é &ldquo;sal ácido&rdquo;</td>
+            <td>A <b>classificação</b> é sal ácido; a <b>solução</b> é básica (pH 8,3).</td></tr>
+        <tr><td>Nomear o sal na ordem da fórmula</td>
+            <td>Fórmula: cátion primeiro. <b>Nome: ânion primeiro.</b>
+                <span class="f">FeCl<sub>3</sub></span> = <b>cloreto</b> de ferro III.</td></tr>
+        <tr><td>Usar prefixo numérico em óxido de metal</td>
+            <td>Metal com NOX variável usa <b>romano</b> (óxido de ferro III), não &ldquo;trióxido&rdquo;.
+                Prefixo é só para óxido <b>molecular</b> (ametal).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-prova">
+    <div class="tit">&#127919; O fluxograma de 5 segundos para identificar a função</div>
+    <div class="eq" style="border-left-color:var(--violeta); margin-bottom:0">
+      Começa com <b>H</b> &nbsp;&rarr;&nbsp; <span class="tag t-acido">ÁCIDO</span><br>
+      Termina com <b>OH</b> &nbsp;&rarr;&nbsp; <span class="tag t-base">BASE</span><br>
+      Só dois elementos e termina em <b>O</b> &nbsp;&rarr;&nbsp; <span class="tag t-oxido">ÓXIDO</span><br>
+      Cátion + ânion, <b>sem</b> H no começo e <b>sem</b> OH no fim &nbsp;&rarr;&nbsp; <span class="tag t-sal">SAL</span>
+      <small>Exceções a guardar: H₂O (anfótera, nem ácido nem base) e OF₂ (não é óxido).</small>
+    </div>
+  </div>
+</section>
+
+<!-- ==================================================== LINKS =========== -->
+<section id="s11">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#128279;</div>
+    <div>
+      <h2>11. Links e simuladores</h2>
+      <p>O site que a professora mostrou ao vivo, mais o que vale abrir depois.</p>
+    </div>
+  </div>
+
+  <h4>Os dois simuladores usados na aula (PhET &mdash; University of Colorado)</h4>
+  <div class="links">
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/ph-scale" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#127777;</span>
+      <span><span class="tit">Escala de pH</span>
+      <span class="desc">O primeiro simulador da aula: escolha café, refrigerante, leite, desentupidor de ralo
+      e veja o pH. Adicione água e veja o pH caminhar para 7.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/acid-base-solutions" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#129379;</span>
+      <span><span class="tit">Soluções de ácido e base</span>
+      <span class="desc">O segundo simulador: troque ácido forte por fraco na mesma concentração e veja
+      a fitinha de pH mudar. É o grau de ionização na tela.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/ph-scale-basics" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#129514;</span>
+      <span><span class="tit">Escala de pH: básico</span>
+      <span class="desc">Versão simplificada, boa para uma revisão rápida antes da prova.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/filter?subjects=chemistry" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#9878;</span>
+      <span><span class="tit">Todas as simulações de Química</span>
+      <span class="desc">O catálogo inteiro em português. Tem física, matemática e biologia também &mdash;
+      serve para as outras disciplinas do curso.</span></span>
+    </a>
+  </div>
+
+  <h4>Biblioteca da faculdade (citada na abertura da aula)</h4>
+  <div class="links">
+    <a class="link" href="https://www.unicesumar.edu.br/biblioteca/" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128218;</span>
+      <span><span class="tit">Biblioteca Unicesumar</span>
+      <span class="desc">Periódicos e artigos científicos, além das bibliografias básica e complementar
+      de todas as matérias do curso.</span></span>
+    </a>
+    <a class="link" href="https://www.unicesumar.edu.br/biblioteca/" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128214;</span>
+      <span><span class="tit">Minha Biblioteca</span>
+      <span class="desc">Livros responsivos com leitura em voz alta. O acesso sai do mesmo endereço
+      da biblioteca, dentro do Studeo.</span></span>
+    </a>
+  </div>
+
+  <h4>Para aprofundar</h4>
+  <div class="links">
+    <a class="link" href="https://mundoeducacao.uol.com.br/quimica/funcoes-inorganicas.htm" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128221;</span>
+      <span><span class="tit">Funções inorgânicas &mdash; Mundo Educação</span>
+      <span class="desc">Resumo teórico com exercícios resolvidos das quatro funções.</span></span>
+    </a>
+    <a class="link" href="https://www.todamateria.com.br/funcoes-inorganicas/" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128209;</span>
+      <span><span class="tit">Funções inorgânicas &mdash; Toda Matéria</span>
+      <span class="desc">Tabelas de nomenclatura e classificação, boas para revisão visual.</span></span>
+    </a>
+    <a class="link" href="https://www.youtube.com/results?search_query=fun%C3%A7%C3%B5es+inorg%C3%A2nicas+nomenclatura" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#9654;</span>
+      <span><span class="tit">Videoaulas de nomenclatura inorgânica</span>
+      <span class="desc">Se travar em ácido &ldquo;hipo&hellip;oso&rdquo; e &ldquo;per&hellip;ico&rdquo;,
+      ver alguém escrevendo no quadro resolve rápido.</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================================================== COLA =========== -->
+<section id="s12">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.14); border-color:rgba(232,147,63,.35)">&#128203;</div>
+    <div>
+      <h2>12. Cola de uma página</h2>
+      <p>Se você só tiver 5 minutos antes da prova, leia isto.</p>
+    </div>
+  </div>
+
+  <div class="card cola">
+    <div class="cola-grid">
+      <div class="cola-bloco">
+        <h5>Reconhecer</h5>
+        <ul>
+          <li><b>H</b>&hellip; &rarr; ácido</li>
+          <li>&hellip;<b>OH</b> &rarr; base</li>
+          <li>binário &hellip;<b>O</b> &rarr; óxido</li>
+          <li>cátion + ânion &rarr; sal</li>
+          <li>H<sub>2</sub>O e OF<sub>2</sub> &rarr; exceções</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>NOX fixo</h5>
+        <ul>
+          <li>1A e Ag = <b>+1</b></li>
+          <li>2A e Zn = <b>+2</b></li>
+          <li>Al = <b>+3</b></li>
+          <li>H = <b>+1</b> (hidreto &minus;1)</li>
+          <li>O = <b>&minus;2</b> (peróxido &minus;1)</li>
+          <li>F = <b>&minus;1</b> sempre</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>pH</h5>
+        <ul>
+          <li>&lt;7 ácido &middot; 7 neutro &middot; &gt;7 básico</li>
+          <li>pH + pOH = <b>14</b></li>
+          <li>1 degrau = <b>10&times;</b></li>
+          <li>diluir &rarr; caminha para 7</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Força &mdash; ácido</h5>
+        <ul>
+          <li>&alpha; &ge;50% forte &middot; 5&ndash;50% moderado &middot; &lt;5% fraco</li>
+          <li>Oxiácido: <b>O &minus; H</b> &ge;2 forte, =1 moderado, =0 fraco</li>
+          <li>Hidrácido: HCl, HBr, HI fortes; HF moderado; resto fraco</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Força &mdash; base</h5>
+        <ul>
+          <li>1A e 2A &rarr; <b>forte</b></li>
+          <li>exceto Be(OH)<sub>2</sub> e Mg(OH)<sub>2</sub></li>
+          <li>todas as outras &rarr; fraca</li>
+          <li>sem &ldquo;moderada&rdquo;</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Nomenclatura ácido</h5>
+        <ul>
+          <li>Hidrácido: &hellip;<b>ÍDRICO</b></li>
+          <li>Oxiácido pelo NOX:</li>
+          <li>+1 hipo&hellip;oso</li>
+          <li>+3 &hellip;oso</li>
+          <li>+5 &hellip;ico</li>
+          <li>+7 per&hellip;ico</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Ácido &rarr; ânion</h5>
+        <ul>
+          <li>ÍDRICO &rarr; <b>ETO</b></li>
+          <li>OSO &rarr; <b>ITO</b></li>
+          <li>ICO &rarr; <b>ATO</b></li>
+          <li>hipo e per continuam</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Reações-chave</h5>
+        <ul>
+          <li>ácido + base &rarr; <b>sal + água</b></li>
+          <li>óx. básico + água &rarr; base</li>
+          <li>óx. ácido + água &rarr; ácido</li>
+          <li>óxido + ácido/base &rarr; sal + água</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Óxidos</h5>
+        <ul>
+          <li>metal 1A/2A &rarr; <b>básico</b></li>
+          <li>ametal 5A/6A/7A &rarr; <b>ácido</b></li>
+          <li>CO, NO, N<sub>2</sub>O &rarr; neutros</li>
+          <li>Al<sub>2</sub>O<sub>3</sub>, ZnO &rarr; anfóteros</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>pH do sal</h5>
+        <ul>
+          <li>forte + forte &rarr; neutro</li>
+          <li>ác. forte + base fraca &rarr; ácido</li>
+          <li>ác. fraco + base forte &rarr; básico</li>
+          <li><em>quem é forte, manda</em></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Nomes que caem</h5>
+        <ul>
+          <li>NaOH soda cáustica</li>
+          <li>Ca(OH)<sub>2</sub> cal hidratada</li>
+          <li>CaO cal virgem</li>
+          <li>Mg(OH)<sub>2</sub> leite de magnésia</li>
+          <li>KNO<sub>3</sub> salitre</li>
+          <li>NaClO água sanitária</li>
+          <li>CaSO<sub>4</sub> gesso/giz</li>
+          <li>Fe<sub>2</sub>O<sub>3</sub> ferrugem</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Não confundir</h5>
+        <ul>
+          <li>forte &ne; concentrado</li>
+          <li>força &ne; solubilidade</li>
+          <li>ácido <b>ioniza</b>, base <b>dissocia</b></li>
+          <li>sal ácido &ne; solução ácida</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Aula 03 &mdash; Funções Inorgânicas</b> &middot; Química Geral e Experimental &middot; Módulo 53/2026<br>
+  Material de estudo montado a partir da aula ao vivo (1h24), com complementos de nomenclatura,
+  exceções, hidrólise salina e cálculo de pH.</p>
+  <p style="margin-bottom:0">Plataforma Bueno &middot; Cérebro Digital</p>
+</footer>
+</div>
+</body>
+</html>

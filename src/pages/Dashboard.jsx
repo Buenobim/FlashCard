@@ -1,602 +1,546 @@
 /*
   =============================================================================
   ARQUIVO: src/pages/Dashboard.jsx
-  PARA QUE SERVE: Esta é a "Página Inicial" ou Painel do Estudante. Quando você abre 
-  o aplicativo, se depara com ela. Ela calcula e exibe suas estatísticas de estudo 
-  (quantas vezes estudou, recorde do jogo, etc.) e lista todos os seus baralhos de 
-  cartões. Nela, você pode escolher o que quer estudar e qual o modo de estudo prefere.
+  PARA QUE SERVE: Painel do módulo Flashcards. Mostra estatísticas de estudo,
+  os grupos (categorias) e a grade de baralhos. De cada baralho saem os 4 modos
+  de estudo: Flashcards 3D, Aprender, Combinar e Simulado.
   =============================================================================
 */
 
-import React, { useState } from 'react';
-// Importamos os ícones necessários da biblioteca Lucide para dar um toque super moderno
-import { 
-  Plus, 
-  Play, 
-  Edit3, 
-  Trash2, 
-  Trophy, 
-  Layers, 
-  Activity, 
-  BookOpen, 
-  Sparkles, 
-  Eye, 
-  ChevronRight,
-  RotateCcw
+import { useMemo, useState } from 'react';
+import {
+  Plus, Edit3, Trash2, Trophy, Activity, BookOpen,
+  Search, ExternalLink, Play, Flame
 } from 'lucide-react';
+import StudyMaterialModal, { STUDY_MATERIAL_TYPES } from '../components/StudyMaterialModal';
+import { raioX as calcularRaioX } from '../estudo/trilhaCore.js';
+import { resumoDoEstudo } from '../utils/db';
 
-/*
-  COMPONENTE: Dashboard
-  PARAMETROS (PROPS) QUE RECEBE:
-    - sets: Lista de todos os conjuntos de flashcards criados.
-    - stats: Objeto contendo as estatísticas acumuladas do usuário.
-    - onNavigate: Função para trocar de tela.
-    - onSelectSet: Função disparada quando escolhemos um conjunto para estudar.
-    - onDeleteSet: Função para apagar um conjunto da memória.
-    - onResetStats: Função opcional para limpar estatísticas.
-*/
-export default function Dashboard({ sets, stats, onNavigate, onSelectSet, onDeleteSet, onResetStats }) {
-  // Estado local para controlar a dupla confirmação de exclusão (evita apagar sem querer!)
-  // Armazena o ID do conjunto que o usuário quer excluir temporariamente.
+export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, categories = [], onAddCategory, activeProfile, isSyncing, initialCategoryFilter, initialExpandedSetId, studyMaterials = [], onSaveStudyMaterials, onOpenNotebook, onEstudarTrilha }) {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(initialCategoryFilter || 'Todos');
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [createMenuOpen, setCreateMenuOpen] = useState(false);
+  const [materialEditor, setMaterialEditor] = useState(null);
 
-  // Estado local para guardar qual conjunto está com o menu de modos de estudo "aberto" (expandido)
-  const [expandedSetId, setExpandedSetId] = useState(null);
+  const handleAddCategorySubmit = (e) => {
+    e.preventDefault();
+    const trimmed = newCategoryName.trim();
+    if (!trimmed) return;
+    if (categories.some(cat => cat.toLowerCase() === trimmed.toLowerCase())) {
+      alert('Este grupo de estudos já existe!');
+      return;
+    }
+    onAddCategory(trimmed);
+    setActiveCategory(trimmed);
+    setNewCategoryName('');
+    setIsAddingCategory(false);
+  };
 
-  /*
-    FUNÇÃO INTERNA: handleDeleteClick
-    PARA QUE SERVE: Dispara quando clica no lixo. Se clicar uma vez, pede confirmação. 
-    Se clicar novamente na confirmação, apaga o conjunto em definitivo.
-  */
+  // Exclusão em 2 cliques (evita apagar sem querer)
   const handleDeleteClick = (setId, event) => {
-    event.stopPropagation(); // Impede que o clique selecione o baralho por acidente
-    
+    event.stopPropagation();
     if (confirmDeleteId === setId) {
-      // Segunda confirmação: apaga de fato!
       onDeleteSet(setId);
       setConfirmDeleteId(null);
     } else {
-      // Primeira confirmação: muda o estado para alertar o usuário
       setConfirmDeleteId(setId);
     }
   };
 
-  /*
-    FUNÇÃO INTERNA: handleCancelDelete
-    PARA QUE SERVE: Cancela o modo de confirmação se o usuário tirar o mouse ou clicar fora.
-  */
-  const handleCancelDelete = (event) => {
-    event.stopPropagation();
-    setConfirmDeleteId(null);
+
+  const totalCards = sets.reduce((acc, s) => acc + s.cards.length, 0);
+  const firstName = (activeProfile || 'Estudante').split(' ')[0];
+
+  // Filtro por grupo + busca por texto
+  const filteredSets = sets.filter(s => {
+    const inCategory = activeCategory === 'Todos' || s.category === activeCategory;
+    const q = searchTerm.trim().toLowerCase();
+    const inSearch = !q || s.title.toLowerCase().includes(q) || (s.description || '').toLowerCase().includes(q);
+    return inCategory && inSearch;
+  });
+
+  const filteredMaterials = studyMaterials.filter((material) => {
+    const inCategory = activeCategory === 'Todos' || material.category === activeCategory;
+    const q = searchTerm.trim().toLowerCase();
+    const inSearch = !q || material.title.toLowerCase().includes(q) || (material.content || '').toLowerCase().includes(q);
+    return inCategory && inSearch;
+  });
+
+  const saveMaterial = (material) => {
+    const exists = studyMaterials.some((item) => item.id === material.id);
+    const updated = exists ? studyMaterials.map((item) => item.id === material.id ? material : item) : [...studyMaterials, material];
+    onSaveStudyMaterials(updated);
+    setMaterialEditor(null);
+    if (material.type === 'notebook') onOpenNotebook(material);
+  };
+
+  const deleteMaterial = (materialId) => {
+    if (!confirm('Excluir este material de estudo?')) return;
+    onSaveStudyMaterials(studyMaterials.filter((item) => item.id !== materialId));
+  };
+
+  const toggleTask = (materialId, taskId) => {
+    onSaveStudyMaterials(studyMaterials.map((material) => material.id !== materialId ? material : {
+      ...material,
+      tasks: (material.tasks || []).map((task) => task.id === taskId ? { ...task, done: !task.done } : task),
+      updatedAt: new Date().toISOString(),
+    }));
   };
 
   /*
-    FUNÇÃO INTERNA: handleSetClick
-    PARA QUE SERVE: Abre/Fecha a lista de modos de estudo daquele conjunto ao clicar nele.
+    O RAIO-X DE CADA MATÉRIA: quantos blocos ela tem e quantos cartões venceram
+    hoje. É o que transforma o painel de uma lista de pastas numa lista de
+    PENDÊNCIAS — você bate o olho e já sabe onde tem trabalho esperando.
   */
-  const handleSetClick = (setId) => {
-    if (expandedSetId === setId) {
-      setExpandedSetId(null);
-    } else {
-      setExpandedSetId(setId);
-    }
-  };
+  const raioXPorBaralho = useMemo(() => {
+    const agora = new Date();
+    const mapa = new Map();
+    sets.forEach((s) => mapa.set(s.id, calcularRaioX(s, agora)));
+    return mapa;
+  }, [sets]);
 
-  /*
-    FUNÇÃO INTERNA: startStudyMode
-    PARA QUE SERVE: Seleciona o baralho e redireciona o usuário para o modo de estudo desejado.
-  */
-  const startStudyMode = (set, mode, event) => {
-    event.stopPropagation(); // Impede fechar a sanfona de baralhos
-    onSelectSet(set);
-    onNavigate(mode);
-  };
+  const totalParaHoje = useMemo(
+    () => sets.reduce((acc, s) => acc + (raioXPorBaralho.get(s.id)?.aRevisar || 0), 0),
+    [sets, raioXPorBaralho],
+  );
 
-  // Cálculo rápido: soma total de cartões em todos os baralhos criados
-  const totalCards = sets.reduce((acc, currentSet) => acc + currentSet.cards.length, 0);
+  // A sequência de dias seguidos estudando — o número que mais segura a rotina.
+  // O diário mora no LocalStorage, fora do React — por isso ele é relido quando
+  // `sets` muda: responder um cartão regrava o baralho, e é esse o sinal de que
+  // uma sessão acabou de acontecer.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const diario = useMemo(() => resumoDoEstudo(activeProfile), [activeProfile, sets]);
+
+  const summary = [
+    { icon: Flame, value: diario.sequencia, label: diario.sequencia === 1 ? 'dia seguido' : 'dias seguidos', color: '#E77950' },
+    { icon: Activity, value: totalParaHoje, label: 'Para revisar hoje', color: totalParaHoje > 0 ? '#EEA53D' : '#3ECF8E' },
+    { icon: BookOpen, value: totalCards, label: 'Cartões', color: '#E8933F' },
+    { icon: Trophy, value: diario.hoje.respostas, label: 'Respostas hoje', color: '#3ECF8E' },
+  ];
+
+  // A matéria mais atrasada — é ela que o botão grande do topo abre.
+  const maisAtrasada = useMemo(() => {
+    let melhor = null;
+    sets.forEach((s) => {
+      const n = raioXPorBaralho.get(s.id)?.aRevisar || 0;
+      if (n > 0 && (!melhor || n > (raioXPorBaralho.get(melhor.id)?.aRevisar || 0))) melhor = s;
+    });
+    return melhor;
+  }, [sets, raioXPorBaralho]);
+
 
   return (
-    <div className="app-container">
-      
-      {/* 1. SEÇÃO DE BOAS-VINDAS E INTRODUÇÃO */}
+    <div className="app-container" style={{ animation: 'fadeIn 0.4s ease' }}>
+
+      {/* CABEÇALHO */}
       <section style={styles.welcomeSection}>
         <div>
-          <h1 style={styles.title}>Olá, Estudante! 👋</h1>
-          <p style={styles.subtitle}>Pronto para impulsionar o seu aprendizado hoje? Escolha um baralho ou crie um novo para começar.</p>
+          <h1 style={styles.title}>Seus estudos, {firstName}.</h1>
+          <p style={styles.subtitle}>Baralhos, anotações, cadernos e tudo que ajuda você a aprender.</p>
         </div>
-        <button 
-          onClick={() => onNavigate('create')} 
-          className="btn-primary"
-          style={styles.ctaHeaderBtn}
-        >
-          <Plus size={20} />
-          Criar Novo Baralho
-        </button>
+        <div className="study-create-wrap">
+          <button onClick={() => setCreateMenuOpen((open) => !open)} className="btn-primary" disabled={isSyncing}><Plus size={18} /> Novo material</button>
+          {createMenuOpen && (
+            <div className="study-create-menu">
+              <button onClick={() => { setCreateMenuOpen(false); onNavigate('create'); }}><span style={{ color: '#E8933F', background: '#E8933F18' }}><BookOpen size={20} /></span><span><strong>Baralho</strong><small>Cartões com pergunta e resposta</small></span></button>
+              {Object.entries(STUDY_MATERIAL_TYPES).map(([type, config]) => { const Icon = config.icon; return <button key={type} onClick={() => { setCreateMenuOpen(false); setMaterialEditor({ type, material: null }); }}><span style={{ color: config.color, background: `${config.color}18` }}><Icon size={20} /></span><span><strong>{config.label}</strong><small>{config.description}</small></span></button>; })}
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* 2. PAINEL DE ESTATÍSTICAS (Sua casa construída sobre a rocha das métricas) */}
-      <section style={styles.statsGrid}>
-        
-        {/* Cartão de Baralhos Criados */}
-        <div style={styles.statsCard} className="glass-panel">
-          <div style={{ ...styles.iconCircle, background: 'rgba(99, 102, 241, 0.15)', color: '#6366f1' }}>
-            <Layers size={22} />
-          </div>
-          <div>
-            <h3 style={styles.statsVal}>{sets.length}</h3>
-            <p style={styles.statsLabel}>Baralhos Criados</p>
-          </div>
+      {isSyncing && (
+        <div style={styles.syncingBanner} className="animate-pulse">
+          Sincronizando seus baralhos com a nuvem…
         </div>
+      )}
 
-        {/* Cartão de Cartões Totais */}
-        <div style={styles.statsCard} className="glass-panel">
-          <div style={{ ...styles.iconCircle, background: 'rgba(168, 85, 247, 0.15)', color: '#a855f7' }}>
-            <BookOpen size={22} />
+      {/*
+        O CONVITE DO DIA.
+        Sem ele, abrir o app é encarar uma grade de pastas e ter que decidir por
+        onde começar — e decidir cansa. Com ele, existe UM botão que já sabe qual
+        matéria está mais atrasada. Dez minutos por dia aqui valem mais do que
+        cinco horas na véspera da prova.
+      */}
+      {onEstudarTrilha && maisAtrasada && (
+        <section style={styles.convite}>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <strong style={styles.conviteTitulo}>
+              {totalParaHoje} {totalParaHoje === 1 ? 'cartão venceu' : 'cartões venceram'} hoje.
+            </strong>
+            <p style={styles.conviteTexto}>
+              O mais atrasado está em <b>{maisAtrasada.title}</b>. Revisar hoje custa alguns minutos;
+              deixar para depois custa a semana inteira.
+            </p>
           </div>
-          <div>
-            <h3 style={styles.statsVal}>{totalCards}</h3>
-            <p style={styles.statsLabel}>Cartões de Estudo</p>
-          </div>
-        </div>
-
-        {/* Cartão de Sessões Estudadas */}
-        <div style={styles.statsCard} className="glass-panel">
-          <div style={{ ...styles.iconCircle, background: 'rgba(16, 185, 129, 0.15)', color: '#10b981' }}>
-            <Activity size={22} />
-          </div>
-          <div>
-            <h3 style={styles.statsVal}>{stats.setsStudied}</h3>
-            <p style={styles.statsLabel}>Sessões Concluídas</p>
-          </div>
-        </div>
-
-        {/* Cartão de Recorde do Jogo Combinar */}
-        <div style={styles.statsCard} className="glass-panel">
-          <div style={{ ...styles.iconCircle, background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b' }}>
-            <Trophy size={22} />
-          </div>
-          <div>
-            <h3 style={styles.statsVal}>
-              {stats.bestMatchTime ? `${stats.bestMatchTime.toFixed(2)}s` : '---'}
-            </h3>
-            <p style={styles.statsLabel}>Melhor Tempo no Jogo</p>
-          </div>
-        </div>
-
-      </section>
-
-      {/* 3. TÍTULO DE SEÇÃO */}
-      <h2 style={styles.sectionTitle}>
-        <Sparkles size={20} color="#a855f7" /> 
-        Meus Baralhos de Estudo
-      </h2>
-
-      {/* 4. LISTAGEM DE BARALHOS (SE COMPORTA EM GRADE) */}
-      {sets.length === 0 ? (
-        // Estado Vazio: Quando o usuário apagou tudo ou não tem nada
-        <div style={styles.emptyContainer} className="glass-panel">
-          <BookOpen size={60} style={styles.emptyIcon} />
-          <h3 style={styles.emptyTitle}>Nenhum Baralho Cadastrado</h3>
-          <p style={styles.emptyDesc}>Você não possui baralhos de estudo no momento. Vamos começar criando o seu primeiro conjunto de cartões de termos e definições!</p>
-          <button 
-            onClick={() => onNavigate('create')} 
+          <button
             className="btn-primary"
-            style={{ marginTop: '16px' }}
+            style={{ flexShrink: 0 }}
+            onClick={() => onEstudarTrilha(maisAtrasada, 'revisao')}
           >
-            <Plus size={20} />
-            Criar Primeiro Baralho
+            <Play size={17} /> Revisar agora
           </button>
+        </section>
+      )}
+
+      {/* ESTATÍSTICAS */}
+      <section style={styles.statsGrid}>
+        {summary.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div key={item.label} style={styles.statsCard} className="glass-panel">
+              <div style={{ ...styles.iconCircle, background: `${item.color}1A`, color: item.color }}>
+                <Icon size={20} />
+              </div>
+              <div>
+                <h3 style={styles.statsVal}>{item.value}</h3>
+                <p style={styles.statsLabel}>{item.label}</p>
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
+      {/* GRUPOS + BUSCA */}
+      <section style={styles.filterSection}>
+        <div style={styles.categoriesList}>
+          <button
+            onClick={() => setActiveCategory('Todos')}
+            className={activeCategory === 'Todos' ? 'chip chip-active' : 'chip'}
+          >
+            Todos
+          </button>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={activeCategory === cat ? 'chip chip-active' : 'chip'}
+            >
+              {cat}
+            </button>
+          ))}
+          {!isAddingCategory ? (
+            <button onClick={() => setIsAddingCategory(true)} className="chip" title="Criar novo grupo">
+              <Plus size={13} /> Grupo
+            </button>
+          ) : (
+            <form onSubmit={handleAddCategorySubmit} style={styles.addCategoryForm}>
+              <input
+                type="text"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                placeholder="Nome do grupo"
+                style={styles.categoryInput}
+                maxLength={20}
+                autoFocus
+              />
+              <button type="submit" style={styles.categorySubmitBtn}>Ok</button>
+              <button
+                type="button"
+                onClick={() => { setIsAddingCategory(false); setNewCategoryName(''); }}
+                style={styles.categoryCancelBtn}
+              >
+                ✕
+              </button>
+            </form>
+          )}
+        </div>
+
+        <div style={styles.searchBox}>
+          <Search size={15} color="#7A828E" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar nos estudos…"
+            style={styles.searchInput}
+          />
+        </div>
+      </section>
+
+      {/* BIBLIOTECA DE ESTUDOS */}
+      {filteredSets.length === 0 && filteredMaterials.length === 0 ? (
+        <div className="glass-panel empty-state">
+          <BookOpen size={52} style={{ color: '#3B434F', marginBottom: '16px' }} />
+          <h3 style={styles.emptyTitle}>
+            {sets.length === 0 && studyMaterials.length === 0 ? 'Sua biblioteca está vazia' : 'Nada encontrado aqui'}
+          </h3>
+          <p style={styles.emptyDesc}>
+            {sets.length === 0 && studyMaterials.length === 0
+              ? 'Adicione um baralho, uma anotação, um caderno, exercícios ou um material externo.'
+              : 'Nenhum material corresponde a esse grupo ou busca.'}
+          </p>
+          <button onClick={() => setCreateMenuOpen(true)} className="btn-primary" style={{ marginTop: '18px' }}><Plus size={18} /> Adicionar material</button>
         </div>
       ) : (
-        // Grade com os Baralhos Existentes
         <div style={styles.setsGrid}>
-          {sets.map((set) => {
-            const isExpanded = expandedSetId === set.id;
-            const isConfirming = confirmDeleteId === set.id;
-            
+          {filteredMaterials.map((material) => {
+            const config = STUDY_MATERIAL_TYPES[material.type] || STUDY_MATERIAL_TYPES.note;
+            const Icon = config.icon;
+            const completed = (material.tasks || []).filter((task) => task.done).length;
+            const openMaterial = () => material.type === 'notebook'
+              ? onOpenNotebook(material)
+              : material.type === 'link' && material.url
+                ? window.open(material.url, '_blank', 'noopener,noreferrer')
+                : setMaterialEditor({ type: material.type, material });
             return (
-              <div 
-                key={set.id} 
-                style={styles.setCard} 
-                className="glass-panel"
-                onClick={() => handleSetClick(set.id)}
+              <article key={material.id} className="glass-panel study-material-card" onClick={openMaterial}>
+                <div className="study-material-top">
+                  <span className="study-material-type" style={{ color: config.color }}><Icon size={16} /> {config.label}</span>
+                  <div className="study-material-actions" onClick={(e) => e.stopPropagation()}>
+                    <button onClick={() => setMaterialEditor({ type: material.type, material })} title="Editar"><Edit3 size={14} /></button>
+                    <button onClick={() => deleteMaterial(material.id)} title="Excluir"><Trash2 size={14} /></button>
+                  </div>
+                </div>
+                <h3 className="study-material-title">{material.title}</h3>
+                {material.type === 'exercises' ? (
+                  <div className="study-task-preview" onClick={(e) => e.stopPropagation()}>
+                    {(material.tasks || []).slice(0, 3).map((task) => <label key={task.id}><input type="checkbox" checked={task.done} onChange={() => toggleTask(material.id, task.id)} /><span style={{ textDecoration: task.done ? 'line-through' : 'none', opacity: task.done ? .55 : 1 }}>{task.text}</span></label>)}
+                  </div>
+                ) : <p className="study-material-preview">{material.content || (material.type === 'notebook' ? 'Caderno visual pronto para escrever e desenhar.' : material.url)}</p>}
+                <footer className="study-material-footer"><span>{material.category || 'Sem grupo'}</span><span>{material.type === 'exercises' ? `${completed}/${(material.tasks || []).length} concluídos` : material.type === 'link' ? <><ExternalLink size={12} /> Abrir material</> : 'Abrir'}</span></footer>
+              </article>
+            );
+          })}
+          {filteredSets.map((set) => {
+            const isConfirming = confirmDeleteId === set.id;
+            const subItemCount = (set.subItems || []).length;
+            const numeros = raioXPorBaralho.get(set.id) || { totalBlocos: 0, totalCartoes: 0, contexto: 0, aRevisar: 0 };
+
+            return (
+              <div
+                key={set.id}
+                style={styles.setCard}
+                className="glass-panel deck-card"
+                onClick={() => { onSelectSet(set); onNavigate('sub_brain'); }}
               >
-                {/* Cabeçalho do Baralho (Título e Info) */}
                 <div style={styles.setCardHeader}>
                   <div style={styles.setMainInfo}>
+                    <div style={styles.badgeRow}>
+                      <span style={styles.cardCounter}>{numeros.totalCartoes} {numeros.totalCartoes === 1 ? 'cartão' : 'cartões'}</span>
+                      {numeros.contexto > 0 && <span style={styles.cardCounter}>{numeros.contexto} de contexto</span>}
+                      <span style={styles.categoryBadge}>{set.category || 'Sem Grupo'}</span>
+                      {numeros.aRevisar > 0 && (
+                        <span style={styles.badgeVencido} title="Cartões que a repetição espaçada marcou para hoje">
+                          {numeros.aRevisar} para hoje
+                        </span>
+                      )}
+                    </div>
                     <h3 style={styles.setCardTitle}>{set.title}</h3>
-                    <p style={styles.setCardDesc}>
-                      {set.description || 'Sem descrição cadastrada.'}
-                    </p>
-                    <span style={styles.cardCounter}>
-                      {set.cards.length} {set.cards.length === 1 ? 'cartão' : 'cartões'}
-                    </span>
+                    {set.description && <p style={styles.setCardDesc}>{set.description}</p>}
                   </div>
 
-                  {/* Ações Rápidas (Editar e Lixeira) */}
-                  <div style={styles.setActions}>
+                  <div style={styles.setActions} onClick={(e) => e.stopPropagation()}>
+                    {onEstudarTrilha && numeros.totalBlocos > 0 && (
+                      <button
+                        onClick={() => onEstudarTrilha(set)}
+                        style={styles.botaoEstudar}
+                        title="Estudar esta matéria"
+                      >
+                        <Play size={13} /> Estudar
+                      </button>
+                    )}
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectSet(set);
-                        onNavigate('edit');
-                      }}
+                      onClick={() => { onSelectSet(set); onNavigate('edit'); }}
                       style={styles.actionIconButton}
-                      title="Editar cartões do baralho"
+                      className="deck-edit-btn"
+                      title="Editar a trilha desta matéria"
                     >
-                      <Edit3 size={16} />
+                      <Edit3 size={15} />
                     </button>
-                    
                     {isConfirming ? (
                       <div style={styles.confirmBox}>
                         <button
                           onClick={(e) => handleDeleteClick(set.id, e)}
                           style={styles.confirmDeleteBtn}
-                          title="Confirmar exclusão permanente"
+                          disabled={isSyncing}
                         >
                           Apagar
                         </button>
-                        <button
-                          onClick={handleCancelDelete}
-                          style={styles.cancelDeleteBtn}
-                        >
-                          Não
-                        </button>
+                        <button onClick={() => setConfirmDeleteId(null)} style={styles.cancelDeleteBtn}>Não</button>
                       </div>
                     ) : (
                       <button
-                        onClick={(e) => handleDeleteClick(set.id, e)}
-                        style={styles.deleteIconButton}
-                        title="Apagar este baralho do seu dispositivo"
+                        onClick={(e) => !isSyncing && handleDeleteClick(set.id, e)}
+                        style={{ ...styles.deleteIconButton, ...(isSyncing ? { opacity: 0.5, cursor: 'not-allowed' } : {}) }}
+                        className="deck-delete-btn"
+                        title="Apagar baralho"
+                        disabled={isSyncing}
                       >
-                        <Trash2 size={16} />
+                        <Trash2 size={15} />
                       </button>
                     )}
                   </div>
                 </div>
 
-                {/* BOTÃO EXPANSOR INDICATIVO */}
-                <div style={styles.expandTrigger}>
-                  <span style={styles.expandText}>
-                    {isExpanded ? 'Esconder Modos de Estudo 🔼' : 'Clique para escolher como estudar 🔽'}
-                  </span>
+                <div style={styles.expandHint}>
+                  {numeros.totalBlocos > 0
+                    ? `${numeros.totalBlocos} ${numeros.totalBlocos === 1 ? 'bloco na trilha' : 'blocos na trilha'}`
+                    : 'Trilha vazia — abra e monte a matéria'}
+                  {numeros.totalCartoes > 0 ? ` · ${numeros.dominio}% na memória de longo prazo` : ''}
+                  {subItemCount > 0 ? ` · ${subItemCount} ${subItemCount === 1 ? 'material interno' : 'materiais internos'}` : ''}
                 </div>
-
-                {/* ÁREA EXPANSÍVEL: OS 4 MODOS DE ESTUDO DO QUIZLET */}
-                {isExpanded && (
-                  <div style={styles.studyModesArea} onClick={(e) => e.stopPropagation()}>
-                    <h4 style={styles.studyAreaTitle}>Selecione um Modo de Estudo:</h4>
-                    <div style={styles.modesContainer}>
-                      
-                      {/* Modo 1: Flashcards Clássico */}
-                      <div 
-                        style={{ ...styles.modeOption, borderLeft: '4px solid #6366f1' }}
-                        onClick={(e) => startStudyMode(set, 'flashcard_mode', e)}
-                      >
-                        <div style={styles.modeOptionMeta}>
-                          <span style={styles.modeOptionName}>🎴 Flashcards</span>
-                          <span style={styles.modeOptionDesc}>Estudo clássico virando cartões em 3D</span>
-                        </div>
-                        <ChevronRight size={18} color="#6366f1" />
-                      </div>
-
-                      {/* Modo 2: Aprender */}
-                      <div 
-                        style={{ ...styles.modeOption, borderLeft: '4px solid #a855f7' }}
-                        onClick={(e) => startStudyMode(set, 'learn_mode', e)}
-                      >
-                        <div style={styles.modeOptionMeta}>
-                          <span style={styles.modeOptionName}>🧠 Aprender</span>
-                          <span style={styles.modeOptionDesc}>Múltipla escolha inteligente automático</span>
-                        </div>
-                        <ChevronRight size={18} color="#a855f7" />
-                      </div>
-
-                      {/* Modo 3: Combinar */}
-                      <div 
-                        style={{ ...styles.modeOption, borderLeft: '4px solid #f59e0b' }}
-                        onClick={(e) => startStudyMode(set, 'match_mode', e)}
-                      >
-                        <div style={styles.modeOptionMeta}>
-                          <span style={styles.modeOptionName}>⚡ Combinar</span>
-                          <span style={styles.modeOptionDesc}>Jogo de velocidade associando termos</span>
-                        </div>
-                        <ChevronRight size={18} color="#f59e0b" />
-                      </div>
-
-                      {/* Modo 4: Teste */}
-                      <div 
-                        style={{ ...styles.modeOption, borderLeft: '4px solid #10b981' }}
-                        onClick={(e) => startStudyMode(set, 'test_mode', e)}
-                      >
-                        <div style={styles.modeOptionMeta}>
-                          <span style={styles.modeOptionName}>📝 Simulado</span>
-                          <span style={styles.modeOptionDesc}>Prova avaliativa rápida com notas e revisão</span>
-                        </div>
-                        <ChevronRight size={18} color="#10b981" />
-                      </div>
-
-                    </div>
-                  </div>
-                )}
               </div>
             );
           })}
         </div>
       )}
+      {materialEditor && <StudyMaterialModal material={materialEditor.material} type={materialEditor.type} categories={categories.length ? categories : ['Faculdade']} onClose={() => setMaterialEditor(null)} onSave={saveMaterial} />}
     </div>
   );
 }
 
-// -----------------------------------------------------------------------------
-// ESTILOS LOCAIS DO DASHBOARD
-// -----------------------------------------------------------------------------
 const styles = {
   welcomeSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '32px',
-    flexWrap: 'wrap',
-    gap: '20px',
+    display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
+    marginBottom: '28px', flexWrap: 'wrap', gap: '18px',
   },
-  title: {
-    fontSize: '32px',
-    fontWeight: '800',
-    background: 'linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    marginBottom: '8px',
+  title: { fontSize: 'clamp(26px, 5vw, 34px)', color: '#F4F5F7', marginBottom: '6px', lineHeight: 1.15 },
+  subtitle: { color: '#99A1AC', fontSize: '15px', maxWidth: '600px' },
+  syncingBanner: {
+    background: 'rgba(232, 147, 63, 0.08)', border: '1px solid rgba(232, 147, 63, 0.2)',
+    borderRadius: '12px', color: '#EFAE6B', padding: '12px 20px', fontSize: '14px',
+    fontWeight: 700, textAlign: 'center', marginBottom: '22px',
   },
-  subtitle: {
-    color: '#94a3b8',
-    fontSize: '16px',
-    maxWidth: '650px',
+  convite: {
+    display: 'flex', alignItems: 'center', gap: '18px', flexWrap: 'wrap',
+    background: 'linear-gradient(135deg, rgba(232,147,63,0.13), rgba(231,121,80,0.07))',
+    border: '1px solid rgba(232, 147, 63, 0.28)', borderRadius: '16px',
+    padding: '18px 22px', marginBottom: '24px',
   },
-  ctaHeaderBtn: {
-    alignSelf: 'center',
+  conviteTitulo: { display: 'block', fontFamily: 'var(--font-display)', fontSize: '19px', color: '#F4F5F7', marginBottom: '4px' },
+  conviteTexto: { color: '#B9BFC8', fontSize: '13.5px', lineHeight: 1.5, margin: 0 },
+  badgeVencido: {
+    background: 'rgba(238, 165, 61, 0.16)', border: '1px solid rgba(238, 165, 61, 0.38)',
+    color: '#F0BC72', borderRadius: '999px', padding: '3px 10px',
+    fontSize: '11px', fontWeight: 800, letterSpacing: '0.2px',
+  },
+  botaoEstudar: {
+    display: 'inline-flex', alignItems: 'center', gap: '5px',
+    background: 'rgba(232, 147, 63, 0.14)', border: '1px solid rgba(232, 147, 63, 0.35)',
+    color: '#EFAE6B', borderRadius: '8px', padding: '7px 12px',
+    fontSize: '12.5px', fontWeight: 800, cursor: 'pointer', fontFamily: 'var(--font-main)',
+    whiteSpace: 'nowrap',
   },
   statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: '16px',
-    marginBottom: '40px',
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+    gap: '12px', marginBottom: '28px',
   },
-  statsCard: {
-    padding: '20px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-  },
+  statsCard: { padding: '16px 18px', display: 'flex', alignItems: 'center', gap: '13px' },
   iconCircle: {
-    width: '46px',
-    height: '46px',
-    borderRadius: '12px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '42px', height: '42px', borderRadius: '11px',
+    display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0,
   },
-  statsVal: {
-    fontSize: '24px',
-    fontWeight: '700',
-    color: '#ffffff',
-  },
+  statsVal: { fontSize: '21px', color: '#F4F5F7', lineHeight: 1.1 },
   statsLabel: {
-    fontSize: '12px',
-    color: '#94a3b8',
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    marginTop: '2px',
+    fontSize: '11px', color: '#7A828E', fontWeight: 800,
+    textTransform: 'uppercase', letterSpacing: '0.6px', marginTop: '3px',
   },
-  sectionTitle: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: '#ffffff',
-    marginBottom: '20px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
+  filterSection: {
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    gap: '14px', flexWrap: 'wrap', marginBottom: '20px',
   },
-  emptyContainer: {
-    padding: '60px 24px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+  categoriesList: { display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' },
+  addCategoryForm: { display: 'flex', alignItems: 'center', gap: '6px' },
+  categoryInput: {
+    background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)',
+    borderRadius: '8px', padding: '6px 12px', color: '#fff', fontSize: '13px', outline: 'none', width: '140px',
   },
-  emptyIcon: {
-    color: '#334155',
-    marginBottom: '16px',
+  categorySubmitBtn: {
+    background: 'var(--primary-color)', border: 'none', borderRadius: '8px',
+    color: '#17120B', padding: '6px 12px', fontSize: '12px', fontWeight: 800, cursor: 'pointer',
   },
-  emptyTitle: {
-    fontSize: '20px',
-    fontWeight: '700',
-    marginBottom: '8px',
+  categoryCancelBtn: {
+    background: 'transparent', border: 'none', color: '#7A828E',
+    padding: '6px', fontSize: '13px', cursor: 'pointer',
   },
-  emptyDesc: {
-    color: '#94a3b8',
-    fontSize: '15px',
-    maxWidth: '500px',
-    lineHeight: '1.6',
+  searchBox: {
+    display: 'flex', alignItems: 'center', gap: '8px',
+    background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)',
+    borderRadius: '10px', padding: '8px 14px', minWidth: '210px',
   },
+  searchInput: {
+    background: 'transparent', border: 'none', outline: 'none',
+    color: '#F4F5F7', fontSize: '14px', width: '100%',
+  },
+  emptyTitle: { fontSize: '20px', color: '#F4F5F7', marginBottom: '8px' },
+  emptyDesc: { color: '#99A1AC', fontSize: '14px', maxWidth: '460px', lineHeight: 1.6 },
   setsGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
+    display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+    gap: '14px', paddingBottom: '40px', alignItems: 'start',
   },
-  setCard: {
-    padding: '24px',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-  },
+  setCard: { padding: '20px', cursor: 'pointer', transition: 'all 0.25s ease' },
   setCardHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    flexWrap: 'wrap',
-    gap: '16px',
+    display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px',
   },
-  setMainInfo: {
-    flex: '1 1 300px',
-  },
-  setCardTitle: {
-    fontSize: '18px',
-    fontWeight: '700',
-    color: '#ffffff',
-    marginBottom: '6px',
-  },
-  setCardDesc: {
-    color: '#94a3b8',
-    fontSize: '14px',
-    marginBottom: '12px',
-    lineHeight: '1.5',
-  },
+  setMainInfo: { flex: 1, minWidth: 0 },
+  badgeRow: { display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' },
+  setCardTitle: { fontSize: '18px', color: '#F4F5F7', marginBottom: '5px', wordBreak: 'break-word' },
+  setCardDesc: { color: '#99A1AC', fontSize: '13px', lineHeight: 1.5 },
   cardCounter: {
-    background: 'rgba(99, 102, 241, 0.12)',
-    color: '#6366f1',
-    fontSize: '12px',
-    fontWeight: '700',
-    padding: '4px 10px',
-    borderRadius: '100px',
-    display: 'inline-block',
+    background: 'rgba(232, 147, 63, 0.12)', color: '#E8933F', fontSize: '11px',
+    fontWeight: 800, padding: '3px 10px', borderRadius: '100px',
   },
-  setActions: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
+  categoryBadge: {
+    background: 'var(--bg-tertiary)', color: '#99A1AC', fontSize: '11px',
+    fontWeight: 800, padding: '3px 10px', borderRadius: '100px',
   },
+  setActions: { display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 },
   actionIconButton: {
-    background: 'rgba(255, 255, 255, 0.03)',
-    border: '1px solid rgba(255, 255, 255, 0.05)',
-    borderRadius: '8px',
-    color: '#94a3b8',
-    padding: '8px',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    background: 'var(--bg-tertiary)', border: '1px solid var(--border-subtle)',
+    borderRadius: '8px', color: '#99A1AC', padding: '8px', cursor: 'pointer',
+    transition: 'all 0.2s ease', display: 'flex',
   },
   deleteIconButton: {
-    background: 'rgba(244, 63, 94, 0.05)',
-    border: '1px solid rgba(244, 63, 94, 0.1)',
-    borderRadius: '8px',
-    color: '#f43f5e',
-    padding: '8px',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    background: 'rgba(229, 72, 77, 0.06)', border: '1px solid rgba(229, 72, 77, 0.15)',
+    borderRadius: '8px', color: '#E5484D', padding: '8px', cursor: 'pointer',
+    transition: 'all 0.2s ease', display: 'flex',
   },
   confirmBox: {
-    display: 'flex',
-    gap: '4px',
-    background: '#1e293b',
-    padding: '4px',
-    borderRadius: '8px',
-    border: '1px solid rgba(244, 63, 94, 0.2)',
+    display: 'flex', gap: '4px', background: 'var(--bg-tertiary)', padding: '4px',
+    borderRadius: '8px', border: '1px solid rgba(229, 72, 77, 0.25)',
   },
   confirmDeleteBtn: {
-    background: '#f43f5e',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '6px',
-    fontSize: '12px',
-    fontWeight: '700',
-    padding: '6px 12px',
-    cursor: 'pointer',
+    background: '#E5484D', color: '#fff', border: 'none', borderRadius: '6px',
+    fontSize: '12px', fontWeight: 800, padding: '6px 12px', cursor: 'pointer',
   },
   cancelDeleteBtn: {
-    background: 'transparent',
-    color: '#94a3b8',
-    border: 'none',
-    fontSize: '12px',
-    fontWeight: '700',
-    padding: '6px 10px',
-    cursor: 'pointer',
+    background: 'transparent', color: '#99A1AC', border: 'none',
+    fontSize: '12px', fontWeight: 800, padding: '6px 10px', cursor: 'pointer',
   },
-  expandTrigger: {
-    textAlign: 'center',
-    marginTop: '16px',
-    borderTop: '1px solid rgba(255, 255, 255, 0.03)',
-    paddingTop: '12px',
-  },
-  expandText: {
-    fontSize: '12px',
-    color: '#94a3b8',
-    fontWeight: '600',
-    transition: 'color 0.2s ease',
+  expandHint: {
+    textAlign: 'center', marginTop: '16px', borderTop: '1px solid var(--border-subtle)',
+    paddingTop: '12px', fontSize: '12px', color: '#7A828E', fontWeight: 700,
   },
   studyModesArea: {
-    marginTop: '20px',
-    borderTop: '1px dashed rgba(255, 255, 255, 0.08)',
-    paddingTop: '20px',
-    animation: 'fadeIn 0.3s ease',
-  },
-  studyAreaTitle: {
-    fontSize: '14px',
-    fontWeight: '700',
-    color: '#f8fafc',
-    marginBottom: '14px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-  },
-  modesContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-    gap: '12px',
+    marginTop: '16px', borderTop: '1px solid var(--border-subtle)', paddingTop: '16px',
+    display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px',
+    animation: 'fadeIn 0.25s ease',
   },
   modeOption: {
-    background: 'rgba(255, 255, 255, 0.02)',
-    padding: '14px 18px',
-    borderRadius: '10px',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    transition: 'all 0.2s ease',
-    border: '1px solid rgba(255, 255, 255, 0.03)',
+    background: 'var(--bg-primary)', padding: '12px 14px', borderRadius: '10px',
+    cursor: 'pointer', display: 'flex', justifyContent: 'space-between',
+    alignItems: 'center', transition: 'all 0.2s ease', border: '1px solid',
+    textAlign: 'left', width: '100%',
   },
-  modeOptionMeta: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-  },
-  modeOptionName: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: '#ffffff',
-  },
-  modeOptionDesc: {
-    fontSize: '11px',
-    color: '#94a3b8',
-  }
+  modeOptionName: { fontSize: '14px', fontWeight: 800, display: 'block' },
+  modeOptionDesc: { fontSize: '11px', color: '#7A828E', display: 'block', marginTop: '2px' },
 };
 
-/* Adiciona efeitos hover adicionais nos elementos dinâmicos através de uma folha de estilos */
 const extraStyles = `
-.modeOption:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  transform: translateX(4px);
-}
-.setCard:hover {
-  border-color: rgba(99, 102, 241, 0.15) !important;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
-}
-.actionIconButton:hover {
-  background: var(--primary-color) !important;
-  color: white !important;
-}
-.deleteIconButton:hover {
-  background: var(--color-danger) !important;
-  color: white !important;
+.deck-card:hover { border-color: rgba(255, 255, 255, 0.14) !important; }
+.mode-option-btn:hover { transform: translateY(-2px); background: var(--bg-tertiary) !important; }
+.deck-edit-btn:hover { color: #F4F5F7 !important; border-color: rgba(255,255,255,0.2) !important; }
+.deck-delete-btn:hover { background: #E5484D !important; color: #fff !important; }
+@media (max-width: 480px) {
+  .deck-card .studyModesArea { grid-template-columns: 1fr !important; }
 }
 `;
 if (typeof document !== 'undefined') {
-  const styleSheet = document.createElement("style");
+  const styleSheet = document.createElement('style');
   styleSheet.innerText = extraStyles;
   document.head.appendChild(styleSheet);
 }

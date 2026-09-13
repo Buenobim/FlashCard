@@ -12,7 +12,12 @@
 
 import React, { useState, useEffect } from 'react';
 // Importamos ícones da Lucide para dar o visual de prova acadêmica de alto nível
-import { ArrowLeft, CheckCircle2, XCircle, Award, FileText, Send, RotateCcw } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, XCircle, Award, FileText, Send, RotateCcw, HelpCircle } from 'lucide-react';
+// O CORRETOR e a MONTAGEM DAS QUESTÕES moram em arquivos sem tela, conferidos
+// por `npm run testar`. É de lá que vem o entendimento de "12500 N = 12,5 kN" e
+// a garantia de que nenhuma alternativa errada é igual à certa.
+import { corrigirResposta } from '../estudo/correcaoCore.js';
+import { montarMultiplaEscolha, montarVerdadeiroFalso } from '../estudo/questoesCore.js';
 
 /*
   COMPONENTE: TestMode
@@ -28,6 +33,18 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
   const [scorePercent, setScorePercent] = useState(0);    // Nota percentual calculada (0 a 100)
   const [letterGrade, setLetterGrade] = useState('F');    // Conceito final de nota (A+, B, F etc.)
   const [lightboxImage, setLightboxImage] = useState(null); // Estado para a imagem em zoom (lightbox)
+
+  /*
+    A CORREÇÃO E A SUA PALAVRA FINAL
+
+    correcoes: o que o corretor automático decidiu em cada questão
+               ('certo', 'errado' ou 'revisar') e o motivo, em português.
+    ajustes:   o que VOCÊ decidiu nas questões que o corretor não tem como
+               julgar sozinho (resposta escrita com outras palavras). A máquina
+               não chuta: ela pergunta.
+  */
+  const [correcoes, setCorrecoes] = useState({});
+  const [ajustes, setAjustes] = useState({});
 
   // 2. GERAÇÃO AUTOMÁTICA DA PROVA:
   // Dispara quando carrega o baralho. Monta a mistura inteligente de questões.
@@ -54,50 +71,38 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
       // 1. Decidimos o tipo de questão de forma cíclica (0: Verdadeiro/Falso, 1: Múltipla Escolha, 2: Escrita)
       // para garantir que a prova tenha uma boa variedade de desafios!
       const typeIndex = index % 3;
-      let type = 'written';
+      let type;
       let options = [];
-      let promptText = '';
+      let promptText;
       let isAssociationCorrect = true; // Usado apenas no tipo Verdadeiro/Falso
-      let statementDefinition = '';    // Usado apenas no tipo Verdadeiro/Falso
 
       if (typeIndex === 0) {
         // --- QUESTÃO TIPO VERDADEIRO OU FALSO ---
         type = 'true-false';
-        
-        // Decidimos aleatoriamente se faremos uma afirmação verdadeira ou falsa
-        isAssociationCorrect = Math.random() > 0.5;
-        
-        if (isAssociationCorrect) {
-          // Associação Correta: Termo bate com sua própria definição
-          statementDefinition = card.definition;
-        } else {
-          // Associação Falsa: Termo associado à definição de outro cartão
-          const otherCards = set.cards.filter(c => c.id !== card.id);
-          if (otherCards.length > 0) {
-            const randomCard = otherCards[Math.floor(Math.random() * otherCards.length)];
-            statementDefinition = randomCard.definition;
-          } else {
-            // Queda de segurança se tiver apenas 1 cartão no baralho (afirmação verdadeira por falta de outra)
-            statementDefinition = card.definition;
-            isAssociationCorrect = true;
-          }
-        }
-        
-        promptText = `O termo "${card.term}" significa "${statementDefinition}"?`;
+
+        // A afirmação FALSA agora usa obrigatoriamente uma definição que diz
+        // outra coisa. Antes, o app pegava a definição de qualquer outro cartão
+        // e cravava "isto é falso" — se o outro cartão dissesse a mesma coisa
+        // com outras palavras, você levava erro por ter acertado.
+        const afirmacao = montarVerdadeiroFalso(card, set.cards);
+        isAssociationCorrect = afirmacao.verdadeira;
+
+        promptText = `O termo "${card.term}" significa "${afirmacao.definicaoDaAfirmacao}"?`;
 
       } else if (typeIndex === 1 && set.cards.length >= 2) {
         // --- QUESTÃO TIPO MÚLTIPLA ESCOLHA ---
-        type = 'multiple-choice';
-        promptText = `Qual é a definição correta para "${card.term}"?`;
-        
-        // Sorteia até 3 definições falsas
-        const otherCards = set.cards.filter(c => c.id !== card.id);
-        const wrongCards = [...otherCards]
-          .sort(() => Math.random() - 0.5)
-          .slice(0, Math.min(3, otherCards.length));
-        
-        // Junta a correta com as erradas e embaralha a ordem final das alternativas
-        options = [card, ...wrongCards].sort(() => Math.random() - 0.5);
+        // As alternativas vêm prontas e sem repetição (ver questoesCore).
+        const questao = montarMultiplaEscolha(card, set.cards);
+        if (questao) {
+          type = 'multiple-choice';
+          promptText = `Qual é a definição correta para "${card.term}"?`;
+          options = questao.opcoes;
+        } else {
+          // Não sobrou nenhuma alternativa errada honesta para oferecer:
+          // vira questão escrita em vez de uma múltipla escolha de uma opção só.
+          type = 'written';
+          promptText = `Digite a definição correspondente ao termo: "${card.term}"`;
+        }
 
       } else {
         // --- QUESTÃO TIPO ESCRITA (DISSERTATIVA) ---
@@ -111,6 +116,9 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
         cardId: card.id,
         term: card.term,
         correctDefinition: card.definition,
+        // Formas alternativas de responder que VOCÊ aprovou no cartão
+        // (campo respostasAceitas, ou "12,5 kN | 12500 N" no verso).
+        aceitas: Array.isArray(card.respostasAceitas) ? card.respostasAceitas : [],
         image: card.image || '', // Salva a imagem da resposta correta para usar no gabarito
         prompt: promptText,
         options: options,
@@ -121,6 +129,8 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
 
     setQuestions(generatedQuestions);
     setIsSubmitted(false);
+    setCorrecoes({});
+    setAjustes({});
   };
 
   /*
@@ -139,53 +149,80 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
   };
 
   /*
+    FUNÇÃO INTERNA: corrigirQuestao
+    PARA QUE SERVE: corrige UMA questão e devolve { situacao, motivo }.
+      'certo'   -> ponto garantido;
+      'errado'  -> sem ponto, com o motivo explicado;
+      'revisar' -> o corretor NÃO tem como decidir sozinho (você escreveu a
+                   definição com outras palavras, ou acertou o número e esqueceu
+                   a unidade). Fica valendo zero até VOCÊ dizer, no gabarito, que
+                   acertou. A máquina não chuta a seu favor nem contra você.
+  */
+  const corrigirQuestao = (q) => {
+    if (q.type === 'true-false') {
+      const esperado = q.isAssociationCorrect ? 'true' : 'false';
+      if (q.userAnswer === esperado) return { situacao: 'certo', motivo: '' };
+      return {
+        situacao: 'errado',
+        motivo: `A afirmação era ${q.isAssociationCorrect ? 'verdadeira' : 'falsa'}.`,
+      };
+    }
+    if (q.type === 'multiple-choice') {
+      if (q.userAnswer === q.cardId) return { situacao: 'certo', motivo: '' };
+      return { situacao: 'errado', motivo: q.userAnswer ? 'Alternativa incorreta.' : 'Não respondida.' };
+    }
+    // Escrita: entra o corretor de verdade (valor, unidade e tolerância).
+    return corrigirResposta(q.userAnswer, q.correctDefinition, { aceitas: q.aceitas });
+  };
+
+  // A palavra final sobre uma questão: o que VOCÊ decidiu vale mais do que o
+  // palpite do corretor automático.
+  const situacaoFinal = (q, mapa = correcoes, aj = ajustes) =>
+    aj[q.id] || mapa[q.id]?.situacao || 'errado';
+
+  const conceitoDaNota = (percent) => {
+    if (percent === 100) return 'A+';
+    if (percent >= 90) return 'A';
+    if (percent >= 80) return 'B';
+    if (percent >= 70) return 'C';
+    if (percent >= 60) return 'D';
+    return 'F';
+  };
+
+  // Recalcula a nota levando em conta as suas revisões manuais.
+  const recalcularNota = (mapa, aj) => {
+    const acertos = questions.filter(q => situacaoFinal(q, mapa, aj) === 'certo').length;
+    const percent = questions.length ? Math.round((acertos / questions.length) * 100) : 0;
+    setScorePercent(percent);
+    setLetterGrade(conceitoDaNota(percent));
+  };
+
+  /*
+    FUNÇÃO INTERNA: revisarQuestao
+    PARA QUE SERVE: os botões "acertei / errei" do gabarito. É a revisão humana
+    das questões que o corretor marcou como 'revisar' (e a chance de consertar
+    uma correção que você achou injusta).
+  */
+  const revisarQuestao = (questionId, decisao) => {
+    const novos = { ...ajustes, [questionId]: decisao };
+    setAjustes(novos);
+    recalcularNota(correcoes, novos);
+  };
+
+  /*
     FUNÇÃO INTERNA: handleSubmit
-    PARA QUE SERVE: Dispara ao clicar em "Entregar Prova". Roda o corretor automático:
-      - Para V/F: Checa se a escolha bate com a veracidade da afirmação.
-      - Para Múltipla Escolha: Checa se o ID da alternativa bate.
-      - Para Dissertativa: Compara os textos sem importar letras maiúsculas/minúsculas 
-        ou espaços extras!
-    Ao final, calcula a porcentagem e o conceito de nota.
+    PARA QUE SERVE: dispara ao clicar em "Entregar Prova". Passa cada questão
+    pelo corretor, guarda o motivo de cada resultado e calcula a nota.
   */
   const handleSubmit = () => {
-    let correctCount = 0;
+    const mapa = {};
+    questions.forEach(q => { mapa[q.id] = corrigirQuestao(q); });
 
-    questions.forEach(q => {
-      if (q.type === 'true-false') {
-        // Para V/F, a resposta do usuário é 'true' ou 'false'
-        const expected = q.isAssociationCorrect ? 'true' : 'false';
-        if (q.userAnswer === expected) {
-          correctCount++;
-        }
-      } else if (q.type === 'multiple-choice') {
-        // Para múltipla escolha, a resposta do usuário é o ID do cartão selecionado
-        if (q.userAnswer === q.cardId) {
-          correctCount++;
-        }
-      } else if (q.type === 'written') {
-        // Para escrita, comparamos o texto normalizado (caixa baixa e sem espaços nas pontas)
-        const userText = q.userAnswer.trim().toLowerCase();
-        const correctText = q.correctDefinition.trim().toLowerCase();
-        if (userText === correctText) {
-          correctCount++;
-        }
-      }
-    });
-
-    const percent = Math.round((correctCount / questions.length) * 100);
-    setScorePercent(percent);
-
-    // Atribuição clássica de conceito de nota acadêmica
-    let grade = 'F';
-    if (percent === 100) grade = 'A+';
-    else if (percent >= 90) grade = 'A';
-    else if (percent >= 80) grade = 'B';
-    else if (percent >= 70) grade = 'C';
-    else if (percent >= 60) grade = 'D';
-
-    setLetterGrade(grade);
+    setCorrecoes(mapa);
+    setAjustes({});
+    recalcularNota(mapa, {});
     setIsSubmitted(true);
-    
+
     // Registra mais uma sessão de estudos finalizada nas estatísticas globais
     onCompleteSession();
   };
@@ -300,7 +337,7 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                                   borderRadius: '4px',
                                   border: '1px solid rgba(255, 255, 255, 0.1)',
                                   objectFit: 'contain',
-                                  background: '#090d16',
+                                  background: '#0B0C0E',
                                   cursor: 'zoom-in',
                                 }} 
                                 onClick={(e) => {
@@ -390,25 +427,29 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
           <h3 style={styles.gabaritoHeader}>Gabarito e Correção de Questões</h3>
           <div style={styles.questionsList}>
             {questions.map((q, idx) => {
-              // Lógica de correção para mostrar se o usuário acertou esta questão individual
-              let isCorrect = false;
-              let userFriendlyAnswer = '';
-              let userFriendlyExpected = '';
+              // O que o corretor decidiu (e o que VOCÊ decidiu depois).
+              const situacao = situacaoFinal(q);
+              const motivo = correcoes[q.id]?.motivo || '';
+              const precisaDeVoce = situacao === 'revisar';
+              const isCorrect = situacao === 'certo';
+
+              // Cor e rótulo do selo desta questão
+              const cor = isCorrect ? 'var(--color-success)'
+                : precisaDeVoce ? 'var(--color-warning)'
+                  : 'var(--color-danger)';
+              const rotulo = isCorrect ? 'Acertou' : precisaDeVoce ? 'Confira você mesmo' : 'Errou';
+
+              let userFriendlyAnswer;
+              let userFriendlyExpected = q.correctDefinition;
 
               if (q.type === 'true-false') {
-                const expected = q.isAssociationCorrect ? 'true' : 'false';
-                isCorrect = q.userAnswer === expected;
                 userFriendlyAnswer = q.userAnswer === 'true' ? 'Verdadeiro' : q.userAnswer === 'false' ? 'Falso' : '(Não respondido)';
                 userFriendlyExpected = q.isAssociationCorrect ? 'Verdadeiro' : 'Falso';
               } else if (q.type === 'multiple-choice') {
-                isCorrect = q.userAnswer === q.cardId;
                 const chosenOpt = q.options.find(opt => opt.id === q.userAnswer);
                 userFriendlyAnswer = chosenOpt ? chosenOpt.definition : '(Não respondido)';
-                userFriendlyExpected = q.correctDefinition;
-              } else if (q.type === 'written') {
-                isCorrect = q.userAnswer.trim().toLowerCase() === q.correctDefinition.trim().toLowerCase();
-                userFriendlyAnswer = q.userAnswer.trim() || '(Não respondido)';
-                userFriendlyExpected = q.correctDefinition;
+              } else {
+                userFriendlyAnswer = (q.userAnswer || '').trim() || '(Não respondido)';
               }
 
               return (
@@ -416,7 +457,7 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                   key={q.id} 
                   style={{ 
                     ...styles.questionCard, 
-                    borderLeft: `5px solid ${isCorrect ? 'var(--color-success)' : 'var(--color-danger)'}`
+                    borderLeft: `5px solid ${cor}`
                   }} 
                   className="glass-panel"
                 >
@@ -424,11 +465,11 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                     <span style={styles.questionNumber}>Questão {idx + 1}</span>
                     <span style={{ 
                       ...styles.gabaritoStatusTag, 
-                      color: isCorrect ? 'var(--color-success)' : 'var(--color-danger)',
-                      background: isCorrect ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.1)'
+                      color: cor,
+                      background: isCorrect ? 'rgba(62, 207, 142, 0.1)' : precisaDeVoce ? 'rgba(232, 147, 63, 0.12)' : 'rgba(229, 72, 77, 0.1)'
                     }}>
-                      {isCorrect ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-                      {isCorrect ? 'Acertou' : 'Errou'}
+                      {isCorrect ? <CheckCircle2 size={14} /> : precisaDeVoce ? <HelpCircle size={14} /> : <XCircle size={14} />}
+                      {rotulo}
                     </span>
                   </div>
 
@@ -437,7 +478,7 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                   <div style={styles.gabaritoComparisonBox}>
                     <div style={styles.gabaritoUserAns}>
                       <span style={styles.gabaritoLabel}>Sua Resposta:</span>
-                      <strong style={{ color: isCorrect ? 'var(--color-success)' : 'var(--color-danger)' }}>
+                      <strong style={{ color: cor }}>
                         {userFriendlyAnswer}
                       </strong>
                     </div>
@@ -448,6 +489,54 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                         <strong style={{ color: 'var(--color-success)' }}>
                           {userFriendlyExpected}
                         </strong>
+                      </div>
+                    )}
+
+                    {/* O PORQUÊ DA CORREÇÃO: unidade trocada, valor fora da
+                        tolerância, resposta em branco... em vez de um "errou"
+                        seco que não ensina nada. */}
+                    {motivo && (
+                      <div style={styles.motivoDaCorrecao}>
+                        <span style={styles.gabaritoLabel}>Por quê:</span>
+                        <span style={{ color: '#C6CBD4' }}>{motivo}</span>
+                      </div>
+                    )}
+
+                    {/* A SUA PALAVRA FINAL: em resposta escrita, quem decide se
+                        a explicação com outras palavras valeu é você. */}
+                    {q.type === 'written' && (
+                      <div style={styles.linhaDeRevisao}>
+                        <span style={styles.gabaritoLabel}>
+                          {precisaDeVoce ? 'Escreveu com outras palavras? Você decide:' : 'Discorda da correção?'}
+                        </span>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button
+                            type="button"
+                            onClick={() => revisarQuestao(q.id, 'certo')}
+                            className="btn-secondary"
+                            style={{
+                              ...styles.botaoDeRevisao,
+                              borderColor: ajustes[q.id] === 'certo' ? 'var(--color-success)' : undefined,
+                              color: ajustes[q.id] === 'certo' ? 'var(--color-success)' : undefined,
+                            }}
+                            title="Contar esta questão como acerto"
+                          >
+                            <CheckCircle2 size={14} /> Eu acertei
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => revisarQuestao(q.id, 'errado')}
+                            className="btn-secondary"
+                            style={{
+                              ...styles.botaoDeRevisao,
+                              borderColor: ajustes[q.id] === 'errado' ? 'var(--color-danger)' : undefined,
+                              color: ajustes[q.id] === 'errado' ? 'var(--color-danger)' : undefined,
+                            }}
+                            title="Contar esta questão como erro"
+                          >
+                            <XCircle size={14} /> Eu errei
+                          </button>
+                        </div>
                       </div>
                     )}
 
@@ -464,7 +553,7 @@ export default function TestMode({ set, onNavigate, onCompleteSession }) {
                             borderRadius: '6px',
                             border: '1px solid rgba(255, 255, 255, 0.1)',
                             objectFit: 'contain',
-                            background: '#090d16',
+                            background: '#0B0C0E',
                             alignSelf: 'flex-start',
                             cursor: 'zoom-in',
                           }} 
@@ -518,6 +607,31 @@ const styles = {
     padding: '8px 16px',
     fontSize: '13px',
   },
+  motivoDaCorrecao: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    marginTop: '10px',
+    fontSize: '13px',
+    lineHeight: '1.5',
+  },
+  linhaDeRevisao: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '10px',
+    marginTop: '12px',
+    paddingTop: '10px',
+    borderTop: '1px solid rgba(255,255,255,0.08)',
+  },
+  botaoDeRevisao: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '6px 12px',
+    fontSize: '12px',
+  },
   setTitle: {
     fontSize: '20px',
     fontWeight: '800',
@@ -536,7 +650,7 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     fontSize: '14px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     border: '1px solid rgba(255, 255, 255, 0.05)',
   },
   questionsList: {
@@ -561,21 +675,21 @@ const styles = {
   questionNumber: {
     fontSize: '13px',
     fontWeight: '700',
-    color: '#94a3b8',
+    color: '#99A1AC',
     textTransform: 'uppercase',
   },
   questionTypeTag: {
     fontSize: '11px',
     fontWeight: '700',
-    color: '#6366f1',
-    background: 'rgba(99, 102, 241, 0.08)',
+    color: '#E8933F',
+    background: 'rgba(232, 147, 63, 0.08)',
     padding: '4px 10px',
     borderRadius: '100px',
   },
   questionPrompt: {
     fontSize: '17px',
     fontWeight: '700',
-    color: '#f8fafc',
+    color: '#F4F5F7',
     marginBottom: '20px',
     lineHeight: '1.4',
   },
@@ -599,16 +713,16 @@ const styles = {
     transition: 'all 0.2s ease',
   },
   tfBtnSelectedTrue: {
-    background: 'rgba(16, 185, 129, 0.15)',
+    background: 'rgba(62, 207, 142, 0.15)',
     borderColor: 'var(--color-success)',
     color: 'var(--color-success)',
-    boxShadow: '0 0 10px rgba(16, 185, 129, 0.15)',
+    boxShadow: '0 0 10px rgba(62, 207, 142, 0.15)',
   },
   tfBtnSelectedFalse: {
-    background: 'rgba(244, 63, 94, 0.15)',
+    background: 'rgba(229, 72, 77, 0.15)',
     borderColor: 'var(--color-danger)',
     color: 'var(--color-danger)',
-    boxShadow: '0 0 10px rgba(244, 63, 94, 0.15)',
+    boxShadow: '0 0 10px rgba(229, 72, 77, 0.15)',
   },
   mcOptionsGrid: {
     display: 'grid',
@@ -628,7 +742,7 @@ const styles = {
     transition: 'all 0.2s ease',
   },
   mcOptionBtnSelected: {
-    background: 'rgba(99, 102, 241, 0.15)',
+    background: 'rgba(232, 147, 63, 0.15)',
     borderColor: 'var(--primary-color)',
     color: '#ffffff',
     boxShadow: 'var(--box-shadow-glow)',
@@ -644,7 +758,7 @@ const styles = {
     marginTop: '20px',
     marginBottom: '60px',
     justifyContent: 'center',
-    background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+    background: 'linear-gradient(135deg, #E8933F 0%, #E77950 100%)',
   },
   resultsArea: {
     maxWidth: '750px',
@@ -666,7 +780,7 @@ const styles = {
     marginBottom: '4px',
   },
   scoreSubtitle: {
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontSize: '15px',
     marginBottom: '32px',
   },
@@ -693,7 +807,7 @@ const styles = {
   },
   finalScoreLabel: {
     fontSize: '11px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '600',
     textTransform: 'uppercase',
     marginTop: '2px',
@@ -714,14 +828,14 @@ const styles = {
   },
   finalLetterLabel: {
     fontSize: '11px',
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '600',
     textTransform: 'uppercase',
     marginTop: '2px',
   },
   resultsCongrats: {
     fontSize: '15px',
-    color: '#f8fafc',
+    color: '#F4F5F7',
     maxWidth: '500px',
     lineHeight: '1.6',
     marginBottom: '36px',
@@ -780,7 +894,7 @@ const styles = {
     paddingTop: '8px',
   },
   gabaritoLabel: {
-    color: '#94a3b8',
+    color: '#99A1AC',
     fontWeight: '500',
   }
 };

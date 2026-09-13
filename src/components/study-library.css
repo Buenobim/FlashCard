@@ -1,0 +1,929 @@
+.study-create-wrap { position: relative; }
+.study-create-menu { position: absolute; z-index: 30; top: calc(100% + 10px); right: 0; width: min(360px, 92vw); padding: 8px; border: 1px solid var(--border-subtle); border-radius: 16px; background: #1b1d22; box-shadow: 0 22px 60px rgba(0,0,0,.55); }
+.study-create-menu button { width: 100%; display: flex; gap: 12px; align-items: center; padding: 12px; border: 0; border-radius: 11px; background: transparent; color: #f4f5f7; text-align: left; cursor: pointer; }
+.study-create-menu button:hover { background: rgba(255,255,255,.055); }
+.study-create-menu button>span:first-child { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto; }
+.study-create-menu strong,.study-create-menu small { display:block; }.study-create-menu strong { font-size:13px; }.study-create-menu small { color:#8e96a3; margin-top:2px; font-size:11px; }
+.study-material-card { padding: 20px; min-height: 190px; display:flex; flex-direction:column; cursor:pointer; transition:.2s ease; }
+.study-material-card:hover { transform: translateY(-2px); border-color:rgba(255,255,255,.15); }
+.study-material-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.study-material-type { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+.study-material-title { margin:18px 0 7px; font-size:19px; }.study-material-preview { color:#99a1ac; font-size:12.5px; line-height:1.55; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.study-material-footer { margin-top:auto; padding-top:16px; display:flex; align-items:center; justify-content:space-between; color:#747c88; font-size:11px; }
+.study-material-actions { display:flex; gap:5px; }.study-material-actions button { border:1px solid var(--border-subtle); border-radius:8px; background:#202329; color:#9ba3af; padding:7px; display:flex; cursor:pointer; }.study-material-actions button:last-child { color:#e76b70; }
+.study-task-preview { margin-top:12px; display:flex; flex-direction:column; gap:7px; }.study-task-preview label { display:flex; align-items:center; gap:8px; color:#aeb4bf; font-size:12px; cursor:pointer; }.study-task-preview input { accent-color:#34d399; }
+.study-modal-overlay { position:fixed; z-index:200; inset:0; padding:20px; display:grid; place-items:center; background:rgba(4,5,12,.78); backdrop-filter:blur(10px); }
+.study-modal { width:min(600px,100%); max-height:calc(100dvh - 40px); overflow:auto; padding:26px; border:1px solid rgba(160,170,230,.2); border-radius:22px; background:#12141c; box-shadow:0 35px 100px rgba(0,0,0,.7); }
+.study-modal-header { display:flex; align-items:center; gap:12px; margin-bottom:24px; }.study-modal-header>div { flex:1; }.study-modal-header small { color:#858da4; letter-spacing:.12em; font-size:9px; font-weight:800; }.study-modal-header h2 { font-size:24px; margin-top:2px; }.study-modal-icon { width:46px; height:46px; display:grid; place-items:center; border-radius:13px; }
+.study-icon-button { border:0; background:transparent; color:#8e96a3; padding:7px; cursor:pointer; }
+.study-field { display:flex; flex-direction:column; gap:7px; margin-bottom:16px; }.study-field>span { color:#9ba3b5; font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; }.study-field input,.study-field textarea,.study-field select,.study-url-field { width:100%; border:1px solid rgba(160,170,230,.18); border-radius:11px; background:#1c1f2a; color:#f4f5f7; padding:12px 14px; outline:none; font:inherit; }.study-field textarea { resize:vertical; line-height:1.6; }.study-field input:focus,.study-field textarea:focus,.study-field select:focus { border-color:#8b7bff; }.study-url-field { display:flex; align-items:center; gap:8px; }.study-url-field input { border:0; background:transparent; padding:0; }
+.study-notebook-info { display:flex; gap:13px; padding:17px; border-radius:13px; background:rgba(167,139,250,.08); color:#a78bfa; }.study-notebook-info p { color:#9ba3b5; font-size:12px; line-height:1.5; margin-top:4px; }.study-preview-link { display:inline-flex; align-items:center; gap:6px; color:#f59e0b; font-size:12px; }
+.study-modal-footer { position:sticky; bottom:-26px; display:flex; justify-content:flex-end; gap:9px; margin-top:24px; padding:18px 0 0; background:linear-gradient(180deg,rgba(18,20,28,0),#12141c 30%); }
+.study-notebook-page { position:fixed; inset:86px 0 0; background:#0c0d0f; }.study-notebook-page>header { height:68px; display:flex; align-items:center; gap:18px; padding:10px 22px; border-bottom:1px solid var(--border-subtle); }.study-notebook-page>header>div { display:flex; align-items:center; gap:10px; }.study-notebook-page>header>div>span { width:38px; height:38px; border-radius:10px; display:grid; place-items:center; color:#a78bfa; background:rgba(167,139,250,.12); }.study-notebook-page small { color:#8d95a3; font-size:9px; font-weight:800; letter-spacing:.12em; }.study-notebook-page h2 { font-size:18px; }.study-notebook-canvas { position:absolute; inset:68px 0 0; }
+@media(max-width:650px){.study-create-menu{position:fixed;left:10px;right:10px;top:auto;bottom:78px;width:auto}.study-modal-overlay{align-items:end;padding:8px}.study-modal{padding:22px 17px 16px;border-radius:22px;max-height:calc(100dvh - 16px)}.study-modal-footer{bottom:-16px}.study-modal-footer button{flex:1}.study-notebook-page{inset:72px 0 72px}.study-notebook-page>header{padding:9px 12px}.study-notebook-page>header .btn-glass{min-width:40px}.study-material-card{min-height:170px}}
+
+/* =======================================================================
+   SUB-CÉREBRO VISUAL 3D (SubBrainView)
+   Canvas 3D em tela cheia com esferas orbitantes, HUD flutuante e modais.
+   ======================================================================= */
+
+.sub-brain-canvas-container {
+  position: fixed;
+  inset: 64px 0 0 0;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background: #04040d;
+  z-index: 90;
+  overflow: hidden;
+}
+
+.sub-brain-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sub-brain-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* HUD Superior: Botão voltar, Título da matéria, Badge do Grupo */
+.sub-brain-hud {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  pointer-events: none;
+}
+.sub-brain-hud > * {
+  pointer-events: auto;
+}
+
+.sub-brain-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sub-brain-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  background: rgba(18,20,30,.75);
+  backdrop-filter: blur(12px);
+  color: #f4f5f7;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .18s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.sub-brain-back-btn:hover {
+  background: rgba(255,255,255,.12);
+  border-color: rgba(255,255,255,.28);
+  transform: translateY(-1px);
+}
+
+.sub-brain-category-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(232,147,63,.18);
+  border: 1px solid rgba(232,147,63,.3);
+  color: #E8933F;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  backdrop-filter: blur(10px);
+}
+
+/* HUD Inferior: Barra de ferramentas com botão "+ Novo" */
+.sub-brain-hud-bottom {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px;
+  background: rgba(18,20,30,.8);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.6);
+}
+
+/* Overlay do Painel lateral/modal ao clicar numa esfera */
+.sub-brain-panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(4, 5, 12, 0.78);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.sub-brain-panel {
+  width: min(560px, 94vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 26px;
+  border: 1px solid rgba(160, 170, 230, 0.2);
+  border-radius: 22px;
+  background: #12141c;
+  box-shadow: 0 35px 100px rgba(0,0,0,0.8);
+}
+
+.sub-brain-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.sub-brain-panel-header h3 {
+  font-size: 20px;
+  color: #f4f5f7;
+  margin: 0;
+}
+.sub-brain-panel-close {
+  border: 0;
+  background: transparent;
+  color: #8e96a3;
+  padding: 6px;
+  cursor: pointer;
+  margin-left: 8px;
+  border-radius: 8px;
+}
+.sub-brain-panel-close:hover {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+}
+
+/* Modos de estudo no painel */
+.sub-brain-study-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sub-brain-mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid;
+  border-radius: 14px;
+  background: rgba(255,255,255,.03);
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: .18s ease;
+  color: #f4f5f7;
+  font: inherit;
+}
+.sub-brain-mode-btn:hover {
+  background: rgba(255,255,255,.07);
+  transform: translateY(-1px);
+}
+
+/* Lista de sub-itens no painel */
+.sub-brain-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sub-brain-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  background: rgba(255,255,255,.025);
+  cursor: pointer;
+  transition: .18s ease;
+}
+.sub-brain-list-item:hover {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.16);
+}
+.sub-brain-list-item-main h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: #f4f5f7;
+}
+.sub-brain-list-item-main p {
+  margin: 0;
+  font-size: 12px;
+  color: #949ca8;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sub-brain-empty-items {
+  text-align: center;
+  padding: 32px 16px;
+  color: #7A828E;
+  font-size: 14px;
+}
+
+.sub-brain-count-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(232,147,63,.12);
+  color: #E8933F;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.sub-brain-item-actions {
+  display: flex;
+  gap: 5px;
+}
+.sub-brain-item-actions button {
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: #202329;
+  color: #9ba3af;
+  padding: 7px;
+  display: flex;
+  cursor: pointer;
+}
+.sub-brain-item-actions button:last-child {
+  color: #e76b70;
+}
+
+.sub-brain-create-menu {
+  top: auto;
+  bottom: calc(100% + 12px);
+}
+
+@media (max-width: 650px) {
+  .sub-brain-canvas-container {
+    inset: 60px 0 0 0;
+    height: calc(100vh - 60px);
+  }
+  .sub-brain-hud {
+    top: 14px;
+    left: 14px;
+    right: 14px;
+  }
+  .sub-brain-hud-bottom {
+    bottom: 16px;
+    width: 90vw;
+    justify-content: center;
+  }
+}
+
+
+/* =======================================================================
+   MICRO-CÉREBRO (MicroBrainView) — o leque inteiro aberto
+   Chave Macro/Micro, canvas navegável, barra de busca, barra de
+   ferramentas e o painel de edição que abre ao clicar numa esfera.
+   ======================================================================= */
+
+/* Chave que troca entre as duas visões (fica no HUD do topo) */
+.sub-brain-mode-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  background: rgba(18,20,30,.75);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+}
+.sub-brain-mode-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: #9ba3af;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .18s ease;
+}
+.sub-brain-mode-switch button:hover { color: #f4f5f7; background: rgba(255,255,255,.06); }
+.sub-brain-mode-switch button.is-active {
+  color: #0d0f16;
+  background: linear-gradient(135deg, #E8933F, #EEA53D);
+  box-shadow: 0 6px 18px rgba(232,147,63,.35);
+}
+
+/* Canvas do Micro (ocupa todo o container do Sub-Cérebro) */
+.micro-brain-wrap { position: absolute; inset: 0; }
+.micro-brain-wrap canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+
+/* Faixa de cima: resumo do baralho + busca */
+.micro-brain-topbar {
+  position: absolute;
+  top: 78px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.micro-brain-stats,
+.micro-brain-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 13px;
+  background: rgba(18,20,30,.8);
+  backdrop-filter: blur(14px);
+  color: #9ba3af;
+  font-size: 12px;
+}
+.micro-brain-stats strong { color: #f4f5f7; font-weight: 800; }
+.micro-brain-stats i { width: 1px; height: 13px; background: rgba(255,255,255,.14); }
+.micro-brain-search input {
+  border: 0;
+  background: transparent;
+  color: #f4f5f7;
+  outline: none;
+  font: inherit;
+  width: 170px;
+}
+.micro-brain-search input::placeholder { color: #6f7684; }
+.micro-brain-search button { border: 0; background: transparent; color: #8e96a3; cursor: pointer; display: flex; }
+
+/* Barra de ferramentas de baixo (criar cartão mãe, zoom, centralizar) */
+.micro-brain-toolbar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 20px;
+  background: rgba(18,20,30,.85);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.6);
+}
+.micro-brain-divider { width: 1px; height: 22px; background: rgba(255,255,255,.14); }
+.micro-brain-tool {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  color: #c3c9d4;
+  cursor: pointer;
+  transition: .16s ease;
+}
+.micro-brain-tool:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+/* ---------- PAINEL DE EDIÇÃO (a edição dentro do próprio cérebro) ---------- */
+.micro-inspector {
+  position: absolute;
+  top: 78px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 120;
+  width: min(390px, calc(100vw - 40px));
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(160,170,230,.2);
+  border-radius: 20px;
+  background: rgba(16,18,27,.94);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.65);
+  overflow: hidden;
+  animation: fadeIn .18s ease;
+}
+.micro-inspector-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.micro-inspector-head > div { flex: 1; min-width: 0; }
+.micro-inspector-head small { display: block; color: #858da4; font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.micro-inspector-head h3 { margin-top: 3px; font-size: 17px; color: #f4f5f7; word-break: break-word; }
+.micro-inspector-parent {
+  margin-top: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #7AA2F7;
+  font-size: 11.5px;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.micro-inspector-parent:hover { text-decoration: underline; }
+
+.micro-inspector-body { flex: 1; overflow-y: auto; padding: 16px 18px; }
+.micro-inspector-body .study-field { margin-bottom: 13px; }
+
+.micro-inspector-image { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.micro-inspector-image img { width: 92px; height: 62px; object-fit: cover; border-radius: 9px; border: 1px solid rgba(255,255,255,.14); }
+.micro-inspector-image button,
+.micro-inspector-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px dashed rgba(255,255,255,.2);
+  border-radius: 9px;
+  background: rgba(255,255,255,.04);
+  color: #9ba3af;
+  padding: 8px 12px;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.micro-inspector-image button:hover, .micro-inspector-upload:hover { color: #f4f5f7; border-color: rgba(255,255,255,.34); }
+.micro-inspector-status { color: #6f7684; font-size: 10.5px; margin-bottom: 16px; }
+
+.micro-inspector-section { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.07); }
+.micro-inspector-section h4 { display: flex; align-items: center; gap: 8px; color: #9ba3b5; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 9px; }
+.micro-inspector-section h4 span { color: #f4f5f7; background: rgba(255,255,255,.08); border-radius: 20px; padding: 1px 8px; font-size: 10px; letter-spacing: 0; }
+
+.micro-inspector-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 11px;
+  margin-bottom: 6px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 11px;
+  background: rgba(255,255,255,.03);
+  color: #e6e9ef;
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: .15s ease;
+}
+.micro-inspector-row:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); }
+.micro-row-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.micro-row-tag { color: #7a828e; font-size: 10.5px; font-weight: 700; }
+.micro-dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+
+.micro-inspector-add {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px;
+  border: 1px dashed rgba(232,147,63,.4);
+  border-radius: 11px;
+  background: rgba(232,147,63,.08);
+  color: #E8933F;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.micro-inspector-add:hover { background: rgba(232,147,63,.16); }
+
+.micro-inspector-newsub { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.micro-inspector-newsub button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px;
+  border: 1px solid;
+  border-radius: 10px;
+  background: rgba(255,255,255,.03);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.micro-inspector-newsub button:hover { background: rgba(255,255,255,.09); }
+
+.micro-inspector-subicon { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; margin-bottom: 14px; }
+.micro-inspector-text { color: #c3c9d4; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.micro-inspector-empty { color: #6f7684; font-size: 12px; }
+.micro-inspector-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.micro-task-list { display: flex; flex-direction: column; gap: 9px; }
+.micro-task-list label { display: flex; align-items: flex-start; gap: 9px; color: #c3c9d4; font-size: 12.5px; cursor: pointer; }
+.micro-task-list input { accent-color: #34d399; margin-top: 2px; }
+
+.micro-inspector-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 18px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  background: rgba(10,11,18,.6);
+}
+.micro-danger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  padding: 9px 14px;
+  border: 1px solid rgba(231,107,112,.35);
+  border-radius: 11px;
+  background: rgba(231,107,112,.12);
+  color: #e76b70;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.micro-danger-btn:hover { background: rgba(231,107,112,.22); }
+.micro-inspector-warning { padding: 0 18px 14px; color: #e8b04f; font-size: 11.5px; line-height: 1.5; }
+
+/* ---------- HIERARQUIA NA LISTA DO EDITOR DE CARTÕES ---------- */
+.deck-card-parent-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255,255,255,.09);
+}
+.deck-card-parent-row label {
+  color: #9ba3b5;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.deck-card-parent-row select {
+  flex: 1;
+  min-width: 190px;
+  border: 1px solid rgba(160,170,230,.18);
+  border-radius: 10px;
+  background: #1c1f2a;
+  color: #f4f5f7;
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 12.5px;
+  outline: none;
+  cursor: pointer;
+}
+.deck-card-parent-row select:focus { border-color: #8b7bff; }
+.deck-card-depth-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(122,162,247,.14);
+  color: #7AA2F7;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+@media (max-width: 820px) {
+  .sub-brain-mode-switch button span { display: none; }
+  .sub-brain-mode-switch button { padding: 9px 12px; }
+  .micro-brain-topbar { top: 74px; left: 12px; right: 12px; }
+  .micro-brain-search input { width: 100%; }
+  .micro-brain-search { flex: 1; }
+  .micro-inspector {
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+    width: auto;
+    max-height: 62vh;
+    border-radius: 20px 20px 0 0;
+  }
+  .micro-brain-toolbar { bottom: auto; top: 130px; }
+}
+
+/* Legenda das cores da visão Micro (amarelo = flashcard, azul = anotação…) */
+.micro-brain-legend {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 11px 14px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  background: rgba(18,20,30,.72);
+  backdrop-filter: blur(14px);
+}
+.micro-brain-legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #aeb4c2;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.micro-brain-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  box-shadow: 0 0 8px currentColor;
+}
+
+@media (max-width: 820px) {
+  .micro-brain-legend {
+    left: 10px;
+    bottom: auto;
+    top: 178px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    right: 10px;
+    padding: 8px 11px;
+  }
+  .micro-brain-legend span { font-size: 10.5px; }
+}
+
+/* Menu "+ Novo" da visão Micro: abre para CIMA (a barra fica no rodapé) */
+.micro-create-menu {
+  top: auto;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+.micro-create-hint {
+  padding: 4px 12px 10px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  color: #9ba3b5;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.micro-create-hint strong { color: #EFD03C; }
+.micro-create-hint em { color: #7a828e; font-style: normal; }
+
+/* Camada invisível que fecha o menu ao clicar fora */
+.micro-create-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+}
+
+@media (max-width: 650px) {
+  .micro-create-menu { left: 10px; right: 10px; transform: none; }
+}
+
+/* ===========================================================================
+   AULAS — a página HTML da faculdade guardada dentro da matéria
+   (janela de entrega + tela de leitura)
+
+   REGRA IMPORTANTE: a aula é desenhada dentro de um <iframe>, então NENHUMA
+   regra daqui alcança o conteúdo dela. É de propósito: o CSS do professor
+   continua valendo lá dentro, e o nosso não o desfigura.
+   =========================================================================== */
+
+/* ---------- Janela de entrega da aula ---------- */
+.aula-modal { width: min(880px, 100%); }
+
+.aula-linha-campos {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 190px;
+  gap: 12px;
+}
+.aula-linha-campos .study-field { margin-bottom: 14px; }
+
+.aula-abas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0 12px;
+}
+.aula-abas button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid rgba(160,170,230,.18);
+  border-radius: 10px;
+  background: transparent;
+  color: #9ba3b5;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .16s ease;
+}
+.aula-abas button:hover { color: #f4f5f7; border-color: rgba(244,114,182,.45); }
+.aula-abas button.is-active {
+  color: #F472B6;
+  border-color: rgba(244,114,182,.55);
+  background: rgba(244,114,182,.10);
+}
+.aula-selo-tamanho {
+  margin-left: auto;
+  max-width: 46%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #7a828e;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* Zona de arrastar o arquivo */
+.aula-zona-arquivo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 30px 20px;
+  border: 1.5px dashed rgba(160,170,230,.28);
+  border-radius: 14px;
+  background: rgba(244,114,182,.04);
+  color: #F472B6;
+  text-align: center;
+  cursor: pointer;
+  transition: .16s ease;
+}
+.aula-zona-arquivo:hover,
+.aula-zona-arquivo.is-dragging {
+  border-color: rgba(244,114,182,.7);
+  background: rgba(244,114,182,.10);
+}
+.aula-zona-arquivo.is-full { padding: 20px; }
+.aula-zona-arquivo strong { color: #f4f5f7; font-size: 14px; }
+.aula-zona-arquivo p { color: #7a828e; font-size: 12px; }
+
+.aula-codigo {
+  font-family: 'Fira Code', 'Cascadia Mono', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.aula-carregando {
+  padding: 26px;
+  border-radius: 13px;
+  background: rgba(255,255,255,.03);
+  color: #9ba3b5;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Recados de erro e de aviso */
+.aula-recado {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 4px 0 14px;
+  padding: 11px 13px;
+  border-radius: 11px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.aula-recado svg { flex: 0 0 auto; margin-top: 1px; }
+.aula-recado-erro  { background: rgba(229,72,77,.10);  border: 1px solid rgba(229,72,77,.28);  color: #F1949A; }
+.aula-recado-aviso { background: rgba(238,165,61,.10); border: 1px solid rgba(238,165,61,.28); color: #EEA53D; }
+
+/* Prévia dentro da janela */
+.aula-previa {
+  border: 1px solid rgba(160,170,230,.18);
+  border-radius: 13px;
+  overflow: hidden;
+  background: #fff;
+}
+.aula-previa-topo {
+  padding: 8px 13px;
+  background: #1c1f2a;
+  border-bottom: 1px solid rgba(160,170,230,.18);
+  color: #7a828e;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.aula-previa-quadro {
+  display: block;
+  width: 100%;
+  height: 320px;
+  border: 0;
+  /* Fundo branco: aula que não define fundo próprio vira uma folha, não um buraco. */
+  background: #fff;
+}
+
+/* ---------- Tela de leitura da aula ---------- */
+.aula-page {
+  position: fixed;
+  inset: 86px 0 0;
+  display: flex;
+  flex-direction: column;
+  background: #0c0d0f;
+  z-index: 5;
+}
+.aula-page.is-fullscreen { inset: 0; z-index: 120; }
+
+.aula-page > header {
+  flex: 0 0 auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: #0c0d0f;
+}
+.aula-page-titulo { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.aula-page-titulo > span {
+  width: 38px; height: 38px; flex: 0 0 auto;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  color: #F472B6;
+  background: rgba(244,114,182,.13);
+}
+.aula-page-titulo > div { min-width: 0; }
+.aula-page-titulo small {
+  display: block;
+  color: #8d95a3;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.aula-page-titulo h2 {
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aula-page-acoes { margin-left: auto; display: flex; align-items: center; gap: 7px; }
+.aula-page-acoes .btn-glass { min-height: 36px; padding: 8px 11px; }
+.aula-selo-origem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(96,165,250,.12);
+  color: #60A5FA;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.aula-page-corpo { flex: 1; min-height: 0; position: relative; }
+.aula-quadro {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* Mesma razão da prévia: a aula é uma folha branca dentro do app escuro. */
+  background: #fff;
+}
+
+.aula-sumiu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #EEA53D;
+}
+.aula-sumiu strong { color: #f4f5f7; font-size: 17px; }
+.aula-sumiu p { max-width: 460px; color: #9ba3b5; font-size: 13px; line-height: 1.6; }
+.aula-sumiu .btn-primary { margin-top: 8px; }
+
+@media (max-width: 720px) {
+  .aula-linha-campos { grid-template-columns: 90px minmax(0, 1fr); }
+  .aula-campo-data { grid-column: 1 / -1; }
+  .aula-previa-quadro { height: 240px; }
+  .aula-page { inset: 72px 0 0; }
+  .aula-page > header { height: auto; flex-wrap: wrap; gap: 10px; padding: 10px 12px; }
+  .aula-page-acoes { margin-left: 0; width: 100%; }
+  .aula-selo-tamanho { display: none; }
+}

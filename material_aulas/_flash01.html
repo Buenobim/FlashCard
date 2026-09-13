@@ -1,0 +1,135 @@
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#60A5FA1f; border-color:#60A5FA52">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 01</h2>
+      <p>62 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 01","Qual foi o primeiro modelo atômico, e o que ele dizia?","DALTON, 1808: o átomo é uma esfera maciça e INDIVISÍVEL, que sofre rearranjos numa reação química. Era considerada a menor partícula possível."],
+    ["Aula 01","O que Thomson descobriu, e em que ano?","1897 — o ELÉTRON e sua carga NEGATIVA. Com isso o átomo deixou de ser indivisível: passou a poder ser subdividido em partículas."],
+    ["Aula 01","Qual foi a contribuição de Rutherford (1911)?","Descobriu o NÚCLEO. O átomo passou a ser um núcleo central com os elétrons distribuídos ao redor dele — e é quase todo espaço vazio."],
+    ["Aula 01","O que Bohr acrescentou em 1913?","Que os elétrons não ficam em qualquer lugar: eles se distribuem em CAMADAS DE ENERGIA bem definidas ao redor do núcleo."],
+    ["Aula 01","Como é o modelo atômico ATUAL?","Núcleo com PRÓTONS e NÊUTRONS, cercado por uma NUVEM ELETRÔNICA — a região onde há PROBABILIDADE de encontrar os elétrons. Não há órbita definida."],
+    ["Aula 01","Coloque em ordem: Bohr, Dalton, modelo atual, Rutherford, Thomson","Dalton (1808) → Thomson (1897) → Rutherford (1911) → Bohr (1913) → atual (1920s). Dalton disse que existe, Thomson achou o elétron, Rutherford achou o núcleo, Bohr organizou em camadas, o atual trocou órbita por probabilidade."],
+    ["Aula 01","Qual a carga do próton, do nêutron e do elétron?","Próton +1 (positiva) · Nêutron 0 (nenhuma) · Elétron −1 (negativa)."],
+    ["Aula 01","Onde fica cada partícula do átomo?","PRÓTONS e NÊUTRONS ficam no NÚCLEO. ELÉTRONS ficam na ELETROSFERA, orbitando ao redor do núcleo."],
+    ["Aula 01","Por que a massa do átomo é praticamente só o núcleo?","Porque o elétron tem cerca de 1/1836 da massa do próton — desprezível. Massa fica no núcleo; o tamanho (volume) fica na eletrosfera."],
+    ["Aula 01","O que é o número atômico (Z)?","É o NÚMERO DE PRÓTONS do átomo. É a identidade do elemento: não existem dois elementos diferentes com o mesmo Z. A tabela periódica é ordenada em Z crescente."],
+    ["Aula 01","O que é o número de massa (A)?","A = prótons + nêutrons. É a \"massa do núcleo\", porque soma tudo que está lá dentro. O elétron não entra: a massa dele é desprezível."],
+    ["Aula 01","Como achar o número de nêutrons de um átomo?","N = A − Z. Subtraia o número atômico do número de massa. É a conta mais cobrada da aula 01."],
+    ["Aula 01","Quando um átomo é neutro?","Quando o número de PRÓTONS é igual ao número de ELÉTRONS — as cargas +1 e −1 se anulam e a carga total é zero."],
+    ["Aula 01","O número de nêutrons tem relação com o de prótons?","NÃO, nenhuma. \"Prótons = elétrons\" só vale para o átomo neutro. Nêutrons são independentes: o mesmo elemento pode ter 8, 9 ou 10 deles."],
+    ["Aula 01","Por que a massa atômica na tabela periódica é um número quebrado?","Porque é a MÉDIA PONDERADA das massas de todos os isótopos do elemento, pesada pela abundância de cada um na natureza."],
+    ["Aula 01","Quando NÃO se deve arredondar a massa atômica?","Quando o decimal é ,5 — fica no meio e não há para onde arredondar. Ex.: Cl = 35,5 e Cu = 63,5. Nos outros casos, arredonde (Fe 55,847 → 56)."],
+    ["Aula 01","Numa tabela periódica sem legenda, como saber qual número é Z e qual é A?","O Z é sempre MENOR e é INTEIRO. A massa atômica costuma ser DECIMAL (55,847). Achou o decimal, é a massa."],
+    ["Aula 01","Um átomo tem A = 31 e Z = 15. Quantos prótons, elétrons e nêutrons?","15 prótons (= Z), 15 elétrons (átomo neutro) e 16 nêutrons (N = 31 − 15). É o fósforo."],
+    ["Aula 01","O que são ISÓTOPOS?","Átomos com o MESMO número de prótons (mesmo Z, mesmo elemento) mas números de MASSA diferentes — porque têm quantidades diferentes de nêutrons. IsótoPos = mesmo Próton."],
+    ["Aula 01","O que são ISÓBAROS?","Átomos de elementos DIFERENTES (Z diferente) que têm o MESMO número de MASSA (A). IsóbAros = mesmo A. Ex.: Ca-40 e Ar-40."],
+    ["Aula 01","O que são ISÓTONOS?","Átomos de elementos DIFERENTES que têm o MESMO número de NÊUTRONS. IsótoNos = mesmo Nêutron. Ex.: N-14 e C-13, os dois com 7 nêutrons."],
+    ["Aula 01","Um átomo pode \"ser isótopo\" por si só?","NÃO. É sempre uma COMPARAÇÃO entre dois átomos: um é isótopo DE OUTRO. A classificação é relacional."],
+    ["Aula 01","Nos isótopos do oxigênio (16, 17, 18), o que muda e o que não muda?","NÃO muda: 8 prótons e 8 elétrons em todos (é sempre oxigênio neutro). MUDA: os nêutrons (8, 9, 10) e por consequência a massa (16, 17, 18)."],
+    ["Aula 01","Ca (Z=20, A=40) e Ar (Z=18, A=40): que relação existe?","São ISÓBAROS — mesmo número de massa (40), elementos diferentes. O Ca tem 20 nêutrons e o Ar tem 22."],
+    ["Aula 01","Quantas camadas de energia existem, e como se chamam?","SETE camadas possíveis: K, L, M, N, O, P, Q (n = 1 a 7). Nem todo átomo preenche todas — depende de quantos elétrons ele tem."],
+    ["Aula 01","Quanto mais longe do núcleo, mais ou menos energia?","MAIS energia. A camada K (n=1) é a de menor energia; a camada Q (n=7) é a de maior. Pense numa cebola: as camadas de fora são as mais energéticas."],
+    ["Aula 01","O que diz o Princípio da Incerteza de Heisenberg?","Que é impossível determinar com precisão a POSIÇÃO de um elétron na eletrosfera. Só se pode falar da PROBABILIDADE de encontrá-lo numa região."],
+    ["Aula 01","Quais são os quatro números quânticos?","PRINCIPAL (n) = a camada, 1 a 7 · SECUNDÁRIO (ℓ) = o subnível, s p d f · MAGNÉTICO (mℓ) = qual orbital · SPIN (ms) = sentido de rotação, +½ ou −½."],
+    ["Aula 01","O que é um orbital?","A região do espaço ao redor do núcleo onde há MÁXIMA PROBABILIDADE de encontrar o elétron — a \"casinha\" dele."],
+    ["Aula 01","Quantos elétrons cabem em UM orbital?","No máximo DOIS — um com spin +½ (↑) e outro com −½ (↓). Vale para qualquer orbital, de qualquer subnível."],
+    ["Aula 01","Quantos orbitais tem cada subnível: s, p, d, f?","s = 1 orbital · p = 3 · d = 5 · f = 7. Sempre número ÍMPAR, com o zero no meio."],
+    ["Aula 01","Quantos elétrons no máximo cabem em s, p, d e f?","s = 2 · p = 6 · d = 10 · f = 14. É o nº de orbitais × 2. Decore a sequência 2, 6, 10, 14."],
+    ["Aula 01","O que é o número quântico de spin?","O sentido de rotação do elétron: +½ (seta para cima, ↑) ou −½ (seta para baixo, ↓). Dois elétrons no mesmo orbital têm spins opostos."],
+    ["Aula 01","Para que serve o diagrama de Linus Pauling?","Para dar a ORDEM DE PREENCHIMENTO dos subníveis, da menor para a maior energia — assim todos fazem a distribuição eletrônica do mesmo jeito."],
+    ["Aula 01","Qual a ordem de preenchimento dos 8 primeiros subníveis?","1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p. Atenção: depois do 4s vem o 3d, não o 4p — é a diagonal do diagrama."],
+    ["Aula 01","Em \"3d⁶\", o que significa cada parte?","3 = a camada (nível). d = o subnível. 6 = o número de elétrons que estão ali dentro."],
+    ["Aula 01","Faça a distribuição eletrônica do alumínio (Z = 13)","1s² 2s² 2p⁶ 3s² 3p¹. O 3p cabe 6, mas só sobrou 1 elétron para colocar. Camada de valência = 3."],
+    ["Aula 01","Faça a distribuição eletrônica do ferro (Z = 26)","1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶. Note a diagonal: depois do 4s² vem o 3d, e o 3d cabe 10 mas só faltavam 6."],
+    ["Aula 01","O que é a camada de valência?","A camada mais EXTERNA do átomo — o MAIOR número de camada que aparece na distribuição eletrônica. É ela que participa das ligações químicas."],
+    ["Aula 01","No ferro, qual é o subnível mais energético e qual é a camada de valência?","Mais energético: 3d⁶ (o último preenchido). Camada de valência: a 4 (4s²), porque 4 > 3 — é a mais externa. SÃO COISAS DIFERENTES."],
+    ["Aula 01","Camada de valência e subnível mais energético são a mesma coisa?","NÃO. O mais energético é o último preenchido pelo diagrama. A valência é a camada de maior NÚMERO. Às vezes coincidem, mas isso é coincidência, não regra."],
+    ["Aula 01","Como localizar um elemento na tabela pela distribuição eletrônica?","A MAIOR camada dá o PERÍODO (linha). O nº de elétrons NESSA camada dá a FAMÍLIA (coluna). Ex.: P = ...3s² 3p³ → camada 3, 5 elétrons → 3º período, família 5A."],
+    ["Aula 01","É preciso decorar o diagrama de Linus Pauling?","Não — fazendo cinco distribuições a ordem cola sozinha. E na prática você quase nunca vai além de 4s/3d, porque os elementos mais usados estão no começo da tabela."],
+    ["Aula 01","Em que ordem a tabela periódica é organizada?","Em ordem CRESCENTE de número atômico (Z), ou seja, de número de prótons. Nada ali é aleatório."],
+    ["Aula 01","O que são os PERÍODOS da tabela periódica?","As LINHAS horizontais. São 7 e correspondem às 7 CAMADAS de energia (K a Q). O período diz em qual camada está a valência do elemento."],
+    ["Aula 01","O que são as FAMÍLIAS (ou grupos) da tabela?","As COLUNAS verticais. Agrupam elementos com propriedades semelhantes, porque todos têm o MESMO número de elétrons na camada de valência."],
+    ["Aula 01","Quantos elétrons de valência tem um elemento da família 7A?","SETE. O número da família É o número de elétrons de valência (só vale para as famílias A). 1A→1, 2A→2, ..., 7A→7."],
+    ["Aula 01","Qual a diferença entre grupos A e grupos B?","GRUPOS A (principais): as 2 primeiras colunas + as 6 últimas, com valência nos subníveis s e p. GRUPOS B: o bloco do meio, os metais de transição, com valência no subnível d."],
+    ["Aula 01","Quais são as propriedades dos METAIS?","Sólidos (exceto o mercúrio, líquido) · bons condutores de calor e eletricidade · maleáveis e dúcteis (deformam sem quebrar) · têm brilho metálico."],
+    ["Aula 01","Quais são as propriedades dos AMETAIS?","Maus condutores (isolantes) · quebradiços · sem brilho metálico. São o oposto dos metais."],
+    ["Aula 01","Qual é o único metal LÍQUIDO à temperatura ambiente?","O MERCÚRIO (Hg) — é o do termômetro antigo. É a exceção clássica de prova."],
+    ["Aula 01","O que caracteriza os SEMIMETAIS? Dê o exemplo mais importante.","Sólidos, com propriedades intermediárias entre metais e ametais e condutividade elétrica MODERADA — são semicondutores. O exemplo é o SILÍCIO, base dos componentes eletrônicos."],
+    ["Aula 01","Por que os gases nobres são inertes?","Porque já têm 8 elétrons na camada de valência (o hélio, 2) — já estão estáveis. Não precisam ganhar, perder nem compartilhar elétrons, então não reagem."],
+    ["Aula 01","Por que o hidrogênio fica separado na tabela periódica?","Porque é um elemento especial: apresenta características de metal E de ametal ao mesmo tempo, então não pertence a nenhum grupo."],
+    ["Aula 01","O que é raio atômico, e para onde ele cresce na tabela?","É o TAMANHO do átomo (núcleo + eletrosfera). Cresce para a ESQUERDA e para BAIXO — mais camadas ocupadas, maior o raio."],
+    ["Aula 01","O que é eletronegatividade, e para onde ela cresce?","É a tendência de ATRAIR elétrons (agir como ímã de elétrons). Cresce para a DIREITA e para CIMA na tabela."],
+    ["Aula 01","O que é eletropositividade?","A tendência de CEDER elétrons — o contrário da eletronegatividade. Cresce para a ESQUERDA e para BAIXO."],
+    ["Aula 01","O que é afinidade eletrônica?","A energia LIBERADA quando o átomo RECEBE um elétron. Segue a mesma direção da eletronegatividade: direita e cima."],
+    ["Aula 01","O que é potencial de ionização?","A energia ABSORVIDA para ARRANCAR um elétron do átomo. Cresce para a direita e para cima — igual à eletronegatividade."],
+    ["Aula 01","Qual é o elemento mais eletronegativo da tabela?","O FLÚOR — canto superior direito, excluindo os gases nobres. Por isso o NOX dele é sempre −1."],
+    ["Aula 01","Resuma as direções das propriedades periódicas em uma frase","DIREITA + CIMA: o átomo quer PEGAR elétron (eletronegatividade, afinidade eletrônica e potencial de ionização crescem juntos). ESQUERDA + BAIXO: o átomo quer DAR elétron e é GRANDE (eletropositividade e raio atômico)."],
+    ["Aula 01","Qual propriedade periódica é a mais importante para as próximas aulas, e por quê?","A ELETRONEGATIVIDADE — ela decide se a ligação será iônica ou covalente e quem cede ou recebe elétron nas ligações químicas."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>

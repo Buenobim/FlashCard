@@ -1,0 +1,1000 @@
+/*
+  =============================================================================
+  ARQUIVO: src/estudo/trilha.css
+  PARA QUE SERVE: o visual da TRILHA (o compositor em blocos) e do MODO DE
+  ESTUDO. Usa as mesmas variáveis do design system da casa (src/index.css), para
+  a trilha parecer parte da plataforma e não um enxerto.
+
+  A ideia visual: uma LINHA VERTICAL descendo pela esquerda, com cada bloco
+  pendurado nela. É literalmente uma trilha — você vê para onde a matéria vai.
+  =============================================================================
+*/
+
+/* ======================================================================
+   O COMPOSITOR
+   ====================================================================== */
+.trilha {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 90px;
+}
+
+.trilha-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.trilha-cabecalho h3 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.trilha-cabecalho p {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+/* Faixa de números: blocos, cartões, vencidos, domínio */
+.trilha-raiox {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.trilha-raiox span {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.trilha-raiox span strong {
+  color: var(--text-white);
+  font-weight: 800;
+}
+
+.trilha-raiox span.quente {
+  border-color: rgba(232, 147, 63, 0.4);
+  background: rgba(232, 147, 63, 0.1);
+  color: #EFAE6B;
+}
+
+.trilha-raiox span.quente strong { color: #F5C089; }
+
+/* ---------- A zona de colar ---------- */
+.trilha-zona {
+  border: 1.5px dashed rgba(255, 255, 255, 0.14);
+  border-radius: var(--border-radius-md);
+  padding: 18px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  background: rgba(255, 255, 255, 0.015);
+  margin-bottom: 18px;
+}
+
+.trilha-zona:hover {
+  border-color: rgba(232, 147, 63, 0.45);
+  color: var(--text-white);
+}
+
+.trilha-zona.armada {
+  border-color: var(--primary-color);
+  background: rgba(232, 147, 63, 0.09);
+  color: #EFAE6B;
+}
+
+.trilha-zona kbd {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-family: ui-monospace, 'Fira Code', monospace;
+  font-size: 11.5px;
+  color: var(--text-white);
+}
+
+/* ---------- A linha da trilha ---------- */
+.trilha-lista {
+  position: relative;
+  padding-left: 30px;
+}
+
+.trilha-lista::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  border-radius: 2px;
+}
+
+/* ---------- Um bloco ---------- */
+.bloco {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--cor-bloco, #60A5FA);
+  border-radius: var(--border-radius-md);
+  margin-bottom: 12px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.bloco:focus-within {
+  border-color: rgba(255, 255, 255, 0.16);
+  border-left-color: var(--cor-bloco, #60A5FA);
+  box-shadow: 0 0 0 1px rgba(232, 147, 63, 0.12), var(--box-shadow-soft);
+}
+
+/* A bolinha na linha da trilha */
+.bloco::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 20px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--cor-bloco, #60A5FA);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.04);
+}
+
+.bloco.arrastando { opacity: 0.35; }
+
+.bloco.alvo-de-solta { box-shadow: 0 -3px 0 var(--primary-color); }
+
+/* Cabeçalho do bloco */
+.bloco-topo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+.bloco-selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--cor-bloco, #60A5FA);
+  background: color-mix(in srgb, var(--cor-bloco, #60A5FA) 13%, transparent);
+  border-radius: 6px;
+  padding: 4px 9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bloco-numero {
+  font-size: 11px;
+  font-weight: 800;
+  color: #5E6672;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.bloco-titulo {
+  flex: 1;
+  min-width: 90px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-white);
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 2px;
+}
+
+.bloco-titulo::placeholder { color: #5A616C; font-weight: 600; }
+
+.bloco-acoes {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.bloco-acoes button {
+  background: transparent;
+  border: none;
+  color: #6D7481;
+  cursor: pointer;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.bloco-acoes button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text-white);
+}
+
+.bloco-acoes button:disabled { opacity: 0.25; cursor: default; }
+.bloco-acoes button.perigo:hover { background: rgba(229, 72, 77, 0.15); color: #F26F73; }
+
+/* Corpo do bloco */
+.bloco-corpo { padding: 12px 14px 14px; }
+
+.bloco-campo {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-white);
+  font-family: var(--font-main);
+  font-size: 14.5px;
+  line-height: 1.6;
+  padding: 11px 13px;
+  resize: vertical;
+  min-height: 46px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.bloco-campo:focus { border-color: rgba(232, 147, 63, 0.45); background: rgba(255, 255, 255, 0.04); }
+.bloco-campo::placeholder { color: #5A616C; }
+
+.bloco-campo.mono {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.bloco-campo.formula {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 19px;
+  text-align: center;
+  letter-spacing: 0.4px;
+}
+
+/* Flashcard: dois lados */
+.bloco-flashcard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bloco-lado > label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #6D7481;
+  margin-bottom: 6px;
+}
+
+.bloco-lado.pergunta > label { color: #C98A4E; }
+.bloco-lado.resposta > label { color: #4E9E7A; }
+
+@media (max-width: 720px) {
+  .bloco-flashcard { grid-template-columns: 1fr; }
+  .trilha-lista { padding-left: 22px; }
+  .bloco::before { left: -19px; }
+}
+
+/* Imagem dentro do bloco */
+.bloco-imagem {
+  position: relative;
+  margin-top: 10px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #08090B;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.bloco-imagem img {
+  display: block;
+  max-width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+.bloco-imagem button {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: rgba(10, 11, 13, 0.82);
+  border: 1px solid var(--border-subtle);
+  color: #C8CDD5;
+  border-radius: 7px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bloco-imagem button:hover { color: #F26F73; border-color: rgba(229, 72, 77, 0.5); }
+
+.bloco-vazio-imagem {
+  border: 1.5px dashed rgba(255, 255, 255, 0.13);
+  border-radius: var(--border-radius-sm);
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.bloco-vazio-imagem:hover { border-color: rgba(232, 121, 200, 0.5); color: var(--text-white); }
+
+/* Barra pequena embaixo de alguns blocos (linguagem, testar link) */
+.bloco-rodape {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 9px;
+  flex-wrap: wrap;
+}
+
+/* O seletor de cartão mãe lista perguntas inteiras; sem teto ele estica a
+   linha toda e empurra o resto do rodapé para fora da tela. */
+.bloco-rodape select { max-width: min(280px, 100%); }
+
+.bloco-rodape select,
+.bloco-rodape input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+  color: var(--text-white);
+  font-size: 12.5px;
+  padding: 6px 9px;
+  outline: none;
+  font-family: var(--font-main);
+}
+
+.bloco-rodape input { flex: 1; min-width: 180px; }
+.bloco-rodape a {
+  color: var(--primary-color);
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.bloco-rodape a:hover { text-decoration: underline; }
+
+/* Bloco de seção — não é cartão, é um divisor */
+.bloco.tipo-secao {
+  background: transparent;
+  border: none;
+  border-left: none;
+  margin: 26px 0 14px;
+}
+
+.bloco.tipo-secao::before {
+  width: 15px;
+  height: 15px;
+  left: -28px;
+  top: 12px;
+  background: var(--bg-primary);
+  border: 3px solid var(--cor-bloco, #99A1AC);
+}
+
+.bloco.tipo-secao .bloco-topo { border-bottom: none; padding: 4px 0; }
+
+.bloco.tipo-secao .bloco-titulo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+/* Barra fixa de criar blocos */
+/*
+  A barra fica grudada no rodapé enquanto você rola. Ela NÃO quebra em várias
+  linhas: numa tela estreita, ela rola de lado. Uma barra de três andares comeria
+  metade da tela e taparia justamente o bloco que você está escrevendo.
+*/
+.trilha-barra {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: nowrap;
+  padding: 10px 12px;
+  margin-top: 16px;
+  background: rgba(12, 13, 15, 0.93);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 -8px 26px rgba(0, 0, 0, 0.4);
+}
+
+.trilha-barra-botoes {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 1px;
+}
+
+.trilha-barra-botoes::-webkit-scrollbar { height: 0; }
+
+.trilha-barra button.add {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  color: #C4CAD3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: var(--transition-fast);
+}
+
+.trilha-barra button.add:hover {
+  color: var(--text-white);
+  border-color: var(--cor-bloco, rgba(255, 255, 255, 0.2));
+  background: color-mix(in srgb, var(--cor-bloco, #ffffff) 12%, var(--bg-tertiary));
+  transform: translateY(-1px);
+}
+
+.trilha-estado {
+  padding-left: 12px;
+  margin-left: 4px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--border-subtle);
+  font-size: 12px;
+  font-weight: 700;
+  color: #6D7481;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.trilha-estado.salvando { color: #EFAE6B; }
+.trilha-estado.salvo { color: var(--color-success); }
+.trilha-estado.falha { color: var(--color-danger); }
+
+/* Aviso de peso do baralho */
+.trilha-aviso {
+  border-radius: var(--border-radius-md);
+  padding: 13px 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-bottom: 16px;
+  border: 1px solid rgba(229, 72, 77, 0.3);
+  background: rgba(229, 72, 77, 0.09);
+  color: #F1949A;
+}
+
+.trilha-aviso.atencao {
+  border-color: rgba(238, 165, 61, 0.3);
+  background: rgba(238, 165, 61, 0.08);
+  color: #EFC383;
+}
+
+/* Vazio */
+.trilha-vazia {
+  border: 1px dashed rgba(255, 255, 255, 0.11);
+  border-radius: var(--border-radius-md);
+  padding: 34px 26px;
+  text-align: center;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.trilha-vazia strong { color: var(--text-white); display: block; margin-bottom: 8px; font-size: 16px; }
+
+/* ======================================================================
+   O MODO DE ESTUDO
+   ====================================================================== */
+.estudo {
+  position: fixed;
+  inset: 0;
+  /* Acima de tudo: a sessão de estudo é tela cheia de verdade. Ela é montada
+     direto no <body> (ver `emCimaDeTudo`), então este número vale mesmo. */
+  z-index: 2000;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  animation: estudoEntra 0.25s ease;
+}
+
+@keyframes estudoEntra {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.estudo-topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.estudo-topo button.sair {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-main);
+}
+
+.estudo-topo button.sair:hover { color: var(--text-white); border-color: rgba(255, 255, 255, 0.2); }
+
+.estudo-titulo { flex: 1; min-width: 0; }
+.estudo-titulo strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.estudo-titulo small { color: #6D7481; font-size: 11.5px; font-weight: 700; }
+
+.estudo-contador {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.estudo-progresso {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.estudo-progresso i {
+  display: block;
+  height: 100%;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.estudo-palco {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 34px 20px 40px;
+}
+
+.estudo-folha {
+  width: 100%;
+  max-width: 760px;
+}
+
+.estudo-secao {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #6D7481;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.estudo-secao::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Um passo de contexto (anotação, imagem, link...) */
+.estudo-contexto {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--cor-bloco, #60A5FA);
+  border-radius: var(--border-radius-lg);
+  padding: 26px 28px;
+  animation: passoEntra 0.28s ease;
+}
+
+@keyframes passoEntra {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.estudo-contexto .selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--cor-bloco, #60A5FA);
+  margin-bottom: 14px;
+}
+
+.estudo-contexto h2 {
+  font-size: clamp(21px, 3.4vw, 27px);
+  line-height: 1.25;
+  margin-bottom: 14px;
+  color: var(--text-white);
+}
+
+.estudo-contexto p {
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: #D3D8DF;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.estudo-contexto pre {
+  background: #08090B;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-sm);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: ui-monospace, 'Fira Code', monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #C9D4C5;
+}
+
+.estudo-contexto .formulao {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(24px, 5vw, 36px);
+  text-align: center;
+  padding: 22px 10px;
+  color: #CDBBF0;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.estudo-contexto img {
+  display: block;
+  max-width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: var(--border-radius-sm);
+  background: #08090B;
+}
+
+.estudo-contexto a.link-grande {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  color: #F0B45F;
+  border-radius: var(--border-radius-sm);
+  padding: 12px 18px;
+  font-weight: 700;
+  font-size: 14.5px;
+  text-decoration: none;
+  margin-top: 6px;
+  word-break: break-all;
+}
+
+.estudo-contexto a.link-grande:hover { background: rgba(245, 158, 11, 0.16); }
+
+/* O flashcard no modo de estudo */
+.estudo-cartao {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  animation: passoEntra 0.28s ease;
+}
+
+.estudo-cartao .pergunta {
+  padding: 40px 30px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.estudo-cartao .pergunta small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #C98A4E;
+  margin-bottom: 16px;
+}
+
+.estudo-cartao .pergunta h2 {
+  font-size: clamp(23px, 4.4vw, 33px);
+  line-height: 1.3;
+  color: var(--text-white);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.estudo-cartao .pergunta img {
+  display: block;
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+  margin: 18px auto 0;
+  border-radius: var(--border-radius-sm);
+}
+
+.estudo-cartao .resposta {
+  padding: 32px 30px;
+  text-align: center;
+  background: rgba(62, 207, 142, 0.045);
+  animation: passoEntra 0.22s ease;
+}
+
+.estudo-cartao .resposta small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #4E9E7A;
+  margin-bottom: 14px;
+}
+
+.estudo-cartao .resposta p {
+  font-size: clamp(17px, 2.8vw, 21px);
+  line-height: 1.6;
+  color: #E4E8ED;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.estudo-cartao .oculto {
+  padding: 32px 30px;
+  text-align: center;
+  color: #5E6672;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Barra de ações do modo de estudo */
+.estudo-pe {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-subtle);
+  padding: 15px 20px 20px;
+  display: flex;
+  justify-content: center;
+  background: rgba(12, 13, 15, 0.96);
+}
+
+.estudo-pe-interno { width: 100%; max-width: 760px; }
+
+.estudo-notas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+.estudo-notas button {
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius-sm);
+  padding: 12px 8px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  color: var(--text-white);
+  transition: var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.estudo-notas button strong { font-size: 14px; font-weight: 800; }
+.estudo-notas button span { font-size: 11px; color: #7A828E; font-weight: 700; }
+.estudo-notas button b { font-size: 9.5px; color: #545B66; font-weight: 800; letter-spacing: 0.5px; }
+
+.estudo-notas button:hover { transform: translateY(-2px); }
+.estudo-notas button.n0:hover { border-color: rgba(229, 72, 77, 0.6); background: rgba(229, 72, 77, 0.12); }
+.estudo-notas button.n1:hover { border-color: rgba(238, 165, 61, 0.6); background: rgba(238, 165, 61, 0.12); }
+.estudo-notas button.n2:hover { border-color: rgba(62, 207, 142, 0.6); background: rgba(62, 207, 142, 0.12); }
+.estudo-notas button.n3:hover { border-color: rgba(122, 162, 247, 0.6); background: rgba(122, 162, 247, 0.12); }
+
+.estudo-continuar {
+  width: 100%;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background: var(--primary-color);
+  color: #17120B;
+  font-family: var(--font-main);
+  font-weight: 800;
+  font-size: 15px;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  transition: var(--transition-fast);
+}
+
+.estudo-continuar:hover { background: #F0A458; }
+
+.estudo-atalho {
+  text-align: center;
+  color: #4E5560;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 620px) {
+  .estudo-notas { grid-template-columns: repeat(2, 1fr); }
+  .estudo-palco { padding: 22px 14px 30px; }
+  .estudo-contexto { padding: 20px 18px; }
+  .estudo-cartao .pergunta { padding: 30px 20px; }
+}
+
+/* ---------- A tela final da sessão ---------- */
+.estudo-fim {
+  width: 100%;
+  max-width: 620px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.estudo-fim .medalha {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(62, 207, 142, 0.12);
+  border: 1px solid rgba(62, 207, 142, 0.3);
+  color: var(--color-success);
+}
+
+.estudo-fim h1 { font-size: clamp(26px, 5vw, 34px); margin-bottom: 10px; }
+.estudo-fim > p { color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 26px; }
+
+.estudo-placar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.estudo-placar div {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-md);
+  padding: 16px 12px;
+}
+
+.estudo-placar strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--text-white);
+  line-height: 1.1;
+}
+
+.estudo-placar span {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #6D7481;
+}
+
+.estudo-fim .revisar-lista {
+  text-align: left;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-md);
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+
+.estudo-fim .revisar-lista h4 {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #E5484D;
+  margin-bottom: 11px;
+}
+
+.estudo-fim .revisar-lista li {
+  list-style: none;
+  color: #C3C9D2;
+  font-size: 13.5px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.45;
+}
+
+.estudo-fim .revisar-lista li:last-child { border-bottom: none; }
+
+.estudo-fim .botoes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* A escolha do modo também precisa vencer a barra flutuante da plataforma. */
+.trilha-por-cima { z-index: 2010; }
+
+/* Lupa de imagem (compartilhada pelas duas telas) */
+.trilha-lupa {
+  position: fixed;
+  inset: 0;
+  z-index: 2020;
+  background: rgba(5, 6, 7, 0.93);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  cursor: zoom-out;
+  animation: passoEntra 0.18s ease;
+}
+
+.trilha-lupa img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius-md);
+}
+
+/* ======================================================================
+   Ícone girando — usado nos selos "salvando…".
+   Existia no JSX do editor desde sempre, mas nunca tinha sido definido no CSS:
+   o ícone ficava parado. Agora gira de verdade, aqui e lá.
+   ====================================================================== */
+@keyframes trilhaGira { to { transform: rotate(360deg); } }
+.spin-icon { animation: trilhaGira 0.9s linear infinite; }

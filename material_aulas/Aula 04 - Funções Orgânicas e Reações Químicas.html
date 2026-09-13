@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 04 — Funções Orgânicas e Reações Químicas | Química Geral e Experimental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   PALETA — as mesmas cores da Plataforma Bueno (src/index.css + as esferas do
+   Sub-Cerebro). Cada funcao inorganica ganhou a cor de uma esfera, para o olho
+   ja saber onde esta: acido = rosa (Aula), base = azul (Anotacao),
+   sal = verde (Exercicios), oxido = violeta (Caderno), NOX = ambar (Link).
+   ========================================================================= */
+:root{
+  --bg-0:#0C0D0F; --bg-1:#15171A; --bg-2:#1E2126;
+  --border:rgba(255,255,255,.07); --border-2:rgba(255,255,255,.12);
+  --laranja:#E8933F; --laranja-2:#E77950;
+  --verde:#3ECF8E;  --vermelho:#E5484D; --amarelo:#EEA53D;
+  --rosa:#F472B6;   --azul:#60A5FA;     --violeta:#A78BFA;
+  --esmeralda:#34D399; --ambar:#F59E0B;
+  --txt:#F4F5F7; --txt-2:#C3C9D2; --mut:#99A1AC;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;
+  --r-s:10px; --r-m:14px; --r-l:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg-0); color:var(--txt); font-family:var(--sans);
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(680px 480px at 12% -6%, rgba(167,139,250,.16), transparent 60%),
+    radial-gradient(620px 520px at 92% 4%, rgba(244,114,182,.13), transparent 62%),
+    radial-gradient(760px 620px at 50% 108%, rgba(232,147,63,.10), transparent 64%);
+}
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 22px 90px}
+
+/* ---------------------------------------------------------------- CAPA -- */
+.capa{padding:52px 0 30px; text-align:center}
+.selo{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 16px;
+  border:1px solid rgba(244,114,182,.35); border-radius:999px;
+  background:rgba(244,114,182,.10); color:#FBCFE8;
+  font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+}
+.capa h1{
+  font-family:var(--serif); font-weight:700; margin:20px 0 8px;
+  font-size:clamp(30px,5.4vw,54px); line-height:1.08; letter-spacing:-.02em;
+  background:linear-gradient(120deg,#fff 8%,#F9C58D 52%,#F472B6 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.capa .sub{color:var(--txt-2); font-size:17px; max-width:660px; margin:0 auto}
+.chips{display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:24px}
+.chip{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 14px;
+  border:1px solid var(--border-2); border-radius:999px; background:rgba(255,255,255,.04);
+  font-size:12.5px; font-weight:600; color:var(--txt-2);
+}
+.chip b{color:var(--txt); font-weight:800}
+
+/* -------------------------------------------------------------- SUMARIO -- */
+.sumario{
+  margin:34px 0 8px; padding:20px; border:1px solid var(--border);
+  border-radius:var(--r-l); background:linear-gradient(180deg,rgba(30,33,38,.9),rgba(21,23,26,.72));
+  backdrop-filter:blur(8px);
+}
+.sumario h2{margin:0 0 14px; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mut)}
+.sumario ol{margin:0; padding:0; list-style:none; display:grid; gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.sumario a{
+  display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:var(--r-s);
+  border:1px solid transparent; color:var(--txt-2); text-decoration:none;
+  font-size:14.5px; font-weight:600; transition:.18s;
+}
+.sumario a:hover{background:rgba(255,255,255,.05); border-color:var(--border-2); color:#fff; transform:translateX(3px)}
+.sumario .num{
+  flex:0 0 26px; height:26px; display:grid; place-items:center; border-radius:8px;
+  background:rgba(232,147,63,.14); color:var(--laranja); font-size:12px; font-weight:800;
+}
+
+/* ------------------------------------------------------------- SECCOES -- */
+section{scroll-margin-top:18px; margin-top:46px}
+.sec-cab{display:flex; align-items:flex-start; gap:15px; margin-bottom:20px}
+.sec-ico{
+  flex:0 0 46px; height:46px; border-radius:14px; display:grid; place-items:center;
+  font-size:22px; border:1px solid var(--border-2); background:rgba(255,255,255,.04);
+}
+.sec-cab h2{
+  font-family:var(--serif); font-weight:700; margin:0; letter-spacing:-.01em;
+  font-size:clamp(22px,3.2vw,30px); line-height:1.2;
+}
+.sec-cab p{margin:5px 0 0; color:var(--mut); font-size:14.5px}
+
+.card{
+  border:1px solid var(--border); border-radius:var(--r-m); padding:20px 22px;
+  background:linear-gradient(180deg,rgba(30,33,38,.72),rgba(21,23,26,.55)); margin:16px 0;
+}
+.grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+h3{font-size:18px; margin:26px 0 10px; letter-spacing:-.01em}
+h4{font-size:15px; margin:18px 0 8px; color:var(--txt)}
+p{margin:0 0 12px; color:var(--txt-2)}
+ul,ol{color:var(--txt-2); padding-left:22px; margin:0 0 12px}
+li{margin-bottom:7px}
+b,strong{color:var(--txt)}
+a{color:var(--laranja)}
+
+.tag{display:inline-block; padding:2px 9px; border-radius:6px; font-size:12px; font-weight:800; letter-spacing:.03em}
+.t-acido{background:rgba(244,114,182,.16); color:#F9A8D4}
+.t-base{background:rgba(96,165,250,.16); color:#93C5FD}
+.t-sal{background:rgba(52,211,153,.16); color:#6EE7B7}
+.t-oxido{background:rgba(167,139,250,.16); color:#C4B5FD}
+.t-nox{background:rgba(245,158,11,.16); color:#FCD34D}
+
+.f{font-family:'Menlo','Consolas',monospace; font-weight:700; color:#fff; white-space:nowrap}
+.f sub{font-size:.72em; font-weight:700}
+.f sup{font-size:.72em; font-weight:700}
+.eq{
+  font-family:'Menlo','Consolas',monospace; font-size:15px; font-weight:700; color:#fff;
+  background:rgba(0,0,0,.34); border:1px solid var(--border-2); border-left:3px solid var(--laranja);
+  border-radius:var(--r-s); padding:13px 16px; margin:12px 0; overflow-x:auto; line-height:2;
+}
+.eq small{display:block; font-family:var(--sans); font-weight:600; color:var(--mut); font-size:12.5px; margin-top:6px}
+
+.box{border-radius:var(--r-m); padding:15px 18px; margin:16px 0; border:1px solid; font-size:14.5px}
+.box .tit{display:flex; align-items:center; gap:9px; font-weight:800; margin-bottom:7px; font-size:14px; letter-spacing:.02em}
+.box p:last-child{margin-bottom:0}
+.b-dica{border-color:rgba(62,207,142,.3); background:rgba(62,207,142,.07)} .b-dica .tit{color:var(--verde)}
+.b-atencao{border-color:rgba(238,165,61,.32); background:rgba(238,165,61,.07)} .b-atencao .tit{color:var(--amarelo)}
+.b-pegadinha{border-color:rgba(229,72,77,.32); background:rgba(229,72,77,.07)} .b-pegadinha .tit{color:#F87171}
+.b-prova{border-color:rgba(167,139,250,.32); background:rgba(167,139,250,.07)} .b-prova .tit{color:var(--violeta)}
+.b-aula{border-color:rgba(244,114,182,.30); background:rgba(244,114,182,.06)} .b-aula .tit{color:var(--rosa)}
+
+.tab-rol{overflow-x:auto; margin:16px 0; border:1px solid var(--border); border-radius:var(--r-m)}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:480px}
+thead th{
+  background:rgba(255,255,255,.045); color:var(--mut); text-align:left; padding:11px 14px;
+  font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:800;
+  border-bottom:1px solid var(--border-2); white-space:nowrap;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--txt-2); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(255,255,255,.028)}
+td .f{color:#fff}
+
+.ph-barra{
+  display:flex; height:42px; border-radius:10px; overflow:hidden; margin:8px 0 4px;
+  border:1px solid var(--border-2); font-size:11px; font-weight:800;
+}
+.ph-barra div{flex:1; display:grid; place-items:center; color:rgba(0,0,0,.62)}
+.ph-legenda{display:flex; justify-content:space-between; color:var(--mut); font-size:12px; font-weight:700}
+.ph-lista{display:grid; gap:7px; margin-top:16px}
+.ph-item{
+  display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:12px;
+  padding:9px 13px; border-radius:var(--r-s); background:rgba(255,255,255,.032);
+  border:1px solid var(--border); font-size:14px;
+}
+.ph-val{font-family:'Menlo','Consolas',monospace; font-weight:800; font-size:15px; text-align:center;
+  padding:3px 0; border-radius:6px; color:#0C0D0F}
+.ph-cat{font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--mut)}
+
+.fc-grid{display:grid; gap:13px; grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+.fc{
+  position:relative; min-height:160px; cursor:pointer; perspective:1200px;
+  background:none; border:0; padding:0; text-align:left; font-family:inherit;
+}
+.fc-int{position:relative; width:100%; height:100%; min-height:160px; transition:transform .5s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d}
+.fc.virado .fc-int{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border:1px solid var(--border-2); border-radius:var(--r-m); padding:16px 17px;
+  display:flex; flex-direction:column; justify-content:center; gap:8px; overflow:auto;
+}
+.fc-frente{background:linear-gradient(160deg,rgba(232,147,63,.16),rgba(30,33,38,.92))}
+.fc-tras{background:linear-gradient(160deg,rgba(62,207,142,.14),rgba(21,23,26,.97)); transform:rotateY(180deg)}
+.fc-tema{font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja)}
+.fc-tras .fc-tema{color:var(--verde)}
+.fc-txt{font-size:15px; font-weight:700; color:#fff; line-height:1.45}
+.fc-tras .fc-txt{font-weight:600; font-size:14.5px; color:var(--txt-2)}
+.fc-tras .fc-txt strong{color:#fff}
+.fc-pista{font-size:11px; color:var(--mut); font-weight:600}
+.fc-barra{display:flex; flex-wrap:wrap; gap:9px; align-items:center; margin:6px 0 18px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:10px;
+  border:1px solid var(--border-2); background:rgba(255,255,255,.05); color:var(--txt);
+  font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; transition:.18s;
+}
+.btn:hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
+.btn-l{background:linear-gradient(135deg,#E8933F,#D96C3F); border-color:transparent; color:#170F06}
+
+.q{border:1px solid var(--border); border-radius:var(--r-m); padding:17px 19px; margin:13px 0;
+  background:linear-gradient(180deg,rgba(30,33,38,.66),rgba(21,23,26,.5))}
+.q-cab{display:flex; align-items:center; gap:10px; margin-bottom:11px}
+.q-n{flex:0 0 28px; height:28px; border-radius:9px; display:grid; place-items:center;
+  background:rgba(167,139,250,.16); color:var(--violeta); font-size:12.5px; font-weight:800}
+.q-tema{font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mut)}
+.q-enun{color:var(--txt); font-size:15px; margin:0 0 11px; font-weight:600}
+.alts{list-style:none; padding:0; margin:0 0 12px; display:grid; gap:6px}
+.alts li{padding:8px 12px; border-radius:8px; background:rgba(255,255,255,.03);
+  border:1px solid var(--border); font-size:14px; color:var(--txt-2)}
+.alts li b{color:var(--laranja); margin-right:6px}
+details{border-top:1px dashed var(--border-2); padding-top:11px}
+details summary{
+  cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:8px;
+  font-size:13px; font-weight:800; color:var(--verde); letter-spacing:.02em;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"\25B8"; transition:.2s}
+details[open] summary::before{transform:rotate(90deg)}
+details .resp{margin-top:11px; font-size:14.5px; color:var(--txt-2);
+  background:rgba(62,207,142,.06); border:1px solid rgba(62,207,142,.22);
+  border-radius:var(--r-s); padding:13px 15px}
+details .resp b{color:#6EE7B7}
+
+.links{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.link{
+  display:flex; gap:13px; padding:15px 16px; border:1px solid var(--border); border-radius:var(--r-m);
+  background:rgba(245,158,11,.045); text-decoration:none; transition:.18s;
+}
+.link:hover{border-color:rgba(245,158,11,.4); background:rgba(245,158,11,.09); transform:translateY(-2px)}
+.link .ico{flex:0 0 38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  background:rgba(245,158,11,.14); font-size:18px}
+.link .tit{color:#fff; font-weight:700; font-size:14.5px; display:block; margin-bottom:3px}
+.link .desc{color:var(--mut); font-size:12.5px; display:block; line-height:1.45}
+
+.cola{border:1px solid rgba(232,147,63,.3); background:rgba(232,147,63,.055)}
+.cola-grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.cola-bloco{border:1px solid var(--border); border-radius:var(--r-s); padding:13px 15px; background:rgba(12,13,15,.5)}
+.cola-bloco h5{margin:0 0 8px; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--laranja)}
+.cola-bloco ul{margin:0; padding-left:17px; font-size:13.5px}
+.cola-bloco li{margin-bottom:5px}
+
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--border); text-align:center;
+  color:var(--mut); font-size:12.5px}
+footer b{color:var(--txt-2)}
+
+@media(max-width:620px){
+  .wrap{padding:0 15px 70px}
+  .ph-item{grid-template-columns:56px 1fr}
+  .ph-cat{grid-column:1/-1}
+  .sec-cab{gap:11px} .sec-ico{flex:0 0 38px; height:38px; font-size:18px}
+}
+@media print{
+  body::before{display:none}
+  .fc-int{transform:none!important}
+  details .resp{display:block}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="capa">
+  <span class="selo" style="border-color:rgba(167,139,250,.35); background:rgba(167,139,250,.10); color:#DDD6FE">&#9679; Aula 04 &middot; Semana 4 &middot; Módulo 53/2026</span>
+  <h1 style="background:linear-gradient(120deg,#fff 8%,#DDD6FE 50%,#A78BFA 100%); -webkit-background-clip:text; background-clip:text; color:transparent">Funções Orgânicas e Reações</h1>
+  <p class="sub">O carbono, que faz sempre quatro ligações e monta praticamente toda a vida &mdash;
+  e o começo das reações químicas, com a lei de Lavoisier e o balanceamento.</p>
+  <div class="chips">
+    <span class="chip">&#128218; <b>Química Geral e Experimental</b></span>
+    <span class="chip">&#127891; Aula ao vivo 04</span>
+    <span class="chip">&#9201; <b>1h33</b> de aula</span>
+    <span class="chip">&#129504; 8 blocos + 51 flashcards</span>
+    <span class="chip">&#9997; 13 questões com gabarito</span>
+  </div>
+</header>
+
+<nav class="sumario">
+  <h2>Mapa da aula</h2>
+  <ol>
+    <li><a href="#s1"><span class="num">1</span> O átomo de carbono</a></li>
+    <li><a href="#s2"><span class="num">2</span> Hibridização: sp³, sp², sp</a></li>
+    <li><a href="#s3"><span class="num">3</span> Postulados de Kekulé</a></li>
+    <li><a href="#s4"><span class="num">4</span> Como representar a cadeia</a></li>
+    <li><a href="#s5"><span class="num">5</span> Hidrocarbonetos e nomenclatura</a></li>
+    <li><a href="#s6"><span class="num">6</span> As outras funções orgânicas</a></li>
+    <li><a href="#s7"><span class="num">7</span> Reações químicas e Lavoisier</a></li>
+    <li><a href="#s8"><span class="num">8</span> Balanceamento (regra MACHO)</a></li>
+    <li><a href="#sfc"><span class="num">9</span> Flashcards (51)</a></li>
+    <li><a href="#s10"><span class="num">10</span> Exercícios comentados</a></li>
+    <li><a href="#s11"><span class="num">11</span> Pegadinhas de prova</a></li>
+    <li><a href="#slinks"><span class="num">&#128279;</span> Links e simuladores</a></li>
+    <li><a href="#s12"><span class="num">12</span> Cola de uma página</a></li>
+  </ol>
+</nav>
+
+<div class="box b-aula" style="margin-top:26px">
+  <div class="tit">&#128161; Por que esta aula tem duas metades</div>
+  <p>A <b>parte 1</b> é a unidade 4 (funções orgânicas) &mdash; o &ldquo;resumo do resumo&rdquo;, porque
+  química orgânica é tão vasta que existem cursos com uma disciplina inteira só para ela.
+  A <b>parte 2</b> adianta o começo da unidade 5 (reações), de propósito, para a aula 05 &mdash;
+  que é cheia de cálculos &mdash; ficar mais tranquila.</p>
+</div>
+
+<!-- ============================================== CARBONO ============== -->
+<section id="s1">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9883;</div>
+    <div>
+      <h2>1. O átomo de carbono</h2>
+      <p>Uma regra só, e ela nunca falha: <b>o carbono faz sempre 4 ligações</b>.</p>
+    </div>
+  </div>
+
+  <div class="eq">
+    C: Z = 6 &rarr; 6 prótons, 6 elétrons<br>
+    Distribuição: <b>1s² 2s² 2p²</b><br>
+    Camada de valência = camada <b>2</b>, com 2 + 2 = <b>4 elétrons</b>
+  </div>
+
+  <div class="card" style="border-color:rgba(167,139,250,.32); background:rgba(167,139,250,.06)">
+    <h4 style="margin-top:0; color:var(--violeta)">&#9878; A regra de ouro</h4>
+    <p style="margin-bottom:0"><b>O CARBONO FAZ SEMPRE QUATRO LIGAÇÕES.</b>
+    Não importa se está ligado a hidrogênio, a oxigênio, a nitrogênio ou a outro carbono.
+    E são sempre ligações <b>COVALENTES</b>, porque o carbono é ametal.</p>
+  </div>
+
+  <h3>As quatro combinações possíveis</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Combinação</th><th>Conta</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b>4 simples</b></td><td>1+1+1+1 = 4</td><td><span class="f">CH₄</span> (metano)</td></tr>
+        <tr><td><b>1 dupla + 2 simples</b></td><td>2+1+1 = 4</td><td><span class="f">CH₂=CH₂</span> (eteno)</td></tr>
+        <tr><td><b>1 tripla + 1 simples</b></td><td>3+1 = 4</td><td><span class="f">HC&#8801;CH</span> (etino)</td></tr>
+        <tr><td><b>2 duplas</b></td><td>2+2 = 4</td><td><span class="f">O=C=O</span> (CO₂)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; Como contar</div>
+    <p>A <b>dupla vale 2</b> das quatro ligações. A <b>tripla vale 3</b>.
+    Se o carbono já fez uma dupla, sobram <b>2</b> simples. Se já fez uma tripla, sobra <b>1</b> simples.
+    Sempre fecha em quatro.</p>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; O paradoxo dos 2 elétrons</div>
+    <p>No estado fundamental (<span class="f">1s² 2s² 2p²</span>) o carbono tem apenas <b>2 elétrons
+    desemparelhados</b>. Pela teoria, faria só 2 ligações. Mas na prática faz 4 &mdash; e a explicação
+    é a <b>hibridização</b>, o próximo bloco.</p>
+  </div>
+  <div class="box b-prova">
+    <div class="tit">&#127891; Por que a química orgânica é gigante</div>
+    <p>Praticamente tudo é feito de carbono: os seres vivos, o petróleo e todos os seus derivados,
+    os plásticos, os fármacos &mdash; e o <b>DNA</b>, aquelas moléculas helicoidais que carregam
+    toda a informação genética.</p>
+  </div>
+</section>
+
+<!-- ========================================== HIBRIDIZAÇÃO ============= -->
+<section id="s2">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(96,165,250,.12); border-color:rgba(96,165,250,.32)">&#128260;</div>
+    <div>
+      <h2>2. Hibridização: sp³, sp² e sp</h2>
+      <p>Como o carbono consegue fazer 4 ligações tendo só 2 elétrons desemparelhados.</p>
+    </div>
+  </div>
+
+  <p>Um elétron do <span class="f">2s</span> <b>salta</b> para o <span class="f">2p</span>.
+  O carbono passa a ter <b>4 elétrons desemparelhados</b>, e os orbitais s e p se <b>misturam</b>
+  formando <b>orbitais híbridos</b>. (Pense em carro híbrido: a junção de duas coisas.)</p>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Hibridização</th><th>Mistura</th><th>Ligações</th><th>Geometria</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--esmeralda)">sp³</b></td><td>1 s + <b>3</b> p</td>
+            <td><b>4 SIMPLES</b></td><td><b>TETRAÉDRICA</b></td>
+            <td><span class="f">CH₄</span> (metano)</td></tr>
+        <tr><td><b style="color:var(--amarelo)">sp²</b></td><td>1 s + <b>2</b> p<br>(sobra 1 p puro)</td>
+            <td><b>1 DUPLA</b> + 2 simples</td><td><b>TRIGONAL PLANA</b></td>
+            <td>formaldeído <span class="f">H₂C=O</span></td></tr>
+        <tr><td><b style="color:var(--rosa)">sp</b></td><td>1 s + <b>1</b> p<br>(sobram 2 p puros)</td>
+            <td><b>1 TRIPLA</b> + 1 simples<br><em>ou</em> <b>2 DUPLAS</b></td><td><b>LINEAR</b></td>
+            <td><span class="f">HCN</span> e <span class="f">CO₂</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>A lógica: quem faz o quê</h3>
+  <div class="eq">
+    orbitais <b>HÍBRIDOS</b> &rarr; fazem as ligações <b>SIMPLES</b><br>
+    orbitais <b>p que sobraram</b> (não hibridizados) &rarr; fazem as <b>DUPLAS e TRIPLAS</b><br><br>
+    sp³: 4 híbridos, <b>0</b> p sobrando &rarr; 4 simples, nenhuma dupla<br>
+    sp²: 3 híbridos, <b>1</b> p sobrando &rarr; 3 simples + 1 dupla<br>
+    sp:&nbsp; 2 híbridos, <b>2</b> p sobrando &rarr; 2 simples + 2 duplas (ou 1 tripla)
+    <small>Nos sp³ todos os orbitais híbridos têm a MESMA energia e fazem ligações EQUIVALENTES — está na mesma linha do diagrama de energia.</small>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; O atalho de prova (não faça a conta de orbitais)</div>
+    <p>Olhe a <b>ligação</b>, não os orbitais:</p>
+    <ul style="margin-bottom:0">
+      <li>só ligações <b>simples</b> &rarr; <b>sp³</b> &rarr; tetraédrica</li>
+      <li>tem uma <b>dupla</b> &rarr; <b>sp²</b> &rarr; trigonal plana</li>
+      <li>tem uma <b>tripla</b> (ou 2 duplas) &rarr; <b>sp</b> &rarr; linear</li>
+    </ul>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Resposta a uma dúvida do chat</div>
+    <p>Dá para identificar a hibridização só pela fórmula molecular? <b>Geralmente sim</b>, mas o ideal
+    é ter a <b>fórmula estrutural</b> &mdash; é ela que mostra se existe dupla ou tripla, que é o que
+    define a hibridização.</p>
+  </div>
+</section>
+
+<!-- ============================================== KEKULÉ =============== -->
+<section id="s3">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.12); border-color:rgba(232,147,63,.32)">&#128220;</div>
+    <div>
+      <h2>3. Postulados de Kekulé (1858)</h2>
+      <p>Três frases de quase 170 anos que ainda regem toda a química orgânica.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">1. Tetravalência</h4>
+      <p style="margin-bottom:0">O carbono faz <b>sempre 4 ligações</b>, com qualquer elemento.
+      Não interessa quem é o parceiro.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">2. Ligações equivalentes</h4>
+      <p style="margin-bottom:0">As quatro ligações têm o <b>mesmo valor</b>. Não importa se o carbono
+      está ligado a um hidrogênio ou a um flúor.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">3. Formação de cadeias</h4>
+      <p style="margin-bottom:0">O carbono <b>se liga a outros carbonos</b>, formando cadeias.
+      É daqui que sai <em>tudo</em>: petróleo, plásticos, fármacos, DNA.</p>
+    </div>
+  </div>
+
+  <div class="box b-aula">
+    <div class="tit">&#9981; Cadeia carbônica e octanagem</div>
+    <p>No refino do petróleo, o craqueamento separa os derivados pela <b>densidade</b> &mdash; ou seja,
+    pelo <b>tamanho da cadeia carbônica</b>. A <b>gasolina</b> tem <b>8 carbonos</b> (octano).</p>
+    <p style="margin-top:8px">&ldquo;Gasolina de <b>alta octanagem</b>&rdquo; significa que a maior parte
+    da composição é realmente <b>octano</b>, com pouca contaminação de cadeias de 7 ou 9 carbonos.
+    É <b>alto grau de pureza</b>.</p>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; E o hidrogênio?</div>
+    <p>O hidrogênio faz <b>sempre 1 ligação</b>, só. É a exceção do octeto vista na aula 02:
+    ele estabiliza com <b>2 elétrons</b>.</p>
+  </div>
+</section>
+
+<!-- =========================================== REPRESENTAÇÕES ========== -->
+<section id="s4">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(52,211,153,.12); border-color:rgba(52,211,153,.32)">&#9999;</div>
+    <div>
+      <h2>4. Como representar uma cadeia carbônica</h2>
+      <p>Quatro formas para a mesma molécula &mdash; cada uma diz mais (ou menos).</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Representação</th><th>Exemplo (propeno)</th><th>O que informa</th></tr></thead>
+      <tbody>
+        <tr><td><b>1. MOLECULAR</b></td><td><span class="f">C₃H₆</span></td>
+            <td>Só <b>quantos</b> átomos de cada tipo. Não diz nada sobre as ligações &mdash;
+            informação pobre.</td></tr>
+        <tr><td><b>2. ESTRUTURAL</b></td><td>H₂C=CH&ndash;CH₃ com todos os H desenhados</td>
+            <td><b>Tudo</b>: todos os átomos e todas as ligações. Dá para tirar a hibridização,
+            a geometria, a função. É a mais completa.</td></tr>
+        <tr><td><b>3. BASTÃO</b></td><td>só riscos, sem letra nenhuma</td>
+            <td>Cada <b>vértice ou ponta</b> é um <b>carbono</b>. Carbonos e hidrogênios ficam
+            <b>implícitos</b>. É a mais rápida de desenhar.</td></tr>
+        <tr><td><b>4. CONDENSADA</b></td><td><span class="f">CH₂=CH&ndash;CH₃</span></td>
+            <td>Mostra os <b>grupos ligados</b>, um por um. Meio caminho entre a molecular e a estrutural.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Lendo a fórmula de bastão</div>
+    <p>Conte os <b>vértices e as pontas</b>: cada um é um carbono. Um risco <b>duplo</b> entre dois
+    vértices é uma ligação dupla. Os hidrogênios estão lá, só não são escritos &mdash;
+    complete mentalmente até o carbono ter as 4 ligações.</p>
+  </div>
+</section>
+
+<!-- ======================================= HIDROCARBONETOS ============= -->
+<section id="s5">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#9981;</div>
+    <div>
+      <h2>5. Hidrocarbonetos e nomenclatura</h2>
+      <p>Só carbono e hidrogênio. E um nome que se monta em três partes.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,158,11,.28)">
+    <p style="margin-bottom:0"><b>HIDROCARBONETO</b> = composto formado <b>apenas</b> por
+    <b>carbono e hidrogênio</b>. O carbono só está ligado a outros carbonos e a hidrogênios,
+    nada mais.</p>
+  </div>
+
+  <h3>Os cinco tipos</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Tipo</th><th>Característica</th><th>Infixo</th></tr></thead>
+      <tbody>
+        <tr><td><b>ALCANO</b></td><td>Só ligações <b>SIMPLES</b> (saturado)</td><td><b>AN</b></td></tr>
+        <tr><td><b>ALCENO</b></td><td>Tem <b>pelo menos uma DUPLA</b></td><td><b>EN</b></td></tr>
+        <tr><td><b>ALCINO</b></td><td>Tem ligação <b>TRIPLA</b></td><td><b>IN</b></td></tr>
+        <tr><td><b>CICLANO</b></td><td>Cadeia <b>FECHADA</b> (cíclica) e <b>SATURADA</b> (só simples)</td><td>&mdash;</td></tr>
+        <tr><td><b>AROMÁTICO</b></td><td>Cadeia cíclica com duplas <b>ALTERNADAS</b></td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>A nomenclatura em três partes</h3>
+  <div class="eq">
+    <b>PREFIXO</b> + <b>INFIXO</b> + <b>SUFIXO</b><br>
+    (quantos carbonos) &nbsp;(tipo de ligação) &nbsp;(qual função)
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>PREFIXO</th><th>Carbonos</th><th>PREFIXO</th><th>Carbonos</th></tr></thead>
+      <tbody>
+        <tr><td><b>met</b></td><td>1</td><td><b>hex</b></td><td>6</td></tr>
+        <tr><td><b>et</b></td><td>2</td><td><b>hept</b></td><td>7</td></tr>
+        <tr><td><b>prop</b></td><td>3</td><td><b>oct</b></td><td>8</td></tr>
+        <tr><td><b>but</b></td><td>4</td><td><b>non</b></td><td>9</td></tr>
+        <tr><td><b>pent</b></td><td>5</td><td><b>dec</b></td><td>10</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="eq">
+    <b>INFIXO:</b>&nbsp;&nbsp;AN = só simples &nbsp;&middot;&nbsp; EN = uma dupla &nbsp;&middot;&nbsp; IN = uma tripla<br>
+    <b>SUFIXO:</b>&nbsp;&nbsp;<b>O</b> = HIDROCARBONETO &nbsp;&nbsp;(OL seria álcool)
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Nome</th><th>Decomposição</th><th>Significa</th></tr></thead>
+      <tbody>
+        <tr><td><b>BUTANO</b></td><td>but + an + o</td><td>4 carbonos, só ligações simples, hidrocarboneto</td></tr>
+        <tr><td><b>PENTANO</b></td><td>pent + an + o</td><td>5 carbonos, só simples, hidrocarboneto</td></tr>
+        <tr><td><b>ETENO</b></td><td>et + en + o</td><td>2 carbonos, uma dupla (também chamado etileno)</td></tr>
+        <tr><td><b>PROPENO</b></td><td>prop + en + o</td><td>3 carbonos, uma dupla</td></tr>
+        <tr><td><b>ETINO</b></td><td>et + in + o</td><td>2 carbonos, uma tripla (o acetileno do maçarico)</td></tr>
+        <tr><td><b>PROPINO</b></td><td>prop + in + o</td><td>3 carbonos, uma tripla</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Por onde começar a numerar</div>
+    <p>Comece pelo carbono <b>mais próximo da insaturação</b> (da dupla ou da tripla) &mdash;
+    <b>não</b> simplesmente pela ponta da esquerda. A numeração tem que dar os <b>menores números</b>
+    possíveis para a insaturação.</p>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; &ldquo;Pelo menos uma&rdquo;</div>
+    <p>Para ser <b>alceno</b> basta <b>uma</b> ligação dupla &mdash; não precisa que todas sejam duplas.
+    Mesma lógica para o alcino.</p>
+  </div>
+
+  <h3>Aromáticos</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Nome</th><th>Estrutura</th><th>Onde aparece</th></tr></thead>
+      <tbody>
+        <tr><td><b>BENZENO</b></td><td>Anel de 6 carbonos com duplas <b>alternadas</b>.
+            Pode ser desenhado como um hexágono com um <b>círculo</b> dentro (o círculo representa a alternância).</td>
+            <td>Solvente, matéria-prima da indústria química</td></tr>
+        <tr><td><b>TOLUENO</b></td><td>benzeno + <b>1</b> radical <span class="f">CH₃</span></td><td>Solvente, tinta</td></tr>
+        <tr><td><b>XILENO</b></td><td>benzeno + <b>2</b> radicais <span class="f">CH₃</span></td><td>Solvente industrial</td></tr>
+        <tr><td><b>NAFTALENO</b></td><td><b>2</b> anéis de benzeno unidos</td><td>É a <b>naftalina</b></td></tr>
+        <tr><td><b>ANTRACENO</b> / <b>FENANTRENO</b></td><td>3 anéis</td><td>Corantes, pesquisa</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================== FUNÇÕES ============== -->
+<section id="s6">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(244,114,182,.12); border-color:rgba(244,114,182,.32)">&#129514;</div>
+    <div>
+      <h2>6. As outras funções orgânicas</h2>
+      <p>Quando o carbono se liga a oxigênio ou nitrogênio, muda a função.</p>
+    </div>
+  </div>
+
+  <p>Nas fórmulas abaixo, <b>R</b> e <b>R'</b> representam <em>qualquer</em> cadeia carbônica
+  (aquela &ldquo;cobrinha&rdquo; dos slides).</p>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Função</th><th>Como reconhecer</th><th>Exemplo do dia a dia</th></tr></thead>
+      <tbody>
+        <tr><td><b>ÁLCOOL</b></td><td><span class="f">R&ndash;OH</span> &mdash; o OH ligado a uma cadeia</td>
+            <td><b>ETANOL</b> &mdash; combustível, álcool de limpeza</td></tr>
+        <tr><td><b>FENOL</b></td><td>OH ligado a um <b>anel aromático</b></td><td>Desinfetante</td></tr>
+        <tr><td><b>ÉTER</b></td><td><span class="f">R&ndash;O&ndash;R'</span> &mdash; oxigênio <b>entre</b> duas cadeias</td>
+            <td>Éter etílico</td></tr>
+        <tr><td><b>ALDEÍDO</b></td><td><span class="f">R&ndash;CHO</span> &mdash; C com dupla ao O <b>+ 1 hidrogênio</b></td>
+            <td>Formaldeído (formol)</td></tr>
+        <tr><td><b>CETONA</b></td><td><span class="f">R&ndash;CO&ndash;R'</span> &mdash; C com dupla ao O <b>entre duas cadeias</b></td>
+            <td><b>ACETONA</b></td></tr>
+        <tr><td><b>ÉSTER</b></td><td><span class="f">R&ndash;COO&ndash;R'</span></td><td>Essências de fruta, biodiesel</td></tr>
+        <tr><td><b>ÁCIDO CARBOXÍLICO</b></td><td><span class="f">R&ndash;COOH</span></td>
+            <td><b>ÁCIDO ACÉTICO</b> &mdash; o vinagre</td></tr>
+        <tr><td><b>AMINA</b></td><td>Nitrogênio ligado a cadeias: <span class="f">R&ndash;NH₂</span> ou <span class="f">R&ndash;NH&ndash;R'</span></td>
+            <td>Aminas de fármacos</td></tr>
+        <tr><td><b>AMIDA</b></td><td><span class="f">R&ndash;CO&ndash;NH₂</span> &mdash; C com dupla ao O <b>+ nitrogênio</b></td>
+            <td><b>UREIA</b> &mdash; fertilizante</td></tr>
+        <tr><td><b>ENOL</b></td><td>OH num carbono que faz <b>ligação dupla</b></td><td>Presente na vitamina C</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; Aldeído ou cetona? A diferença é um hidrogênio</div>
+    <p>Os dois têm carbono com <b>dupla ao oxigênio</b>. No <b>aldeído</b> esse carbono tem também um
+    <b>hidrogênio</b> (está na ponta da cadeia). Na <b>cetona</b> ele está <b>entre duas cadeias</b>
+    carbônicas (está no meio).</p>
+  </div>
+
+  <h3>O ácido acético, passo a passo</h3>
+  <div class="eq">
+    <span class="f">CH₃ &ndash; COOH</span><br><br>
+    <b>CH₃</b> = a cadeia carbônica (um carbono com 3 hidrogênios)<br>
+    <b>COOH</b> = o grupo que define a função: <b>ácido carboxílico</b>
+    <small>É o vinagre. O de cozinha tem cerca de 4% de ácido acético; existem versões de 6% a 8%.</small>
+  </div>
+
+  <div class="box b-prova">
+    <div class="tit">&#127891; Uma molécula pode ter VÁRIAS funções</div>
+    <p>É o mais comum nas moléculas grandes:</p>
+    <ul style="margin-bottom:0">
+      <li><b>Vitamina C</b> (ácido ascórbico) &rarr; álcool + éster + <b>enol</b></li>
+      <li><b>Aspartame</b> (adoçante) &rarr; éter + amida + amina + ácido carboxílico</li>
+      <li><b>Coronopilina</b> (anti-inflamatório) &rarr; cetona + álcool + éster</li>
+    </ul>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; O que NÃO entra na disciplina</div>
+    <p>A professora deixou claro: a <b>nomenclatura</b> completa das outras funções (só a dos
+    hidrocarbonetos foi dada) <b>não está no escopo</b>. O que se pede é <b>reconhecer</b>
+    o grupo funcional pela estrutura. Só guarde que cada função tem seu sufixo &mdash;
+    <b>OL</b> para álcool, por exemplo.</p>
+  </div>
+</section>
+
+<!-- =========================================== REAÇÕES ================= -->
+<section id="s7">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(62,207,142,.12); border-color:rgba(62,207,142,.32)">&#9851;</div>
+    <div>
+      <h2>7. Reações químicas e a lei de Lavoisier</h2>
+      <p>A partir daqui começa a unidade 5.</p>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(62,207,142,.32); background:rgba(62,207,142,.06)">
+    <h4 style="margin-top:0; color:var(--verde)">&#9851; Lei de Lavoisier</h4>
+    <p style="margin-bottom:0; font-size:17px"><b>&ldquo;Na natureza nada se cria, nada se perde,
+    tudo se transforma.&rdquo;</b></p>
+  </div>
+
+  <p><b>Reação química</b> é a transformação de um material em outro: as ligações antigas são
+  <b>quebradas</b>, os átomos se <b>rearranjam</b> e <b>novas ligações</b> se formam &mdash;
+  produzindo substâncias de constituição diferente.</p>
+
+  <div class="eq">
+    <b>REAGENTES</b> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; <b>PRODUTOS</b><br>
+    (estado inicial) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(depois da transformação)
+    <small>A seta significa "reage formando". Os mesmos ÁTOMOS continuam ali — só se reorganizaram.</small>
+  </div>
+
+  <h4>O exemplo da água</h4>
+  <div class="eq">
+    <span class="f">H₂</span> (gás hidrogênio, ligação H&ndash;H)<br>
+    +<br>
+    <span class="f">O₂</span> (gás oxigênio, ligação O&ndash;O)<br>
+    &darr;&nbsp;&nbsp;<em>as ligações são quebradas e refeitas</em><br>
+    <span class="f">H₂O</span> (água líquida)
+    <small>Antes: dois gases. Depois: um líquido. Propriedades completamente diferentes — mas os átomos são os mesmos (hidrogênio e oxigênio), apenas ligados de outro jeito.</small>
+  </div>
+  <div class="box b-aula">
+    <div class="tit">&#128167; &ldquo;Então dá para criar água?&rdquo;</div>
+    <p>Sim &mdash; reagindo gás hidrogênio com gás oxigênio nas condições certas.
+    Mas <b>não</b> em casa: ocorre uma pequena <b>explosão</b> e precisa ser feito em laboratório.
+    Há vários vídeos da síntese da água no YouTube.</p>
+  </div>
+</section>
+
+<!-- ======================================== BALANCEAMENTO ============== -->
+<section id="s8">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(238,165,61,.12); border-color:rgba(238,165,61,.32)">&#9878;</div>
+    <div>
+      <h2>8. Balanceamento (regra MACHO)</h2>
+      <p>Ajustar os números da frente até os dois lados terem os mesmos átomos.</p>
+    </div>
+  </div>
+
+  <p><b>Coeficiente estequiométrico</b> é o número escrito na <b>frente</b> de cada substância.
+  <b>Balancear</b> é ajustar esses coeficientes até que a quantidade de <b>cada átomo</b> seja
+  igual nos reagentes e nos produtos &mdash; exigência direta da lei de Lavoisier.</p>
+
+  <div class="eq">
+    <span style="color:var(--vermelho)">H₂ + O₂ &rarr; H₂O</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    <em>desbalanceada:</em> O = <b>2</b> &rarr; <b>1</b> &#10008;<br><br>
+    <span style="color:var(--verde)"><b>2</b> H₂ + O₂ &rarr; <b>2</b> H₂O</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    <em>balanceada</em> &#10004;<br>
+    H: 2&times;2 = 4 &rarr; 2&times;2 = 4 &nbsp;&nbsp;|&nbsp;&nbsp; O: 2 &rarr; 2&times;1 = 2
+  </div>
+
+  <div class="card cola">
+    <h4 style="margin-top:0; color:var(--laranja)">&#127919; A regra MACHO &mdash; a ordem de balancear</h4>
+    <div class="eq" style="margin-bottom:0">
+      <b>M</b> &mdash; METAIS<br>
+      <b>A</b> &mdash; AMETAIS<br>
+      <b>C</b> &mdash; CARBONO<br>
+      <b>H</b> &mdash; HIDROGÊNIO<br>
+      <b>O</b> &mdash; OXIGÊNIO
+      <small>Seguindo essa ordem, o oxigênio (o último) quase sempre já fecha sozinho no fim. Se ele NÃO fechar, algo foi errado antes.</small>
+    </div>
+  </div>
+
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; Só o COEFICIENTE pode mudar</div>
+    <p>Você pode alterar os números da <b>frente</b> (coeficientes). <b>Nunca</b> os números de
+    <b>baixo</b> (índices) &mdash; mudar um índice muda a <b>substância</b>:
+    <span class="f">H₂O</span> e <span class="f">H₂O₂</span> são coisas completamente diferentes.</p>
+  </div>
+
+  <h3>Exemplos resolvidos</h3>
+
+  <h4>Combustão do metano</h4>
+  <div class="eq">
+    <b>CH₄ + 2 O₂ &rarr; CO₂ + 2 H₂O</b><br><br>
+    C: 1 &rarr; 1 &#10004;<br>
+    H: 4 &rarr; 2&times;2 = 4 &#10004;<br>
+    O: 2&times;2 = 4 &rarr; 2 + (2&times;1) = 4 &#10004;
+    <small>Note o oxigênio do lado dos produtos: ele aparece em DUAS substâncias (CO₂ e H₂O) e é preciso somar as duas.</small>
+  </div>
+
+  <h4>Síntese da amônia</h4>
+  <div class="eq">
+    <b>N₂ + 3 H₂ &rarr; 2 NH₃</b><br><br>
+    N: 2 &rarr; 2&times;1 = 2 &#10004; &nbsp;&nbsp;|&nbsp;&nbsp; H: 3&times;2 = 6 &rarr; 2&times;3 = 6 &#10004;
+    <small>Pela regra MACHO, o nitrogênio (ametal) vem antes do hidrogênio. Ajustou o N, o H se resolve.</small>
+  </div>
+
+  <h4>Óxido de alumínio &mdash; o caso da fração</h4>
+  <div class="eq">
+    <b>2 Al + 3/2 O₂ &rarr; Al₂O₃</b>&nbsp;&nbsp;&nbsp;&nbsp;&larr; <b>correto</b><br>
+    O: 3/2 &times; 2 = 3 &rarr; 3 &#10004;<br><br>
+    <b>4 Al + 3 O₂ &rarr; 2 Al₂O₃</b>&nbsp;&nbsp;&nbsp;&larr; multiplicando tudo por 2, fica inteiro
+    <small>As duas formas valem. Coeficiente fracionário NÃO é erro — só é menos elegante.</small>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; A distributiva do parêntese</div>
+    <p>Em <span class="f">Ca₃(PO₄)₂</span>, o índice de <b>fora</b> do parêntese multiplica
+    <b>tudo</b> o que está dentro:</p>
+    <div class="eq" style="margin-bottom:0">
+      P: 1 &times; 2 = <b>2 fósforos</b><br>
+      O: 4 &times; 2 = <b>8 oxigênios</b>
+      <small>É a mesma distributiva da matemática. Esquecer isso é o erro nº 1 do balanceamento.</small>
+    </div>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Como pegar a manha</div>
+    <p>Não existe passo a passo mágico: é <b>tentativa e erro</b> <em>seguindo a ordem MACHO</em>.
+    A única dica real é <b>treinar</b>. Faça cinco balanceamentos e o jeito cola.
+    E use o simulador de balanceamento do PhET (link no fim desta página).</p>
+  </div>
+</section>
+
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#A78BFA1f; border-color:#A78BFA52">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 04</h2>
+      <p>51 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 04","Quantos elétrons de valência tem o carbono?","QUATRO. Z = 6, distribuição 1s² 2s² 2p² → camada 2 com 2 + 2 = 4 elétrons de valência."],
+    ["Aula 04","Quantas ligações o carbono faz?","SEMPRE QUATRO — não importa com qual elemento. É a TETRAVALÊNCIA, o 1º postulado de Kekulé."],
+    ["Aula 04","Que tipo de ligação o carbono faz?","Sempre COVALENTE (compartilhamento), porque o carbono é um AMETAL."],
+    ["Aula 04","Quais combinações de ligações o carbono pode ter?","4 simples · 1 dupla + 2 simples · 1 tripla + 1 simples · 2 duplas. A dupla conta como 2 das 4 e a tripla como 3 — sempre totalizando quatro."],
+    ["Aula 04","Por que o carbono faz 4 ligações se tem só 2 elétrons desemparelhados?","Por causa da HIBRIDIZAÇÃO: um elétron do 2s salta para o 2p, ficando 4 elétrons desemparelhados, e os orbitais s e p se misturam formando orbitais híbridos."],
+    ["Aula 04","Por que a química orgânica é tão importante?","Porque praticamente tudo na vida é feito de compostos de CARBONO — os seres vivos, o petróleo e seus derivados, os fármacos, os plásticos e o próprio DNA."],
+    ["Aula 04","O que é hibridização sp³? Que ligações e geometria dá?","1 orbital s + 3 orbitais p. Dá 4 LIGAÇÕES SIMPLES e geometria TETRAÉDRICA. Exemplo: CH₄ (gás metano)."],
+    ["Aula 04","O que é hibridização sp²? Que ligações e geometria dá?","1 orbital s + 2 orbitais p (sobra 1 p puro). Dá 1 DUPLA + 2 simples e geometria TRIGONAL PLANA. Exemplo: formaldeído H₂C=O."],
+    ["Aula 04","O que é hibridização sp? Que ligações e geometria dá?","1 orbital s + 1 orbital p (sobram 2 p puros). Dá 1 TRIPLA + 1 simples OU 2 DUPLAS, e geometria LINEAR. Exemplos: HCN e CO₂."],
+    ["Aula 04","Qual a geometria do CO₂ e qual a hibridização do carbono nele?","Geometria LINEAR, hibridização sp — porque o carbono faz DUAS DUPLAS (O=C=O)."],
+    ["Aula 04","Numa molécula só com ligações simples, qual a hibridização do carbono?","sp³ — e a geometria é TETRAÉDRICA. É o atalho: vá pela ligação, não pela conta de orbitais."],
+    ["Aula 04","Numa molécula com uma ligação DUPLA, qual a hibridização e a geometria?","Hibridização sp², geometria TRIGONAL PLANA."],
+    ["Aula 04","Quem faz as ligações simples e quem faz as duplas/triplas, nos orbitais?","Os orbitais HÍBRIDOS fazem as ligações SIMPLES. Os orbitais p que sobraram, NÃO hibridizados, fazem as DUPLAS e TRIPLAS."],
+    ["Aula 04","Quais são os três postulados de Kekulé?","1) O carbono é TETRAVALENTE (4 ligações sempre). 2) As 4 ligações são EQUIVALENTES. 3) O carbono forma CADEIAS com outros carbonos."],
+    ["Aula 04","O que significa dizer que as ligações do carbono são \"equivalentes\"?","Que todas as 4 têm o mesmo valor: não importa se o carbono está ligado a um hidrogênio, a um flúor ou a outro carbono."],
+    ["Aula 04","O que significa \"gasolina de alta octanagem\"?","Que a maior parte da composição é realmente OCTANO — a cadeia de 8 carbonos —, com pouca contaminação de cadeias de 7 ou 9. É alto grau de pureza."],
+    ["Aula 04","Qual a diferença entre fórmula molecular e estrutural?","A MOLECULAR (C₃H₆) só diz quantos átomos de cada tipo existem. A ESTRUTURAL mostra TODOS os átomos e TODAS as ligações — dá para tirar a hibridização e a geometria dela."],
+    ["Aula 04","Na fórmula de BASTÃO, o que representa cada vértice?","Cada vértice ou ponta do risco é um átomo de CARBONO. Os carbonos e os hidrogênios ficam implícitos — não se escreve nenhum deles."],
+    ["Aula 04","Como se representa uma ligação dupla na fórmula de bastão?","Com um risco PARALELO ao lado do primeiro, entre os dois carbonos."],
+    ["Aula 04","O que é um hidrocarboneto?","Composto orgânico formado APENAS por CARBONO e HIDROGÊNIO — o carbono só está ligado a outros carbonos e a hidrogênios."],
+    ["Aula 04","Qual a diferença entre alcano, alceno e alcino?","ALCANO (infixo AN): só ligações simples. ALCENO (EN): tem pelo menos uma DUPLA. ALCINO (IN): tem uma TRIPLA."],
+    ["Aula 04","Quais são os prefixos de 1 a 10 carbonos?","1 met · 2 et · 3 prop · 4 but · 5 pent · 6 hex · 7 hept · 8 oct · 9 non · 10 dec."],
+    ["Aula 04","Quais são os três infixos e o que significam?","AN = só ligações simples · EN = uma ligação dupla · IN = uma ligação tripla."],
+    ["Aula 04","Qual sufixo indica que o composto é um hidrocarboneto?","O sufixo O. Todo nome de hidrocarboneto termina em -O: butano, propeno, etino. (Álcool termina em -OL.)"],
+    ["Aula 04","Decomponha o nome PENTANO","PENT (5 carbonos) + AN (só ligações simples) + O (hidrocarboneto). Logo: cadeia de 5 carbonos, saturada."],
+    ["Aula 04","Decomponha o nome PROPENO","PROP (3 carbonos) + EN (uma ligação dupla) + O (hidrocarboneto). Logo: 3 carbonos com uma dupla."],
+    ["Aula 04","Quantas ligações duplas um alceno precisa ter?","Pelo menos UMA. Não precisa que todas sejam duplas — basta uma para já ser alceno."],
+    ["Aula 04","Por qual carbono se começa a numerar a cadeia?","Pelo carbono MAIS PRÓXIMO DA INSATURAÇÃO (da dupla ou da tripla) — não simplesmente pela ponta da esquerda."],
+    ["Aula 04","O que são ciclanos?","Hidrocarbonetos de cadeia FECHADA (cíclica) e SATURADA — só com ligações simples, nenhuma dupla."],
+    ["Aula 04","O que caracteriza um composto AROMÁTICO?","Cadeia cíclica com ligações duplas ALTERNADAS (simples, dupla, simples, dupla...). O representante é o BENZENO, um anel de 6 carbonos."],
+    ["Aula 04","Benzeno + 1 radical CH₃ é o quê? E dois anéis de benzeno unidos?","Benzeno + 1 CH₃ = TOLUENO (com 2 CH₃ = xileno). Dois anéis de benzeno unidos = NAFTALENO, que é a naftalina."],
+    ["Aula 04","Como se reconhece um ÁLCOOL?","Pelo grupo OH ligado a uma cadeia carbônica (R–OH). Exemplo: o ETANOL. O sufixo do nome é -OL."],
+    ["Aula 04","Como se reconhece um ÁCIDO CARBOXÍLICO?","Pelo grupo COOH (carbono com dupla ligação a um O e ligação simples a um OH). Exemplo: o ÁCIDO ACÉTICO, que é o vinagre."],
+    ["Aula 04","Qual função orgânica é o vinagre, e qual a concentração usual?","ÁCIDO CARBOXÍLICO — o ácido acético, CH₃COOH. O vinagre de cozinha tem cerca de 4%; existem versões de 6% a 8%."],
+    ["Aula 04","Como se reconhece uma AMINA?","Pelo NITROGÊNIO ligado a cadeias carbônicas (R–NH₂ ou R–NH–R'). Só nitrogênio e cadeia, sem oxigênio de dupla."],
+    ["Aula 04","Como se reconhece uma AMIDA?","Pelo carbono com DUPLA ao oxigênio E ligado a um NITROGÊNIO (R–CO–NH₂). Exemplo: a UREIA."],
+    ["Aula 04","Como se reconhece um ÉTER?","Pelo oxigênio ENTRE duas cadeias carbônicas: R–O–R'. Sem OH e sem dupla no oxigênio."],
+    ["Aula 04","Qual a diferença entre ALDEÍDO e CETONA?","Os dois têm C com dupla ao O. No ALDEÍDO esse carbono tem também um HIDROGÊNIO (R–CHO); na CETONA ele está entre DUAS cadeias carbônicas (R–CO–R')."],
+    ["Aula 04","Uma molécula pode ter mais de uma função orgânica?","SIM, e é o mais comum nas moléculas grandes. A vitamina C tem álcool, éster e enol; o aspartame tem éter, amida, amina e ácido carboxílico."],
+    ["Aula 04","Qual função orgânica é a ureia?","AMIDA — um carbono com dupla ligação ao oxigênio ligado a dois grupos amina."],
+    ["Aula 04","O que diz a Lei de Lavoisier?","\"Na natureza nada se cria, nada se perde, tudo se transforma.\" Os mesmos átomos que entram nos reagentes têm que sair nos produtos — só reorganizados."],
+    ["Aula 04","O que é uma reação química?","A transformação de um material em outro: as ligações antigas são QUEBRADAS e novas ligações são FORMADAS, gerando substâncias de constituição diferente."],
+    ["Aula 04","O que é um coeficiente estequiométrico?","O número escrito na FRENTE de cada substância na equação química. É o único que se pode alterar ao balancear (nunca os índices)."],
+    ["Aula 04","O que significa balancear uma reação?","Ajustar os coeficientes até que a quantidade de CADA átomo seja igual nos reagentes e nos produtos — exigência da Lei de Lavoisier."],
+    ["Aula 04","Qual a ordem para balancear uma reação? (regra MACHO)","M-A-C-H-O: METAIS, AMETAIS, CARBONO, HIDROGÊNIO, OXIGÊNIO. Nessa ordem o oxigênio quase sempre fecha sozinho no fim."],
+    ["Aula 04","Ao balancear, o que se pode e o que NÃO se pode alterar?","Pode alterar os COEFICIENTES (números na frente). NÃO se pode alterar os ÍNDICES (números embaixo) — isso mudaria a substância."],
+    ["Aula 04","Balanceie: H₂ + O₂ → H₂O","2 H₂ + O₂ → 2 H₂O. Conferindo: H = 4 → 4 ✓ e O = 2 → 2 ✓"],
+    ["Aula 04","Balanceie a combustão do metano: CH₄ + O₂ →","CH₄ + 2 O₂ → CO₂ + 2 H₂O. C: 1→1 · H: 4→4 · O: 4→4 ✓"],
+    ["Aula 04","Balanceie: N₂ + H₂ → NH₃","N₂ + 3 H₂ → 2 NH₃. N: 2→2 ✓ · H: 6→6 ✓"],
+    ["Aula 04","É permitido coeficiente fracionário no balanceamento?","SIM. 2 Al + 3/2 O₂ → Al₂O₃ está correto. Para deixar tudo inteiro, multiplique a reação INTEIRA por 2: 4 Al + 3 O₂ → 2 Al₂O₃."],
+    ["Aula 04","Ao conferir Ca₃(PO₄)₂, quantos fósforos e oxigênios há?","2 fósforos e 8 oxigênios. O índice de fora do parêntese multiplica tudo o que está dentro: P 1×2 = 2 e O 4×2 = 8. É a distributiva da matemática."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>
+
+<!-- ================================================ EXERCÍCIOS ========== -->
+<section id="s10">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9997;</div>
+    <div>
+      <h2>Exercícios comentados</h2>
+      <p>13 questões, incluindo as duas que a professora resolveu ao vivo.</p>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">1</span><span class="q-tema">Do livro &mdash; resolvida na aula</span></div>
+    <p class="q-enun">A concentração de gás <b>metano</b> na atmosfera está aumentando desde 2007,
+    o que preocupa porque, junto com o dióxido de carbono, ele é grande responsável pelo efeito estufa.
+    O metano pode ser classificado como:</p>
+    <ul class="alts">
+      <li><b>a)</b> um álcool de cadeia curta.</li>
+      <li><b>b)</b> um hidrocarboneto aromático.</li>
+      <li><b>c)</b> um hidrocarboneto da família dos ciclanos.</li>
+      <li><b>d)</b> um hidrocarboneto de cadeia acíclica e saturada.</li>
+      <li><b>e)</b> um álcool aromático.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> Decompondo o nome: <b>met</b> (1 carbono) + <b>an</b>
+      (só ligações simples) + <b>o</b> (hidrocarboneto). O sufixo <b>-O</b> já elimina as alternativas
+      de álcool (seriam <b>-OL</b>). O infixo <b>AN</b> diz <b>saturada</b>, e a cadeia é
+      <b>acíclica</b> (aberta) &mdash; não é ciclano nem aromático.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">2</span><span class="q-tema">Tetravalência</span></div>
+    <p class="q-enun">Quantas ligações o átomo de carbono faz numa molécula orgânica?</p>
+    <ul class="alts">
+      <li><b>a)</b> 2, porque só tem 2 elétrons desemparelhados.</li>
+      <li><b>b)</b> 4, sempre, independentemente do elemento ao qual se liga.</li>
+      <li><b>c)</b> depende do elemento parceiro.</li>
+      <li><b>d)</b> 6, igual ao seu número atômico.</li>
+      <li><b>e)</b> 8, pela regra do octeto.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> É a <b>tetravalência</b>, o 1º postulado de Kekulé.
+      A alternativa (a) descreve o estado <em>fundamental</em>; na prática a <b>hibridização</b>
+      desemparelha 4 elétrons e o carbono faz 4 ligações.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">3</span><span class="q-tema">Hibridização</span></div>
+    <p class="q-enun">Um carbono que faz apenas ligações simples apresenta hibridização e geometria:</p>
+    <ul class="alts">
+      <li><b>a)</b> sp, linear &nbsp;&nbsp;<b>b)</b> sp², trigonal plana &nbsp;&nbsp;<b>c)</b> sp³, tetraédrica
+        &nbsp;&nbsp;<b>d)</b> sp³, linear &nbsp;&nbsp;<b>e)</b> sp², tetraédrica</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Só simples &rarr; <b>sp³</b> (1 s + 3 p, quatro orbitais
+      híbridos equivalentes) &rarr; geometria <b>tetraédrica</b>. Exemplo: o metano
+      <span class="f">CH₄</span>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">4</span><span class="q-tema">Hibridização</span></div>
+    <p class="q-enun">No <span class="f">CO₂</span> (O=C=O), a hibridização do carbono e a geometria da
+    molécula são:</p>
+    <ul class="alts">
+      <li><b>a)</b> sp³ e tetraédrica &nbsp;&nbsp;<b>b)</b> sp² e trigonal plana
+        &nbsp;&nbsp;<b>c)</b> sp e linear &nbsp;&nbsp;<b>d)</b> sp e angular
+        &nbsp;&nbsp;<b>e)</b> sp³ e linear</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> O carbono faz <b>duas duplas</b> &rarr; hibridização
+      <b>sp</b> &rarr; geometria <b>LINEAR</b>. A hibridização sp também aparece quando há uma
+      <b>tripla</b> + uma simples (como no <span class="f">HCN</span>).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">5</span><span class="q-tema">Kekulé</span></div>
+    <p class="q-enun">Não é um postulado de Kekulé:</p>
+    <ul class="alts">
+      <li><b>a)</b> o carbono é tetravalente.</li>
+      <li><b>b)</b> as quatro ligações do carbono são equivalentes.</li>
+      <li><b>c)</b> o carbono forma cadeias com outros carbonos.</li>
+      <li><b>d)</b> o carbono só se liga a hidrogênio.</li>
+      <li><b>e)</b> nenhuma das anteriores &mdash; todas são postulados.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> O carbono se liga a <b>qualquer</b> elemento &mdash;
+      oxigênio, nitrogênio, halogênios, outros carbonos. Justamente por isso existem tantas
+      funções orgânicas.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">6</span><span class="q-tema">Nomenclatura</span></div>
+    <p class="q-enun">O composto <b>propeno</b> possui:</p>
+    <ul class="alts">
+      <li><b>a)</b> 2 carbonos e uma ligação tripla.</li>
+      <li><b>b)</b> 3 carbonos e uma ligação dupla.</li>
+      <li><b>c)</b> 3 carbonos e só ligações simples.</li>
+      <li><b>d)</b> 4 carbonos e uma ligação dupla.</li>
+      <li><b>e)</b> 3 carbonos e um grupo OH.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <b>PROP</b> = 3 carbonos · <b>EN</b> = uma ligação dupla ·
+      <b>O</b> = hidrocarboneto. A alternativa (c) descreveria o <em>propano</em> (infixo AN)
+      e a (e) descreveria o propanol (sufixo OL).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">7</span><span class="q-tema">Nomenclatura</span></div>
+    <p class="q-enun">Um hidrocarboneto de <b>5 carbonos</b> com apenas ligações simples se chama:</p>
+    <ul class="alts">
+      <li><b>a)</b> penteno &nbsp;&nbsp;<b>b)</b> pentino &nbsp;&nbsp;<b>c)</b> pentanol
+        &nbsp;&nbsp;<b>d)</b> pentano &nbsp;&nbsp;<b>e)</b> butano</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> <b>PENT</b> (5 C) + <b>AN</b> (só simples) + <b>O</b>
+      (hidrocarboneto) = <b>PENTANO</b>. Penteno teria dupla, pentino teria tripla e pentanol
+      seria um álcool.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">8</span><span class="q-tema">Do livro &mdash; funções</span></div>
+    <p class="q-enun">Os grupos <span class="f">R&ndash;OH</span>, <span class="f">R&ndash;COOH</span>,
+    <span class="f">R&ndash;CO&ndash;NH₂</span> e <span class="f">R&ndash;NH&ndash;R'</span>
+    representam, respectivamente:</p>
+    <ul class="alts">
+      <li><b>a)</b> éter, éster, amina, amida</li>
+      <li><b>b)</b> álcool, ácido carboxílico, amida, amina</li>
+      <li><b>c)</b> álcool, aldeído, amina, amida</li>
+      <li><b>d)</b> fenol, cetona, éster, éter</li>
+      <li><b>e)</b> ácido carboxílico, álcool, amina, amida</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <span class="f">R&ndash;OH</span> = <b>álcool</b> ·
+      <span class="f">R&ndash;COOH</span> = <b>ácido carboxílico</b> (é o do vinagre) ·
+      <span class="f">R&ndash;CO&ndash;NH₂</span> = <b>amida</b> (C com dupla ao O + N) ·
+      <span class="f">R&ndash;NH&ndash;R'</span> = <b>amina</b> (só N entre cadeias).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">9</span><span class="q-tema">Funções</span></div>
+    <p class="q-enun">O vinagre é uma solução diluída de ácido acético
+    (<span class="f">CH₃COOH</span>). A função orgânica presente nele é:</p>
+    <ul class="alts">
+      <li><b>a)</b> álcool &nbsp;&nbsp;<b>b)</b> cetona &nbsp;&nbsp;<b>c)</b> éster
+        &nbsp;&nbsp;<b>d)</b> ácido carboxílico &nbsp;&nbsp;<b>e)</b> amida</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> O grupo <span class="f">COOH</span> caracteriza o
+      <b>ácido carboxílico</b>. O vinagre de cozinha tem cerca de <b>4%</b> de ácido acético
+      (existem de 6% a 8%).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">10</span><span class="q-tema">Lavoisier</span></div>
+    <p class="q-enun">A frase &ldquo;na natureza nada se cria, nada se perde, tudo se transforma&rdquo;
+    implica que, numa reação química:</p>
+    <ul class="alts">
+      <li><b>a)</b> os produtos podem conter átomos que não estavam nos reagentes.</li>
+      <li><b>b)</b> a quantidade de cada átomo é a mesma nos reagentes e nos produtos.</li>
+      <li><b>c)</b> as propriedades dos produtos são iguais às dos reagentes.</li>
+      <li><b>d)</b> nenhuma ligação é quebrada.</li>
+      <li><b>e)</b> a massa dos produtos é sempre maior.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Os átomos apenas se <b>reorganizam</b>. Em (c):
+      as propriedades mudam completamente (dois gases viram água líquida), mas os <b>átomos</b>
+      são os mesmos &mdash; é justamente esse o ponto.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">11</span><span class="q-tema">Balanceamento</span></div>
+    <p class="q-enun">Os coeficientes que balanceiam
+    <span class="f">CH₄ + O₂ &rarr; CO₂ + H₂O</span> são, na ordem:</p>
+    <ul class="alts">
+      <li><b>a)</b> 1, 1, 1, 1 &nbsp;&nbsp;<b>b)</b> 1, 2, 1, 2 &nbsp;&nbsp;<b>c)</b> 2, 1, 2, 1
+        &nbsp;&nbsp;<b>d)</b> 1, 4, 1, 2 &nbsp;&nbsp;<b>e)</b> 2, 2, 1, 4</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> <span class="f">CH₄ + 2 O₂ &rarr; CO₂ + 2 H₂O</span>.
+      C: 1&rarr;1 &#10004; · H: 4&rarr;2&times;2=4 &#10004; ·
+      O: 2&times;2=4 &rarr; 2+(2&times;1)=4 &#10004;. Cuidado: no lado dos produtos o oxigênio aparece
+      em <b>duas</b> substâncias e é preciso <b>somar</b> as duas.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">12</span><span class="q-tema">Balanceamento</span></div>
+    <p class="q-enun">Ao balancear uma reação, é correto:</p>
+    <ul class="alts">
+      <li><b>a)</b> alterar os índices das fórmulas para igualar os átomos.</li>
+      <li><b>b)</b> alterar apenas os coeficientes escritos na frente das substâncias.</li>
+      <li><b>c)</b> começar sempre pelo oxigênio.</li>
+      <li><b>d)</b> acrescentar substâncias novas nos produtos.</li>
+      <li><b>e)</b> nunca usar coeficiente fracionário, em nenhuma hipótese.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Só o <b>coeficiente</b> (na frente) pode mudar &mdash;
+      alterar o índice mudaria a substância. Em (c), pela regra <b>MACHO</b> o oxigênio é o
+      <b>último</b>. Em (e), coeficiente fracionário é permitido
+      (<span class="f">2 Al + 3/2 O₂ &rarr; Al₂O₃</span>).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">13</span><span class="q-tema">Distributiva</span></div>
+    <p class="q-enun">Quantos átomos de fósforo e de oxigênio existem em
+    <span class="f">Ca₃(PO₄)₂</span>?</p>
+    <ul class="alts">
+      <li><b>a)</b> 1 P e 4 O &nbsp;&nbsp;<b>b)</b> 2 P e 4 O &nbsp;&nbsp;<b>c)</b> 2 P e 8 O
+        &nbsp;&nbsp;<b>d)</b> 3 P e 8 O &nbsp;&nbsp;<b>e)</b> 2 P e 6 O</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> O índice de <b>fora</b> do parêntese multiplica
+      <b>tudo</b> o que está dentro: P = 1 &times; 2 = <b>2</b> e O = 4 &times; 2 = <b>8</b>.
+      É a distributiva da matemática &mdash; esquecer isso é o erro nº 1 do balanceamento.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ================================================ PEGADINHAS ========== -->
+<section id="s11">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#128680;</div>
+    <div>
+      <h2>Pegadinhas de prova</h2>
+      <p>Os erros mais comuns em orgânica e balanceamento.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th style="width:44%">O erro</th><th>O certo</th></tr></thead>
+      <tbody>
+        <tr><td>Achar que o carbono faz 2 ligações (pelos 2 elétrons desemparelhados)</td>
+            <td>Faz <b>4, sempre</b>. A hibridização desemparelha os 4.</td></tr>
+        <tr><td>Não contar a <b>dupla</b> como 2 ligações</td>
+            <td>Dupla vale <b>2</b> das quatro; tripla vale <b>3</b>. Sobram 2 e 1 simples, respectivamente.</td></tr>
+        <tr><td>Trocar <b>sp²</b> com <b>sp³</b></td>
+            <td>sp<b>³</b> = <b>três</b> p = só simples, tetraédrica. sp<b>²</b> = <b>dois</b> p =
+            tem <b>uma dupla</b>, trigonal plana.</td></tr>
+        <tr><td>Confundir <b>alcano</b> com <b>alceno</b></td>
+            <td>alc<b>AN</b>o = só simples. alc<b>EN</b>o = tem <b>dupla</b>. alc<b>IN</b>o = <b>tripla</b>.</td></tr>
+        <tr><td>Numerar a cadeia pela ponta da esquerda</td>
+            <td>Numere pelo carbono <b>mais próximo da insaturação</b> (dupla ou tripla).</td></tr>
+        <tr><td>Exigir que <b>todas</b> as ligações sejam duplas para ser alceno</td>
+            <td>Basta <b>uma</b> dupla.</td></tr>
+        <tr><td>Confundir <b>aldeído</b> com <b>cetona</b></td>
+            <td>Aldeído: C com dupla ao O <b>+ 1 hidrogênio</b> (na ponta).
+            Cetona: esse C fica <b>entre duas cadeias</b> (no meio).</td></tr>
+        <tr><td>Confundir <b>amina</b> com <b>amida</b></td>
+            <td>amI<b>N</b>a = só <b>N</b>itrogênio na cadeia. am<b>ID</b>a = tem
+            <b>C com dupla ao O</b> + nitrogênio.</td></tr>
+        <tr><td>Achar que uma molécula só tem uma função</td>
+            <td>Moléculas grandes têm <b>várias</b> (vitamina C, aspartame).</td></tr>
+        <tr><td>Alterar os <b>índices</b> ao balancear</td>
+            <td>Só o <b>coeficiente</b> da frente. Mudar índice muda a substância
+            (<span class="f">H₂O</span> &ne; <span class="f">H₂O₂</span>).</td></tr>
+        <tr><td>Começar o balanceamento pelo oxigênio</td>
+            <td>Ordem <b>MACHO</b>: Metais, Ametais, Carbono, Hidrogênio, <b>Oxigênio por último</b>.</td></tr>
+        <tr><td>Esquecer a distributiva do parêntese</td>
+            <td><span class="f">Ca₃(PO₄)₂</span> tem <b>2 P e 8 O</b>. O índice de fora multiplica tudo.</td></tr>
+        <tr><td>Somar o oxigênio de <b>uma só</b> substância nos produtos</td>
+            <td>Se o O aparece em duas (CO₂ <em>e</em> H₂O), <b>some as duas</b>.</td></tr>
+        <tr><td>Achar que coeficiente fracionário está errado</td>
+            <td>É permitido. Para deixar inteiro, multiplique a reação <b>toda</b> por 2.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================================================== LINKS =========== -->
+<section id="slinks">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#128279;</div>
+    <div>
+      <h2>Links e simuladores</h2>
+      <p>Os dois que a professora deixou como tarefa de casa &mdash; não deu tempo de mostrar ao vivo.</p>
+    </div>
+  </div>
+
+  <div class="links">
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/build-a-molecule" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#129513;</span>
+      <span><span class="tit">PhET &mdash; Construir uma Molécula</span>
+      <span class="desc">Tarefa de casa nº 1. Monte moléculas juntando átomos e veja a fórmula e o nome
+      aparecerem. Ótimo para fixar que o carbono faz sempre 4 ligações.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/balancing-chemical-equations" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#9878;</span>
+      <span><span class="tit">PhET &mdash; Balanceando Equações Químicas</span>
+      <span class="desc">Tarefa de casa nº 2. Várias equações para balancear, com uma balança visual
+      que mostra na hora se está equilibrado. É o treino direto para a atividade MAPA.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/molecule-shapes" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128142;</span>
+      <span><span class="tit">PhET &mdash; Formas Moleculares</span>
+      <span class="desc">Para ver na prática a diferença entre tetraédrica (sp³), trigonal plana (sp²)
+      e linear (sp).</span></span>
+    </a>
+    <a class="link" href="https://mundoeducacao.uol.com.br/quimica/funcoes-organicas.htm" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128221;</span>
+      <span><span class="tit">Funções orgânicas &mdash; Mundo Educação</span>
+      <span class="desc">Tabela com todas as funções, os grupos funcionais e a nomenclatura completa,
+      caso você queira ir além do escopo da disciplina.</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================================================== COLA =========== -->
+<section id="s12">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.14); border-color:rgba(232,147,63,.35)">&#128203;</div>
+    <div>
+      <h2>Cola de uma página</h2>
+      <p>Se você só tiver 5 minutos antes da prova, leia isto.</p>
+    </div>
+  </div>
+
+  <div class="card cola">
+    <div class="cola-grid">
+      <div class="cola-bloco">
+        <h5>O carbono</h5>
+        <ul>
+          <li>Z = 6 · 1s² 2s² 2p²</li>
+          <li><b>4</b> e⁻ de valência</li>
+          <li><b>SEMPRE 4 ligações</b></li>
+          <li>sempre COVALENTE</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Hibridização</h5>
+        <ul>
+          <li>só simples &rarr; <b>sp³</b> tetraédrica</li>
+          <li>uma dupla &rarr; <b>sp²</b> trigonal plana</li>
+          <li>tripla ou 2 duplas &rarr; <b>sp</b> linear</li>
+          <li>híbridos = simples · p = duplas</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Kekulé</h5>
+        <ul>
+          <li>tetravalente</li>
+          <li>ligações equivalentes</li>
+          <li>forma cadeias</li>
+          <li>gasolina = octano (8 C)</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Representações</h5>
+        <ul>
+          <li>molecular: só conta átomos</li>
+          <li>estrutural: mostra tudo</li>
+          <li>bastão: vértice = <b>carbono</b></li>
+          <li>condensada: grupos ligados</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Hidrocarbonetos</h5>
+        <ul>
+          <li>só <b>C e H</b></li>
+          <li>alcano <b>AN</b> = simples</li>
+          <li>alceno <b>EN</b> = dupla</li>
+          <li>alcino <b>IN</b> = tripla</li>
+          <li>ciclano = fechado saturado</li>
+          <li>aromático = duplas alternadas</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Prefixos</h5>
+        <ul>
+          <li>1 met · 2 et · 3 prop</li>
+          <li>4 but · 5 pent · 6 hex</li>
+          <li>7 hept · 8 oct</li>
+          <li>9 non · 10 dec</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Nome = 3 partes</h5>
+        <ul>
+          <li>prefixo + infixo + sufixo</li>
+          <li>sufixo <b>O</b> = hidrocarboneto</li>
+          <li>sufixo <b>OL</b> = álcool</li>
+          <li>but+an+o = <b>butano</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Funções</h5>
+        <ul>
+          <li>álcool R&ndash;<b>OH</b></li>
+          <li>ácido carbox. R&ndash;<b>COOH</b></li>
+          <li>éter R&ndash;<b>O</b>&ndash;R'</li>
+          <li>aldeído R&ndash;<b>CHO</b></li>
+          <li>cetona R&ndash;<b>CO</b>&ndash;R'</li>
+          <li>éster R&ndash;<b>COO</b>&ndash;R'</li>
+          <li>amina <b>N</b> na cadeia</li>
+          <li>amida <b>CO&ndash;NH₂</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Aromáticos</h5>
+        <ul>
+          <li>benzeno = anel de 6 C</li>
+          <li>+1 CH₃ = tolueno</li>
+          <li>+2 CH₃ = xileno</li>
+          <li>2 anéis = naftaleno</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Lavoisier</h5>
+        <ul>
+          <li>nada se cria, nada se perde</li>
+          <li>reagentes &rarr; produtos</li>
+          <li>átomos só se reorganizam</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Balancear</h5>
+        <ul>
+          <li>ordem <b>MACHO</b></li>
+          <li>Metais, Ametais, Carbono,</li>
+          <li>Hidrogênio, Oxigênio</li>
+          <li>só o <b>coeficiente</b> muda</li>
+          <li>fração é permitida</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Decorar</h5>
+        <ul>
+          <li>2 H₂ + O₂ &rarr; 2 H₂O</li>
+          <li>CH₄ + 2 O₂ &rarr; CO₂ + 2 H₂O</li>
+          <li>N₂ + 3 H₂ &rarr; 2 NH₃</li>
+          <li>4 Al + 3 O₂ &rarr; 2 Al₂O₃</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Aula 04 &mdash; Funções Orgânicas e Reações Químicas</b> &middot; Química Geral e Experimental &middot; Módulo 53/2026<br>
+  Material de estudo montado a partir da aula ao vivo (1h33), com complementos de hibridização,
+  nomenclatura e balanceamento.</p>
+  <p style="margin-bottom:0">Plataforma Bueno &middot; Cérebro Digital</p>
+</footer>
+
+</div>
+</body>
+</html>

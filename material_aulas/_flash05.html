@@ -1,0 +1,108 @@
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#E8933F1f; border-color:#E8933F52">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 05</h2>
+      <p>35 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 05","Balanceie: CaO + P₂O₅ → Ca₃(PO₄)₂","3 CaO + P₂O₅ → Ca₃(PO₄)₂. Pela ordem MACHO: cálcio primeiro (1 vs 3, entra o 3), fósforo já estava (2 vs 2) e o oxigênio fecha sozinho (3+5 = 8 vs 8)."],
+    ["Aula 05","Em Ca₃(PO₄)₂, quantos átomos de cada elemento existem?","3 cálcios, 2 fósforos (1×2) e 8 oxigênios (4×2). O índice de fora do parêntese multiplica TUDO o que está dentro — é a distributiva."],
+    ["Aula 05","Se ao balancear o OXIGÊNIO não fecha, o que isso indica?","Que houve erro ANTES. Como o oxigênio é o último da ordem MACHO, se tudo antes estiver certo ele fecha sozinho. Volte e refaça em vez de forçar o oxigênio."],
+    ["Aula 05","Existe um passo a passo infalível para balancear?","Não — é TENTATIVA E ERRO, mas seguindo a ordem MACHO (Metais, Ametais, Carbono, Hidrogênio, Oxigênio). A única dica real é treinar: cinco exercícios e a manha cola."],
+    ["Aula 05","O que é uma reação de SÍNTESE (adição)?","A + B → AB. Dois ou mais reagentes se JUNTAM formando UM único produto. Ex.: 2 H₂ + O₂ → 2 H₂O."],
+    ["Aula 05","O que é uma reação de DECOMPOSIÇÃO (análise)?","AB → A + B. UM reagente se PARTE em dois ou mais produtos. É o contrário da síntese. Ex.: H₂CO₃ → CO₂ + H₂O."],
+    ["Aula 05","O que é uma reação de SIMPLES TROCA (deslocamento)?","A + BC → B + AC. Um elemento SOZINHO entra, se liga a um dos átomos e DESLOCA o outro, que sai sozinho. Ex.: Fe + 2 HCl → FeCl₂ + H₂."],
+    ["Aula 05","O que é uma reação de DUPLA TROCA?","AB + CD → AD + CB. DOIS compostos trocam parceiros entre si; nenhum elemento fica sozinho nos produtos. Ex.: HCl + NaOH → NaCl + H₂O."],
+    ["Aula 05","Como distinguir simples troca de dupla troca?","Na SIMPLES troca há um elemento SOZINHO (nos reagentes e nos produtos). Na DUPLA troca todos os elementos estão sempre combinados — só trocaram de parceiro."],
+    ["Aula 05","O que é uma reação de PRECIPITAÇÃO?","Dois compostos SOLÚVEIS (aq) reagem e formam um produto INSOLÚVEL, que precipita como SÓLIDO (s). Basta UM produto sólido para já ser precipitação."],
+    ["Aula 05","Exemplo de reação de precipitação","NaCl(aq) + AgNO₃(aq) → NaNO₃(aq) + AgCl(s). O cloreto de prata é insolúvel e precipita — é o (s) no produto que denuncia."],
+    ["Aula 05","O que é uma reação de COMBUSTÃO, e o que ela produz?","Um composto (geralmente ORGÂNICO) queimado na presença de OXIGÊNIO. A combustão COMPLETA produz CO₂ e H₂O. A INCOMPLETA produz também CO (monóxido, tóxico) e fuligem."],
+    ["Aula 05","O que significam (s), (l), (g) e (aq) numa equação?","(s) sólido · (l) líquido · (g) gasoso · (aq) aquoso, ou seja, dissolvido em água."],
+    ["Aula 05","Toda combustão produz apenas CO₂ e água?","Só a combustão COMPLETA. Na INCOMPLETA (falta de oxigênio) também se formam CO (monóxido de carbono) e fuligem."],
+    ["Aula 05","O que é a unidade de massa atômica (u), e como foi definida?","É a unidade para medir a massa de um átomo (que é pequena demais para gramas). Pegou-se o átomo de CARBONO (massa 12), dividiu-se em 12 partes e UMA parte = 1 u."],
+    ["Aula 05","Por que o carbono foi escolhido como padrão da massa atômica?","Porque é o elemento mais ABUNDANTE na natureza e a base da vida. Sua massa atômica é 12 u — dividida em 12, dá a unidade."],
+    ["Aula 05","Quanto vale a constante de Avogadro, e o que ela representa?","6,02 × 10²³. É o número de átomos ou moléculas necessário para que a massa atômica (minúscula, em u) possa ser expressa em GRAMAS. Não precisa decorar — vem no enunciado."],
+    ["Aula 05","O que é 1 MOL?","6,02 × 10²³ unidades de qualquer coisa — átomos, moléculas, íons. É a \"dúzia\" da química: como uma dúzia é sempre 12, um mol é sempre 6,02 × 10²³."],
+    ["Aula 05","Qual a diferença entre massa MOLECULAR e massa MOLAR?","MOLECULAR é a massa de UMA molécula, em u. MOLAR é a massa de UM MOL de moléculas, em g/mol. O NÚMERO é o mesmo — só muda a unidade. H₂O: 18 u e 18 g/mol."],
+    ["Aula 05","Calcule a massa molar da água (H = 1, O = 16)","(2 × 1) + 16 = 18 g/mol. Somam-se as massas atômicas de todos os átomos, multiplicadas pelos respectivos índices."],
+    ["Aula 05","Calcule a massa molar do CO₂ (C = 12, O = 16)","12 + (2 × 16) = 12 + 32 = 44 g/mol."],
+    ["Aula 05","Calcule a massa molar do CuO (Cu = 63,5 · O = 16)","63,5 + 16 = 79,5 g/mol. Note que o cobre é 63,5 e NÃO se arredonda — está no meio."],
+    ["Aula 05","Calcule a massa molar do NaCl (Na = 23 · Cl = 35,5)","23 + 35,5 = 58,5 g/mol. O cloro é 35,5 e não se arredonda."],
+    ["Aula 05","Por que a massa atômica na tabela é decimal, e quando não arredondar?","É a média ponderada dos isótopos conforme a abundância na natureza. Arredonde quando está perto do inteiro (Fe 55,847→56); NÃO arredonde quando o decimal é ,5 (Cl 35,5 · Cu 63,5)."],
+    ["Aula 05","Quantos mols há em 88 g de CO₂? (C=12, O=16)","MM do CO₂ = 44 g/mol. Regra de três: 1 mol ↔ 44 g, então x ↔ 88 g → x = 88 ÷ 44 = 2 MOLS. (88 é o dobro de 44, logo o dobro de 1 mol.)"],
+    ["Aula 05","Como converter gramas em mols?","Por regra de três com a MASSA MOLAR: 1 mol corresponde à massa molar em gramas. Monte a proporção e multiplique cruzado."],
+    ["Aula 05","Em N₂ + 3 H₂ → 2 NH₃, por que 1 + 3 não dá 2?","Porque a lei de Lavoisier conserva a MASSA, não o número de mols. Em gramas fecha: 28 g + 6 g = 34 g nos reagentes e 34 g no produto ✓"],
+    ["Aula 05","A lei de Lavoisier se aplica a mols ou a massa?","A MASSA. A soma das massas dos reagentes é igual à soma das massas dos produtos. O número de mols pode perfeitamente mudar."],
+    ["Aula 05","Quais são os 3 passos do cálculo estequiométrico?","1) BALANCEAR a reação. 2) Calcular as MASSAS MOLARES. 3) Montar a REGRA DE TRÊS com os coeficientes estequiométricos. É só isso."],
+    ["Aula 05","Por que a reação precisa estar balanceada antes do cálculo?","Porque são os COEFICIENTES ESTEQUIOMÉTRICOS que dão a proporção entre reagentes e produtos. Sem eles, a regra de três parte de uma proporção errada."],
+    ["Aula 05","Balanceie: Cu + O₂ → CuO","2 Cu + O₂ → 2 CuO. Primeiro o oxigênio pede um 2 no CuO; isso desbalanceia o cobre, que recebe 2 também."],
+    ["Aula 05","Partindo de 2,54 g de Cu, quanto CuO se forma? (Cu=63,5 · O=16)","MM: Cu 63,5 e CuO 79,5. Regra de três com 2 Cu → 2 CuO: x = (2,54 × 2 × 79,5) ÷ (2 × 63,5) ≈ 3,18 g de CuO."],
+    ["Aula 05","Quantos mols de HCl para produzir 23,4 g de NaCl? (Na=23 · Cl=35,5)","MM do NaCl = 58,5 g/mol. A reação é 1:1, então: 1 mol ↔ 58,5 g, x ↔ 23,4 g → x = 23,4 ÷ 58,5 = 0,4 mol de HCl."],
+    ["Aula 05","O cálculo estequiométrico funciona só do reagente para o produto?","NÃO — funciona nos dois sentidos. Dá para partir da massa do produto e achar quanto reagente é necessário, e vice-versa. É a mesma regra de três."],
+    ["Aula 05","O que é indispensável ter em mãos para fazer estequiometria?","A TABELA PERIÓDICA — é dela que saem as massas atômicas para montar as massas molares. A professora pediu para deixar uma aba aberta."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>

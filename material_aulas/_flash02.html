@@ -1,0 +1,125 @@
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#34D3991f; border-color:#34D39952">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 02</h2>
+      <p>52 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 02","Quais elétrons participam das ligações químicas?","Só os da CAMADA DE VALÊNCIA — a camada mais externa, a de maior número na distribuição eletrônica."],
+    ["Aula 02","O que diz a regra do octeto?","Que os átomos se combinam de modo a ficar com OITO elétrons na camada de valência — a configuração estável dos gases nobres."],
+    ["Aula 02","Qual é a principal exceção da regra do octeto?","O HIDROGÊNIO: estabiliza com apenas 2 elétrons e faz sempre 1 ligação só. Também são exceções o hélio (2), o berílio (4), o boro (6) e o alumínio."],
+    ["Aula 02","Por que os gases nobres não fazem ligações?","Porque já têm 8 elétrons na camada de valência (o hélio, 2) — já estão estáveis. Não precisam ganhar, perder nem compartilhar nada. São INERTES."],
+    ["Aula 02","O que é a fórmula de Lewis?","A representação do átomo mostrando SÓ os elétrons da camada de valência, com pontinhos ao redor do símbolo. Simplifica o desenho e deixa óbvio quem doa e quem recebe."],
+    ["Aula 02","Quantos elétrons de valência tem um elemento da família 2A? E da 6A?","2A → 2 elétrons. 6A → 6 elétrons. O número da família É o número de elétrons de valência (famílias A)."],
+    ["Aula 02","Por que o sódio doa elétron e o cloro recebe?","Lei do menor esforço. O Na tem 1 elétron na valência: é mais fácil doar 1 do que receber 7. O Cl tem 7: é mais fácil receber 1 do que doar 7. Quem decide é a ELETRONEGATIVIDADE."],
+    ["Aula 02","O que é um CÁTION? E um ÂNION?","CÁTION: átomo que PERDEU elétron(s) e ficou com carga POSITIVA (Na⁺, Ca²⁺). ÂNION: átomo que GANHOU elétron(s) e ficou com carga NEGATIVA (Cl⁻, O²⁻)."],
+    ["Aula 02","Um átomo doou 2 elétrons. Qual a carga dele?","2+ — virou um cátion com carga 2 positiva. A carga é sempre o NÚMERO de elétrons doados (se doou 3, fica 3+)."],
+    ["Aula 02","Depois de doar seu elétron, com quantas camadas fica o sódio?","Com DUAS (antes tinha três). O único elétron da camada 3 foi doado, então a camada 3 desapareceu e a camada 2 — que já tinha 8 elétrons — passou a ser a valência. Octeto cumprido."],
+    ["Aula 02","Quando ocorre uma ligação IÔNICA?","Entre METAL e AMETAL — na prática, entre as famílias 1A/2A (pouco eletronegativas) e os ametais (muito eletronegativos)."],
+    ["Aula 02","O que acontece com os elétrons numa ligação iônica?","Há TRANSFERÊNCIA definitiva: o átomo mais eletronegativo ARRANCA elétrons do menos eletronegativo. Formam-se íons (cátion + ânion) presos por atração eletrostática."],
+    ["Aula 02","Por que uma solução de NaCl conduz corrente elétrica?","Porque em água o NaCl se dissocia em ÍONS LIVRES (Na⁺ e Cl⁻), e são os íons em movimento que conduzem a corrente. Seco e sólido ele NÃO conduz — os íons estão presos no retículo."],
+    ["Aula 02","Que tipo de estrutura os compostos iônicos formam?","ESTRUTURA CRISTALINA — figuras geométricas bem definidas. O sal de cozinha (NaCl) forma cubos. Também dá sólidos duros, quebradiços e de alto ponto de fusão."],
+    ["Aula 02","Monte a fórmula do composto entre Mg²⁺ e Cl⁻","MgCl₂. O magnésio tem 2 elétrons para doar e cada cloro só aceita 1 — logo, dois cloros. (Regra prática: as cargas trocam de lugar como índices.)"],
+    ["Aula 02","Monte a fórmula do composto entre Al³⁺ e O²⁻","Al₂O₃. Cruzando as cargas: o 3 do alumínio vira índice do oxigênio e o 2 do oxigênio vira índice do alumínio."],
+    ["Aula 02","Por que o cálcio se liga a DOIS flúores (CaF₂)?","Porque o cálcio (família 2A) tem 2 elétrons para doar, e cada flúor (7A) só precisa receber 1 para completar o octeto. Um cálcio abastece dois flúores."],
+    ["Aula 02","Quando ocorre uma ligação COVALENTE?","Entre AMETAL e AMETAL, ou em QUALQUER ligação que envolva HIDROGÊNIO."],
+    ["Aula 02","O que acontece com os elétrons numa ligação covalente?","São COMPARTILHADOS: ninguém doa nem recebe definitivamente. Os elétrons do par ficam orbitando ao redor dos DOIS núcleos ao mesmo tempo. O resultado é uma MOLÉCULA, não íons."],
+    ["Aula 02","Qual a diferença essencial entre ligação iônica e covalente?","IÔNICA: TRANSFERÊNCIA de elétrons (metal + ametal) → forma ÍONS e retículo cristalino. COVALENTE: COMPARTILHAMENTO (ametal + ametal ou com H) → forma MOLÉCULAS."],
+    ["Aula 02","Por que a água precisa de DOIS hidrogênios?","O oxigênio tem 6 elétrons de valência e precisa de 2 para chegar a 8. Cada hidrogênio traz 1 elétron para compartilhar — então são necessários dois. E cada H fica com 2, que é o octeto dele."],
+    ["Aula 02","No Cl₂, por que os dois cloros se ligam?","Cada cloro tem 7 elétrons de valência e precisa de 1. Compartilhando UM par entre eles, os dois passam a contar 8 elétrons. Ligação covalente entre dois ametais iguais."],
+    ["Aula 02","O que é uma ligação covalente DATIVA (coordenada)?","É quando um átomo JÁ ESTÁVEL (com 8 elétrons) cede um PAR de elétrons seu, em empréstimo, para outro átomo que ainda precisa se estabilizar."],
+    ["Aula 02","Explique a formação do SO₂ com ligação dativa","Primeiro o enxofre compartilha um par com um oxigênio e ambos ficam com 8 (forma SO). Chega um segundo oxigênio precisando de elétrons: o enxofre, já estável, EMPRESTA um par a ele → SO₂, com uma ligação normal e uma dativa."],
+    ["Aula 02","O que diz a teoria da repulsão dos pares eletrônicos (VSEPR)?","Que os pares de elétrons da camada de valência — tanto os LIGANTES quanto os NÃO LIGANTES — se afastam o máximo possível uns dos outros. É isso que define a geometria da molécula."],
+    ["Aula 02","Qual a geometria do CO₂, da H₂O e do CH₄?","CO₂ = LINEAR (2 pares ligantes, nenhum livre). H₂O = ANGULAR (2 ligantes + 2 pares livres empurram). CH₄ = TETRAÉDRICA (4 ligantes)."],
+    ["Aula 02","Por que a água é ANGULAR e não linear?","Porque o oxigênio tem 2 pares de elétrons NÃO LIGANTES, que também se repelem e empurram os hidrogênios para baixo, entortando a molécula."],
+    ["Aula 02","Quando ocorre uma ligação METÁLICA?","Entre METAL e METAL. Os cátions ficam fixos e os elétrons livres circulam entre eles — o modelo do \"mar de elétrons\"."],
+    ["Aula 02","Por que os metais conduzem eletricidade no estado sólido?","Porque na ligação metálica os ELÉTRONS ficam LIVRES, circulando entre os cátions (mar de elétrons). Nos compostos iônicos, os íons estão presos e só conduzem quando dissolvidos ou fundidos."],
+    ["Aula 02","O que é uma liga metálica? Dê exemplos.","Uma mistura de metais (ou metal + não metal) formada por ligação metálica: AÇO (ferro + carbono), BRONZE (cobre + estanho), LATÃO (cobre + zinco)."],
+    ["Aula 02","Resuma as três ligações em uma linha cada","IÔNICA: metal + ametal, TRANSFERE elétron, forma íons. COVALENTE: ametal + ametal (ou com H), COMPARTILHA, forma moléculas. METÁLICA: metal + metal, mar de ELÉTRONS LIVRES."],
+    ["Aula 02","Qual a diferença entre soluto e solvente?","SOLVENTE é quem dissolve e está em MAIOR quantidade (geralmente a água). SOLUTO é quem é dissolvido e está em MENOR quantidade."],
+    ["Aula 02","Toda mistura é uma solução?","NÃO. Só é SOLUÇÃO quando o soluto se dissolve totalmente, formando mistura HOMOGÊNEA (sal em água). Se não dissolve, é uma DISPERSÃO, mistura heterogênea (areia em água)."],
+    ["Aula 02","Água + areia: solução ou dispersão?","DISPERSÃO — mistura heterogênea. A areia não se dissolve: dá para ver o soluto separado do solvente."],
+    ["Aula 02","Qual a fórmula e a unidade da concentração comum?","C = massa do soluto ÷ volume da solução. Unidade: g/L (grama por litro)."],
+    ["Aula 02","Qual a fórmula e a unidade da molaridade?","M = nº de mols do soluto ÷ volume da solução. Unidade: mol/L. Também chamada de concentração molar."],
+    ["Aula 02","Tenho a MASSA do soluto e quero a molaridade. Que fórmula uso?","M = m ÷ (MM × V), onde MM é a MASSA MOLAR do soluto em g/mol. É preciso da massa molar para converter gramas em mols."],
+    ["Aula 02","Calcule: 20 g de sal em 1 L de água. Qual a concentração comum?","C = 20 ÷ 1 = 20 g/L."],
+    ["Aula 02","Calcule: 20 g de NaCl (MM = 58,44 g/mol) em 1 L. Qual a molaridade?","M = 20 ÷ (58,44 × 1) = 0,34 mol/L."],
+    ["Aula 02","Qual a fórmula da fração molar do soluto?","X₁ = n₁ ÷ (n₁ + n₂) — mols do soluto divididos pelo total de mols (soluto + solvente). Não tem unidade."],
+    ["Aula 02","Quanto sempre vale a soma de todas as frações molares?","SEMPRE 1. A soma das frações molares de todos os solutos mais o solvente é igual a 1. Serve de conferência do resultado."],
+    ["Aula 02","2 mols de açúcar + 8 mols de água. Quais são as frações molares?","X(açúcar) = 2/10 = 0,2 e X(água) = 8/10 = 0,8. Conferindo: 0,2 + 0,8 = 1 ✓"],
+    ["Aula 02","Qual a fórmula da diluição?","C₁ · V₁ = C₂ · V₂. O índice 1 é antes e o 2 é depois de adicionar solvente. A quantidade de soluto não muda — só fica mais espalhada."],
+    ["Aula 02","100 mL a 2 mol/L completados até 200 mL. Qual a nova concentração?","2 × 100 = C₂ × 200 → C₂ = 1 mol/L. Dobrou o volume, a concentração caiu à metade."],
+    ["Aula 02","Ao diluir uma solução, o que aumenta e o que diminui?","O VOLUME aumenta e a CONCENTRAÇÃO diminui. A quantidade de soluto continua exatamente a mesma — só está espalhada em mais solvente."],
+    ["Aula 02","O exercício dá o volume em mL. O que fazer antes de calcular a molaridade?","Converter para LITROS (dividir por 1000): 250 mL = 0,25 L. Molaridade é mol/L. (Na fórmula da diluição as unidades se cancelam e dá para deixar em mL.)"],
+    ["Aula 02","O que é uma solução INSATURADA?","A que ainda não chegou no limite de solubilidade: todo o soluto se dissolveu e ainda daria para dissolver mais."],
+    ["Aula 02","O que é uma solução SATURADA?","A que chegou EXATAMENTE no limite de solubilidade daquele soluto naquele solvente. Um grão a mais já não dissolve."],
+    ["Aula 02","O que é solução saturada COM CORPO DE FUNDO?","A que passou do limite de solubilidade: o excesso de soluto PRECIPITA no fundo do recipiente e não dissolve."],
+    ["Aula 02","O que é uma solução SUPERSATURADA?","A que tem MAIS soluto dissolvido do que seria possível em condições normais. É INSTÁVEL — só existe porque a pressão ou a temperatura foram alteradas."],
+    ["Aula 02","Por que o refrigerante é uma solução supersaturada?","Porque o CO₂ só se mantém dissolvido naquela quantidade por causa da ALTA PRESSÃO na garrafa. Ao abrir, a pressão cai e o gás escapa — a solução era instável."],
+    ["Aula 02","Como dissolver mais soluto do que o limite de solubilidade?","Mudando as CONDIÇÕES: aumentando a temperatura ou a pressão. Nas condições normais, o excesso simplesmente precipita."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>

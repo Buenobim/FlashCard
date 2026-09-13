@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 01 — Átomo e Tabela Periódica | Química Geral e Experimental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   PALETA — as mesmas cores da Plataforma Bueno (src/index.css + as esferas do
+   Sub-Cerebro). Cada funcao inorganica ganhou a cor de uma esfera, para o olho
+   ja saber onde esta: acido = rosa (Aula), base = azul (Anotacao),
+   sal = verde (Exercicios), oxido = violeta (Caderno), NOX = ambar (Link).
+   ========================================================================= */
+:root{
+  --bg-0:#0C0D0F; --bg-1:#15171A; --bg-2:#1E2126;
+  --border:rgba(255,255,255,.07); --border-2:rgba(255,255,255,.12);
+  --laranja:#E8933F; --laranja-2:#E77950;
+  --verde:#3ECF8E;  --vermelho:#E5484D; --amarelo:#EEA53D;
+  --rosa:#F472B6;   --azul:#60A5FA;     --violeta:#A78BFA;
+  --esmeralda:#34D399; --ambar:#F59E0B;
+  --txt:#F4F5F7; --txt-2:#C3C9D2; --mut:#99A1AC;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Manrope',-apple-system,'Segoe UI',sans-serif;
+  --r-s:10px; --r-m:14px; --r-l:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg-0); color:var(--txt); font-family:var(--sans);
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(680px 480px at 12% -6%, rgba(167,139,250,.16), transparent 60%),
+    radial-gradient(620px 520px at 92% 4%, rgba(244,114,182,.13), transparent 62%),
+    radial-gradient(760px 620px at 50% 108%, rgba(232,147,63,.10), transparent 64%);
+}
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 22px 90px}
+
+/* ---------------------------------------------------------------- CAPA -- */
+.capa{padding:52px 0 30px; text-align:center}
+.selo{
+  display:inline-flex; align-items:center; gap:9px; padding:7px 16px;
+  border:1px solid rgba(244,114,182,.35); border-radius:999px;
+  background:rgba(244,114,182,.10); color:#FBCFE8;
+  font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+}
+.capa h1{
+  font-family:var(--serif); font-weight:700; margin:20px 0 8px;
+  font-size:clamp(30px,5.4vw,54px); line-height:1.08; letter-spacing:-.02em;
+  background:linear-gradient(120deg,#fff 8%,#F9C58D 52%,#F472B6 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.capa .sub{color:var(--txt-2); font-size:17px; max-width:660px; margin:0 auto}
+.chips{display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:24px}
+.chip{
+  display:inline-flex; align-items:center; gap:7px; padding:7px 14px;
+  border:1px solid var(--border-2); border-radius:999px; background:rgba(255,255,255,.04);
+  font-size:12.5px; font-weight:600; color:var(--txt-2);
+}
+.chip b{color:var(--txt); font-weight:800}
+
+/* -------------------------------------------------------------- SUMARIO -- */
+.sumario{
+  margin:34px 0 8px; padding:20px; border:1px solid var(--border);
+  border-radius:var(--r-l); background:linear-gradient(180deg,rgba(30,33,38,.9),rgba(21,23,26,.72));
+  backdrop-filter:blur(8px);
+}
+.sumario h2{margin:0 0 14px; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--mut)}
+.sumario ol{margin:0; padding:0; list-style:none; display:grid; gap:8px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.sumario a{
+  display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:var(--r-s);
+  border:1px solid transparent; color:var(--txt-2); text-decoration:none;
+  font-size:14.5px; font-weight:600; transition:.18s;
+}
+.sumario a:hover{background:rgba(255,255,255,.05); border-color:var(--border-2); color:#fff; transform:translateX(3px)}
+.sumario .num{
+  flex:0 0 26px; height:26px; display:grid; place-items:center; border-radius:8px;
+  background:rgba(232,147,63,.14); color:var(--laranja); font-size:12px; font-weight:800;
+}
+
+/* ------------------------------------------------------------- SECCOES -- */
+section{scroll-margin-top:18px; margin-top:46px}
+.sec-cab{display:flex; align-items:flex-start; gap:15px; margin-bottom:20px}
+.sec-ico{
+  flex:0 0 46px; height:46px; border-radius:14px; display:grid; place-items:center;
+  font-size:22px; border:1px solid var(--border-2); background:rgba(255,255,255,.04);
+}
+.sec-cab h2{
+  font-family:var(--serif); font-weight:700; margin:0; letter-spacing:-.01em;
+  font-size:clamp(22px,3.2vw,30px); line-height:1.2;
+}
+.sec-cab p{margin:5px 0 0; color:var(--mut); font-size:14.5px}
+
+.card{
+  border:1px solid var(--border); border-radius:var(--r-m); padding:20px 22px;
+  background:linear-gradient(180deg,rgba(30,33,38,.72),rgba(21,23,26,.55)); margin:16px 0;
+}
+.grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+h3{font-size:18px; margin:26px 0 10px; letter-spacing:-.01em}
+h4{font-size:15px; margin:18px 0 8px; color:var(--txt)}
+p{margin:0 0 12px; color:var(--txt-2)}
+ul,ol{color:var(--txt-2); padding-left:22px; margin:0 0 12px}
+li{margin-bottom:7px}
+b,strong{color:var(--txt)}
+a{color:var(--laranja)}
+
+.tag{display:inline-block; padding:2px 9px; border-radius:6px; font-size:12px; font-weight:800; letter-spacing:.03em}
+.t-acido{background:rgba(244,114,182,.16); color:#F9A8D4}
+.t-base{background:rgba(96,165,250,.16); color:#93C5FD}
+.t-sal{background:rgba(52,211,153,.16); color:#6EE7B7}
+.t-oxido{background:rgba(167,139,250,.16); color:#C4B5FD}
+.t-nox{background:rgba(245,158,11,.16); color:#FCD34D}
+
+.f{font-family:'Menlo','Consolas',monospace; font-weight:700; color:#fff; white-space:nowrap}
+.f sub{font-size:.72em; font-weight:700}
+.f sup{font-size:.72em; font-weight:700}
+.eq{
+  font-family:'Menlo','Consolas',monospace; font-size:15px; font-weight:700; color:#fff;
+  background:rgba(0,0,0,.34); border:1px solid var(--border-2); border-left:3px solid var(--laranja);
+  border-radius:var(--r-s); padding:13px 16px; margin:12px 0; overflow-x:auto; line-height:2;
+}
+.eq small{display:block; font-family:var(--sans); font-weight:600; color:var(--mut); font-size:12.5px; margin-top:6px}
+
+.box{border-radius:var(--r-m); padding:15px 18px; margin:16px 0; border:1px solid; font-size:14.5px}
+.box .tit{display:flex; align-items:center; gap:9px; font-weight:800; margin-bottom:7px; font-size:14px; letter-spacing:.02em}
+.box p:last-child{margin-bottom:0}
+.b-dica{border-color:rgba(62,207,142,.3); background:rgba(62,207,142,.07)} .b-dica .tit{color:var(--verde)}
+.b-atencao{border-color:rgba(238,165,61,.32); background:rgba(238,165,61,.07)} .b-atencao .tit{color:var(--amarelo)}
+.b-pegadinha{border-color:rgba(229,72,77,.32); background:rgba(229,72,77,.07)} .b-pegadinha .tit{color:#F87171}
+.b-prova{border-color:rgba(167,139,250,.32); background:rgba(167,139,250,.07)} .b-prova .tit{color:var(--violeta)}
+.b-aula{border-color:rgba(244,114,182,.30); background:rgba(244,114,182,.06)} .b-aula .tit{color:var(--rosa)}
+
+.tab-rol{overflow-x:auto; margin:16px 0; border:1px solid var(--border); border-radius:var(--r-m)}
+table{width:100%; border-collapse:collapse; font-size:14px; min-width:480px}
+thead th{
+  background:rgba(255,255,255,.045); color:var(--mut); text-align:left; padding:11px 14px;
+  font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; font-weight:800;
+  border-bottom:1px solid var(--border-2); white-space:nowrap;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.05); color:var(--txt-2); vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:rgba(255,255,255,.028)}
+td .f{color:#fff}
+
+.ph-barra{
+  display:flex; height:42px; border-radius:10px; overflow:hidden; margin:8px 0 4px;
+  border:1px solid var(--border-2); font-size:11px; font-weight:800;
+}
+.ph-barra div{flex:1; display:grid; place-items:center; color:rgba(0,0,0,.62)}
+.ph-legenda{display:flex; justify-content:space-between; color:var(--mut); font-size:12px; font-weight:700}
+.ph-lista{display:grid; gap:7px; margin-top:16px}
+.ph-item{
+  display:grid; grid-template-columns:64px 1fr auto; align-items:center; gap:12px;
+  padding:9px 13px; border-radius:var(--r-s); background:rgba(255,255,255,.032);
+  border:1px solid var(--border); font-size:14px;
+}
+.ph-val{font-family:'Menlo','Consolas',monospace; font-weight:800; font-size:15px; text-align:center;
+  padding:3px 0; border-radius:6px; color:#0C0D0F}
+.ph-cat{font-size:11.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--mut)}
+
+.fc-grid{display:grid; gap:13px; grid-template-columns:repeat(auto-fit,minmax(258px,1fr))}
+.fc{
+  position:relative; min-height:160px; cursor:pointer; perspective:1200px;
+  background:none; border:0; padding:0; text-align:left; font-family:inherit;
+}
+.fc-int{position:relative; width:100%; height:100%; min-height:160px; transition:transform .5s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d}
+.fc.virado .fc-int{transform:rotateY(180deg)}
+.fc-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border:1px solid var(--border-2); border-radius:var(--r-m); padding:16px 17px;
+  display:flex; flex-direction:column; justify-content:center; gap:8px; overflow:auto;
+}
+.fc-frente{background:linear-gradient(160deg,rgba(232,147,63,.16),rgba(30,33,38,.92))}
+.fc-tras{background:linear-gradient(160deg,rgba(62,207,142,.14),rgba(21,23,26,.97)); transform:rotateY(180deg)}
+.fc-tema{font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--laranja)}
+.fc-tras .fc-tema{color:var(--verde)}
+.fc-txt{font-size:15px; font-weight:700; color:#fff; line-height:1.45}
+.fc-tras .fc-txt{font-weight:600; font-size:14.5px; color:var(--txt-2)}
+.fc-tras .fc-txt strong{color:#fff}
+.fc-pista{font-size:11px; color:var(--mut); font-weight:600}
+.fc-barra{display:flex; flex-wrap:wrap; gap:9px; align-items:center; margin:6px 0 18px}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:10px;
+  border:1px solid var(--border-2); background:rgba(255,255,255,.05); color:var(--txt);
+  font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; transition:.18s;
+}
+.btn:hover{background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.24)}
+.btn-l{background:linear-gradient(135deg,#E8933F,#D96C3F); border-color:transparent; color:#170F06}
+
+.q{border:1px solid var(--border); border-radius:var(--r-m); padding:17px 19px; margin:13px 0;
+  background:linear-gradient(180deg,rgba(30,33,38,.66),rgba(21,23,26,.5))}
+.q-cab{display:flex; align-items:center; gap:10px; margin-bottom:11px}
+.q-n{flex:0 0 28px; height:28px; border-radius:9px; display:grid; place-items:center;
+  background:rgba(167,139,250,.16); color:var(--violeta); font-size:12.5px; font-weight:800}
+.q-tema{font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mut)}
+.q-enun{color:var(--txt); font-size:15px; margin:0 0 11px; font-weight:600}
+.alts{list-style:none; padding:0; margin:0 0 12px; display:grid; gap:6px}
+.alts li{padding:8px 12px; border-radius:8px; background:rgba(255,255,255,.03);
+  border:1px solid var(--border); font-size:14px; color:var(--txt-2)}
+.alts li b{color:var(--laranja); margin-right:6px}
+details{border-top:1px dashed var(--border-2); padding-top:11px}
+details summary{
+  cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:8px;
+  font-size:13px; font-weight:800; color:var(--verde); letter-spacing:.02em;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"\25B8"; transition:.2s}
+details[open] summary::before{transform:rotate(90deg)}
+details .resp{margin-top:11px; font-size:14.5px; color:var(--txt-2);
+  background:rgba(62,207,142,.06); border:1px solid rgba(62,207,142,.22);
+  border-radius:var(--r-s); padding:13px 15px}
+details .resp b{color:#6EE7B7}
+
+.links{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.link{
+  display:flex; gap:13px; padding:15px 16px; border:1px solid var(--border); border-radius:var(--r-m);
+  background:rgba(245,158,11,.045); text-decoration:none; transition:.18s;
+}
+.link:hover{border-color:rgba(245,158,11,.4); background:rgba(245,158,11,.09); transform:translateY(-2px)}
+.link .ico{flex:0 0 38px; height:38px; border-radius:11px; display:grid; place-items:center;
+  background:rgba(245,158,11,.14); font-size:18px}
+.link .tit{color:#fff; font-weight:700; font-size:14.5px; display:block; margin-bottom:3px}
+.link .desc{color:var(--mut); font-size:12.5px; display:block; line-height:1.45}
+
+.cola{border:1px solid rgba(232,147,63,.3); background:rgba(232,147,63,.055)}
+.cola-grid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.cola-bloco{border:1px solid var(--border); border-radius:var(--r-s); padding:13px 15px; background:rgba(12,13,15,.5)}
+.cola-bloco h5{margin:0 0 8px; font-size:11.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--laranja)}
+.cola-bloco ul{margin:0; padding-left:17px; font-size:13.5px}
+.cola-bloco li{margin-bottom:5px}
+
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--border); text-align:center;
+  color:var(--mut); font-size:12.5px}
+footer b{color:var(--txt-2)}
+
+@media(max-width:620px){
+  .wrap{padding:0 15px 70px}
+  .ph-item{grid-template-columns:56px 1fr}
+  .ph-cat{grid-column:1/-1}
+  .sec-cab{gap:11px} .sec-ico{flex:0 0 38px; height:38px; font-size:18px}
+}
+@media print{
+  body::before{display:none}
+  .fc-int{transform:none!important}
+  details .resp{display:block}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="capa">
+  <span class="selo" style="border-color:rgba(96,165,250,.35); background:rgba(96,165,250,.10); color:#BFDBFE">&#9679; Aula 01 &middot; Semana 1 &middot; Módulo 53/2026</span>
+  <h1 style="background:linear-gradient(120deg,#fff 8%,#BFDBFE 50%,#60A5FA 100%); -webkit-background-clip:text; background-clip:text; color:transparent">Átomo e Tabela Periódica</h1>
+  <p class="sub">A base de tudo: como o átomo foi descoberto, o que há dentro dele,
+  como os elétrons se organizam e por que a tabela periódica tem essa cara.</p>
+  <div class="chips">
+    <span class="chip">&#128218; <b>Química Geral e Experimental</b></span>
+    <span class="chip">&#127891; Aula ao vivo 01</span>
+    <span class="chip">&#9201; <b>1h34</b> de aula</span>
+    <span class="chip">&#129504; 8 blocos + 62 flashcards</span>
+    <span class="chip">&#9997; 12 questões com gabarito</span>
+  </div>
+</header>
+
+<nav class="sumario">
+  <h2>Mapa da aula</h2>
+  <ol>
+    <li><a href="#s0"><span class="num">0</span> Como estudar esta disciplina</a></li>
+    <li><a href="#s1"><span class="num">1</span> Os 5 modelos atômicos</a></li>
+    <li><a href="#s2"><span class="num">2</span> Dentro do átomo: P, N, e⁻</a></li>
+    <li><a href="#s3"><span class="num">3</span> Z, A e o átomo neutro</a></li>
+    <li><a href="#s4"><span class="num">4</span> Isótopos, isóbaros, isótonos</a></li>
+    <li><a href="#s5"><span class="num">5</span> Camadas e números quânticos</a></li>
+    <li><a href="#s6"><span class="num">6</span> Diagrama de Linus Pauling</a></li>
+    <li><a href="#s7"><span class="num">7</span> A tabela periódica</a></li>
+    <li><a href="#s8"><span class="num">8</span> Propriedades periódicas</a></li>
+    <li><a href="#sfc"><span class="num">9</span> Flashcards (62)</a></li>
+    <li><a href="#s10"><span class="num">10</span> Exercícios comentados</a></li>
+    <li><a href="#s11"><span class="num">11</span> Pegadinhas de prova</a></li>
+    <li><a href="#slinks"><span class="num">&#128279;</span> Links e simuladores</a></li>
+    <li><a href="#s12"><span class="num">12</span> Cola de uma página</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================ COMO ESTUDAR ============ -->
+<section id="s0">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(62,207,142,.10); border-color:rgba(62,207,142,.3)">&#127919;</div>
+    <div>
+      <h2>0. Como estudar esta disciplina</h2>
+      <p>As quatro dicas que a professora deu na abertura &mdash; e a última é a mais importante.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">&#128260; Revise as aulas</h4>
+      <p style="margin-bottom:0">As aulas ficam gravadas justamente para serem vistas duas, três vezes.
+      Raramente se entende tudo na primeira. O conceito só fica sólido quando você volta nele
+      depois de ler o livro.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#128214; Estude os exemplos resolvidos do livro</h4>
+      <p style="margin-bottom:0">O livro da disciplina está recheado de exemplos, exercícios, dicas e
+      indicações de vídeos e filmes. Está no Studeo &mdash; não precisa do livro físico.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#9997; <b>Refaça</b> os exercícios</h4>
+      <p style="margin-bottom:0">Ler a resolução dá a <em>sensação</em> de ter entendido.
+      A dúvida só aparece quando você tenta fazer sozinho. Refaça os exemplos do livro e das aulas ao vivo.</p>
+    </div>
+    <div class="card" style="border-color:rgba(238,165,61,.32)">
+      <h4 style="margin-top:0; color:var(--amarelo)">&#129504; Não decore o passo a passo</h4>
+      <p style="margin-bottom:0">Decore o <b>raciocínio</b>. Quem decora o passo a passo trava quando o
+      exercício muda uma vírgula. E na engenharia a realidade nunca é igual ao exemplo do livro.</p>
+    </div>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; O conteúdo é cumulativo</div>
+    <p>Na aula 8 e 9 você vai usar tudo das aulas anteriores. Em química isso é mais verdade do que
+    em qualquer outra disciplina. O que parece &ldquo;básico demais&rdquo; hoje é a ferramenta da semana que vem.</p>
+  </div>
+</section>
+
+<!-- =============================================== MODELOS ============== -->
+<section id="s1">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9883;</div>
+    <div>
+      <h2>1. Os 5 modelos atômicos</h2>
+      <p>Nada surgiu do nada: 200 anos de correções até o modelo de hoje.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Ano</th><th>Modelo</th><th>A grande ideia</th><th>Apelido</th></tr></thead>
+      <tbody>
+        <tr><td><b>1808</b></td><td><b>Dalton</b></td>
+            <td>O átomo é uma <b>esfera maciça e indivisível</b> que sofre rearranjos numa reação química.
+            Era a menor partícula possível.</td><td>&ldquo;bola de bilhar&rdquo;</td></tr>
+        <tr><td><b>1897</b></td><td><b>Thomson</b></td>
+            <td>Descoberta do <b>elétron</b> e da sua <b>carga negativa</b>. O átomo deixou de ser
+            indivisível: dá para subdividi-lo em partículas.</td><td>&ldquo;pudim de passas&rdquo;</td></tr>
+        <tr><td><b>1911</b></td><td><b>Rutherford</b></td>
+            <td>Existe um <b>núcleo</b> central e os elétrons ficam <b>distribuídos ao redor</b> dele.
+            O átomo é quase todo espaço vazio.</td><td>&ldquo;modelo planetário&rdquo;</td></tr>
+        <tr><td><b>1913</b></td><td><b>Bohr</b></td>
+            <td>Os elétrons não ficam em qualquer lugar: ocupam <b>camadas de energia</b> bem definidas
+            ao redor do núcleo.</td><td>&ldquo;planetário com órbitas&rdquo;</td></tr>
+        <tr><td><b>1920s</b></td><td><b>Atual</b> (quântico)</td>
+            <td>Núcleo com <b>prótons e nêutrons</b>, cercado por uma <b>nuvem eletrônica</b> &mdash;
+            a região onde há <em>probabilidade</em> de encontrar o elétron.</td><td>&ldquo;nuvem eletrônica&rdquo;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; A ordem, em uma frase</div>
+    <p><b>Dalton</b> disse que existe · <b>Thomson</b> achou o elétron ·
+    <b>Rutherford</b> achou o núcleo · <b>Bohr</b> organizou em camadas ·
+    o <b>modelo atual</b> trocou órbita por probabilidade.</p>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Cuidado com a descrição do modelo atual</div>
+    <p>O slide da aula diz &ldquo;núcleo com prótons de carga positiva&rdquo; &mdash; mas o
+    <b>nêutron também está no núcleo</b>. Ele só não foi citado ali porque não tem carga.
+    Núcleo = prótons + nêutrons, sempre.</p>
+  </div>
+</section>
+
+<!-- ========================================== PARTÍCULAS ================ -->
+<section id="s2">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#9898;</div>
+    <div>
+      <h2>2. Dentro do átomo</h2>
+      <p>Três partículas, três cargas, dois endereços.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Partícula</th><th>Símbolo</th><th>Carga</th><th>Onde fica</th><th>Massa relativa</th></tr></thead>
+      <tbody>
+        <tr><td><b>Próton</b></td><td><span class="f">p</span></td>
+            <td><b style="color:var(--vermelho)">+1</b> (positiva)</td><td><b>Núcleo</b></td><td>1</td></tr>
+        <tr><td><b>Nêutron</b></td><td><span class="f">n</span></td>
+            <td><b style="color:var(--mut)">0</b> (nenhuma)</td><td><b>Núcleo</b></td><td>1</td></tr>
+        <tr><td><b>Elétron</b></td><td><span class="f">e<sup>&minus;</sup></span></td>
+            <td><b style="color:var(--azul)">&minus;1</b> (negativa)</td>
+            <td><b>Eletrosfera</b> &mdash; orbitando ao redor</td><td>&asymp; 1/1836 (desprezível)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; Como não trocar as cargas</div>
+    <p><b>P</b>róton = <b>P</b>ositivo. <b>N</b>êutron = <b>N</b>eutro (zero).
+    Sobrou o elétron &rarr; negativo. É literalmente a primeira letra.</p>
+  </div>
+  <div class="box b-prova">
+    <div class="tit">&#127891; Por que a massa fica toda no núcleo</div>
+    <p>O elétron tem cerca de <b>1/1836</b> da massa do próton. Por isso a <b>massa</b> do átomo é
+    praticamente só o núcleo (prótons + nêutrons), enquanto o <b>volume</b> é praticamente só a
+    eletrosfera. Massa no centro, tamanho na periferia.</p>
+  </div>
+</section>
+
+<!-- ================================================= Z e A ============== -->
+<section id="s3">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#128290;</div>
+    <div>
+      <h2>3. Z, A e o átomo neutro</h2>
+      <p>Dois números resolvem qualquer questão de identificação de átomo.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card" style="border-color:rgba(245,158,11,.28)">
+      <h4 style="margin-top:0; color:var(--ambar)">Z &mdash; número atômico</h4>
+      <p style="margin-bottom:0"><b>Z = número de prótons.</b><br>
+      É a <b>identidade</b> do elemento. Não existem dois elementos diferentes com o mesmo Z, e é por
+      isso que a tabela periódica é ordenada em ordem crescente de Z.</p>
+    </div>
+    <div class="card" style="border-color:rgba(167,139,250,.28)">
+      <h4 style="margin-top:0; color:var(--violeta)">A &mdash; número de massa</h4>
+      <p style="margin-bottom:0"><b>A = prótons + nêutrons.</b><br>
+      É a &ldquo;massa do núcleo&rdquo;, porque soma tudo o que está lá dentro.
+      O elétron não entra: a massa dele é desprezível.</p>
+    </div>
+  </div>
+
+  <div class="eq">
+    <b>A = Z + N</b>&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;<b>N = A &minus; Z</b><br><br>
+    ÁTOMO NEUTRO: &nbsp;n° de prótons = n° de elétrons&nbsp;&nbsp;(carga total = 0)
+    <small>Para achar o número de nêutrons, subtraia. É a conta mais cobrada da aula 01.</small>
+  </div>
+
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; O nêutron é independente</div>
+    <p>O número de nêutrons <b>não tem nenhuma relação</b> com o número de prótons ou de elétrons.
+    Prótons = elétrons só vale para o <b>átomo neutro</b>. Nêutrons são &ldquo;livres&rdquo;:
+    o mesmo elemento pode ter 8, 9 ou 10 deles.</p>
+  </div>
+
+  <h3>Como a tabela periódica mostra isso</h3>
+  <div class="eq">
+    &nbsp;&nbsp;<b>A</b> &nbsp;&larr; número de massa (às vezes em cima, às vezes embaixo)<br>
+    <b>Fe</b><br>
+    &nbsp;&nbsp;<b>Z</b> &nbsp;&larr; número atômico
+    <small>CADA tabela organiza de um jeito. Sempre confira a legenda da tabela que você está usando —
+    algumas trazem só o Z, sem o número de massa.</small>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Truque para identificar sem legenda</div>
+    <p>O <b>Z é sempre menor</b> que o A, e o Z de um elemento é um número <b>inteiro</b>.
+    A massa atômica costuma ser <b>decimal</b> (55,847 para o ferro). Achou o decimal? É a massa.</p>
+  </div>
+
+  <h3>Por que a massa atômica é um número quebrado</h3>
+  <p>Porque ela é a <b>média ponderada</b> das massas de todos os isótopos daquele elemento,
+  pesada pela abundância de cada um na natureza. O ferro não existe em uma única forma:
+  a tabela mostra a média do que existe no planeta.</p>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Arredondar: quando sim, quando não</div>
+    <p><b>Arredonde</b> quando o decimal está claramente perto de um inteiro:
+    Fe 55,847 &rarr; <b>56</b>; O 15,999 &rarr; <b>16</b>; N 14,007 &rarr; <b>14</b>.<br>
+    <b>NÃO arredonde</b> quando o decimal é ,5 &mdash; fica no meio e não há para onde ir:
+    Cl <b>35,5</b>; Cu <b>63,5</b>.</p>
+  </div>
+</section>
+
+<!-- ==================================== ISÓTOPOS / ISÓBAROS ============= -->
+<section id="s4">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(52,211,153,.12); border-color:rgba(52,211,153,.32)">&#128203;</div>
+    <div>
+      <h2>4. Isótopos, isóbaros e isótonos</h2>
+      <p>Três nomes que só existem em <b>comparação</b> entre átomos.</p>
+    </div>
+  </div>
+
+  <div class="box b-atencao">
+    <div class="tit">&#9888; Nenhum átomo &ldquo;é isótopo&rdquo; sozinho</div>
+    <p>Não existe &ldquo;esse elemento é isóbaro&rdquo;. A classificação é sempre <b>relacional</b>:
+    um átomo é isótopo <em>de outro</em>. Sempre precisa dos dois para comparar.</p>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Nome</th><th>O que é IGUAL</th><th>O que é DIFERENTE</th><th>Mesmo elemento?</th></tr></thead>
+      <tbody>
+        <tr><td><b>ISÓTO<span style="color:var(--rosa)">P</span>OS</b></td>
+            <td><b style="color:var(--rosa)">prótons</b> (mesmo Z)</td>
+            <td>nêutrons e massa (A)</td>
+            <td><b>Sim</b> &mdash; é sempre o mesmo elemento</td></tr>
+        <tr><td><b>ISÓB<span style="color:var(--violeta)">A</span>ROS</b></td>
+            <td><b style="color:var(--violeta)">massa (mesmo A)</b></td>
+            <td>prótons (Z) e nêutrons</td>
+            <td><b>Não</b> &mdash; elementos diferentes</td></tr>
+        <tr><td><b>ISÓTO<span style="color:var(--esmeralda)">N</span>OS</b></td>
+            <td><b style="color:var(--esmeralda)">nêutrons</b></td>
+            <td>prótons (Z) e massa (A)</td>
+            <td><b>Não</b> &mdash; elementos diferentes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; A letra escondida no nome</div>
+    <p>ISÓTO<b>P</b>OS &rarr; mesmo <b>P</b>róton.<br>
+    ISÓB<b>A</b>ROS &rarr; mesmo <b>A</b> (número de massa).<br>
+    ISÓTO<b>N</b>OS &rarr; mesmo <b>N</b>êutron.<br>
+    Está literalmente escrito na palavra. É a melhor mnemônica desta aula.</p>
+  </div>
+
+  <h3>Os exemplos da aula, com as contas</h3>
+
+  <h4>ISÓTOPOS &mdash; os três oxigênios</h4>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Isótopo</th><th>Prótons (Z)</th><th>Elétrons</th><th>Nêutrons</th><th>Massa (A)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="f"><sup>16</sup>O</span></td><td>8</td><td>8</td><td><b>8</b></td><td>8 + 8 = <b>16</b></td></tr>
+        <tr><td><span class="f"><sup>17</sup>O</span></td><td>8</td><td>8</td><td><b>9</b></td><td>8 + 9 = <b>17</b></td></tr>
+        <tr><td><span class="f"><sup>18</sup>O</span></td><td>8</td><td>8</td><td><b>10</b></td><td>8 + 10 = <b>18</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Prótons e elétrons <b>não mudam</b> (é sempre oxigênio, e é sempre neutro).
+  Quem muda é o nêutron &mdash; e, por consequência, a massa.</p>
+
+  <h4>ISÓBAROS &mdash; cálcio-40 e argônio-40</h4>
+  <div class="eq">
+    <b>Ca</b>: Z = 20 &rarr; 20 prótons, 20 elétrons, <b>20 nêutrons</b> &rarr; A = 20 + 20 = <b>40</b><br>
+    <b>Ar</b>: Z = 18 &rarr; 18 prótons, 18 elétrons, <b>22 nêutrons</b> &rarr; A = 18 + 22 = <b>40</b>
+    <small>Elementos completamente diferentes, mesma massa. Isso é isóbaro.</small>
+  </div>
+
+  <h4>ISÓTONOS &mdash; nitrogênio-14 e carbono-13</h4>
+  <div class="eq">
+    <b>N</b>: A = 14, Z = 7 &rarr; N = 14 &minus; 7 = <b>7 nêutrons</b><br>
+    <b>C</b>: A = 13, Z = 6 &rarr; N = 13 &minus; 6 = <b>7 nêutrons</b>
+    <small>Z diferente, A diferente, mas o mesmo número de nêutrons. Isso é isótono.</small>
+  </div>
+</section>
+
+<!-- ================================= CAMADAS E Nº QUÂNTICOS ============= -->
+<section id="s5">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(96,165,250,.12); border-color:rgba(96,165,250,.32)">&#127761;</div>
+    <div>
+      <h2>5. Camadas e números quânticos</h2>
+      <p>O endereço do elétron &mdash; do país até o número da casa.</p>
+    </div>
+  </div>
+
+  <h3>As 7 camadas (níveis de energia)</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+      <tbody>
+        <tr><td><b>Letra</b></td><td><b>K</b></td><td><b>L</b></td><td><b>M</b></td><td><b>N</b></td><td><b>O</b></td><td><b>P</b></td><td><b>Q</b></td></tr>
+        <tr><td><b>Máx. e⁻</b></td><td>2</td><td>8</td><td>18</td><td>32</td><td>32</td><td>18</td><td>8</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="eq">
+    núcleo &rarr; K &rarr; L &rarr; M &rarr; N &rarr; O &rarr; P &rarr; Q &rarr; mais longe<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>menos energia &mdash;&mdash;&mdash;&mdash;&mdash;&rarr; mais energia</b>
+    <small>São 7 camadas POSSÍVEIS. Nenhum átomo é obrigado a preencher todas — depende de quantos elétrons ele tem.</small>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127793; A analogia da cebola</div>
+    <p>Pense numa cebola de 7 camadas: as de dentro estão mais perto do centro (menos energia),
+    as de fora estão mais longe (mais energia). Quanto mais afastado do núcleo, mais energético.</p>
+  </div>
+
+  <h3>Princípio da Incerteza de Heisenberg</h3>
+  <div class="card" style="border-color:rgba(96,165,250,.28)">
+    <p style="margin-bottom:0">É <b>impossível determinar com precisão a posição de um elétron</b> na eletrosfera.
+    O que existe é <b>probabilidade</b> de encontrá-lo em determinada região.</p>
+  </div>
+  <div class="box b-aula">
+    <div class="tit">&#127968; A analogia do endereço (da aula)</div>
+    <p>Você mora num país, num estado, numa cidade, num bairro, numa casa. Se eu for te procurar,
+    <b>é provável</b> que eu te ache em casa &mdash; mas não é <em>certeza</em>.
+    O elétron é igual: sabemos a região, não a posição exata.</p>
+  </div>
+
+  <h3>Os quatro números quânticos</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Número quântico</th><th>Símbolo</th><th>O que diz</th><th>Valores</th></tr></thead>
+      <tbody>
+        <tr><td><b>Principal</b></td><td><span class="f">n</span></td>
+            <td>A <b>camada</b> (nível de energia)</td><td>1 a 7 &nbsp;(K a Q)</td></tr>
+        <tr><td><b>Secundário</b> (azimutal)</td><td><span class="f">&#8467;</span></td>
+            <td>O <b>subnível</b> / tipo de orbital</td><td><b>s, p, d, f</b></td></tr>
+        <tr><td><b>Magnético</b></td><td><span class="f">m<sub>&#8467;</sub></span></td>
+            <td><b>Qual</b> orbital dentro do subnível</td>
+            <td>do negativo ao positivo, com o <b>0 no meio</b></td></tr>
+        <tr><td><b>Spin</b></td><td><span class="f">m<sub>s</sub></span></td>
+            <td>O <b>sentido de rotação</b> do elétron</td>
+            <td><b>+&frac12;</b> (seta &uarr;) ou <b>&minus;&frac12;</b> (seta &darr;)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Os orbitais: as &ldquo;casinhas&rdquo; do elétron</h3>
+  <p><b>Orbital</b> é a região do espaço ao redor do núcleo onde há <b>máxima probabilidade</b> de
+  encontrar o elétron. E a regra de ouro: <b>cada orbital cabe no máximo 2 elétrons</b>
+  (um com spin +&frac12;, outro com &minus;&frac12;).</p>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Subnível</th><th>N° de orbitais</th><th>Magnético (m<sub>&#8467;</sub>)</th><th>Máx. de elétrons</th></tr></thead>
+      <tbody>
+        <tr><td><b>s</b></td><td>1</td><td>0</td><td>1 &times; 2 = <b>2</b></td></tr>
+        <tr><td><b>p</b></td><td>3</td><td>&minus;1, 0, +1</td><td>3 &times; 2 = <b>6</b></td></tr>
+        <tr><td><b>d</b></td><td>5</td><td>&minus;2, &minus;1, 0, +1, +2</td><td>5 &times; 2 = <b>10</b></td></tr>
+        <tr><td><b>f</b></td><td>7</td><td>&minus;3, &minus;2, &minus;1, 0, +1, +2, +3</td><td>7 &times; 2 = <b>14</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; O padrão dos orbitais</div>
+    <p>O número de orbitais é sempre <b>ímpar</b>: 1, 3, 5, 7. O do meio é sempre <b>zero</b>,
+    os da esquerda são negativos e os da direita positivos, sempre simétricos.
+    E <b>s p d f = 2 6 10 14</b> elétrons &mdash; decore essa sequência.</p>
+  </div>
+</section>
+
+<!-- ============================================ LINUS PAULING =========== -->
+<section id="s6">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.12); border-color:rgba(232,147,63,.32)">&#128200;</div>
+    <div>
+      <h2>6. Diagrama de Linus Pauling</h2>
+      <p>A ordem de preenchimento &mdash; da menor para a maior energia.</p>
+    </div>
+  </div>
+
+  <p>Combinando camada com subnível, cada combinação tem um nível de energia próprio.
+  O diagrama de Pauling só coloca todas elas <b>em ordem crescente de energia</b>,
+  para todo mundo preencher do mesmo jeito.</p>
+
+  <div class="eq">
+1s²<br>
+2s²&nbsp;&nbsp;2p⁶<br>
+3s²&nbsp;&nbsp;3p⁶&nbsp;&nbsp;3d¹⁰<br>
+4s²&nbsp;&nbsp;4p⁶&nbsp;&nbsp;4d¹⁰&nbsp;&nbsp;4f¹⁴<br>
+5s²&nbsp;&nbsp;5p⁶&nbsp;&nbsp;5d¹⁰&nbsp;&nbsp;5f¹⁴<br>
+6s²&nbsp;&nbsp;6p⁶&nbsp;&nbsp;6d¹⁰<br>
+7s²&nbsp;&nbsp;7p⁶
+    <small>As setas do diagrama descem na DIAGONAL. A ordem de preenchimento que sai delas é:</small>
+  </div>
+  <div class="eq" style="border-left-color:var(--verde)">
+<b>1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p 7s 5f 6d 7p</b>
+    <small>Repare: depois de 4s vem 3d (não 4p). É a diagonal do diagrama. Esse "pulo" é o que confunde todo mundo.</small>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#128161; Não precisa decorar o diagrama</div>
+    <p>Fazendo 5 distribuições, a ordem cola sozinha. E na prática você quase nunca vai além de
+    <b>4s / 3d</b>, porque os elementos mais usados estão no começo da tabela.</p>
+  </div>
+
+  <h3>Como ler cada termo</h3>
+  <div class="eq">
+    <b>3</b> d <b>6</b><br>
+    &uarr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&uarr;&nbsp;&nbsp;&nbsp;&nbsp;&uarr;<br>
+    camada&nbsp;&nbsp;subnível&nbsp;&nbsp;n° de elétrons ali
+    <small>"3d6" = camada 3, subnível d, com 6 elétrons dentro.</small>
+  </div>
+
+  <h3>Exemplo 1 &mdash; alumínio (Z = 13)</h3>
+  <div class="eq">
+    1s² (2) &rarr; 2s² (4) &rarr; 2p⁶ (10) &rarr; 3s² (12) &rarr; 3p<b>¹</b> (13) &#10004;<br><br>
+    <b>Al = 1s² 2s² 2p⁶ 3s² 3p¹</b>
+    <small>O 3p cabe 6, mas só sobrou 1 elétron para colocar: pare quando chegar em Z. Camada de valência = 3.</small>
+  </div>
+
+  <h3>Exemplo 2 &mdash; ferro (Z = 26)</h3>
+  <div class="eq">
+    1s² (2) &rarr; 2s² (4) &rarr; 2p⁶ (10) &rarr; 3s² (12) &rarr; 3p⁶ (18) &rarr; 4s² (20) &rarr; 3d<b>⁶</b> (26) &#10004;<br><br>
+    <b>Fe = 1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶</b>
+    <small>O 3d cabe 10, mas só faltavam 6. E note: depois do 4s vem o 3d — a diagonal do diagrama.</small>
+  </div>
+
+  <div class="box b-pegadinha">
+    <div class="tit">&#128680; A confusão nº 1 desta aula: valência &ne; mais energético</div>
+    <p>No ferro, <span class="f">3d⁶</span> é o <b>subnível mais energético</b>
+    (o último preenchido pelo diagrama). Mas a <b>camada de valência</b> é a <b>4</b>
+    (<span class="f">4s²</span>), porque 4 &gt; 3 &mdash; é a camada <em>mais externa</em>,
+    a mais distante do núcleo.</p>
+    <p style="margin-top:8px"><b>Camada de valência = o MAIOR número de camada que aparece na distribuição.</b>
+    E é ela que faz as ligações químicas, não o subnível mais energético.</p>
+    <p style="margin-top:8px">Às vezes os dois coincidem (no alumínio, 3p¹ é o mais energético <em>e</em> está na
+    camada de valência 3). Coincidência não é regra.</p>
+  </div>
+
+  <h3>Exemplo 3 &mdash; fósforo (Z = 15)</h3>
+  <div class="eq">
+    <b>P = 1s² 2s² 2p⁶ 3s² 3p³</b><br>
+    maior camada = <b>3</b> &rarr; camada de valência<br>
+    elétrons na camada 3 = 2 (do s) + 3 (do p) = <b>5</b> &rarr; família <b>5A</b>
+    <small>A distribuição eletrônica LOCALIZA o elemento na tabela: camada 3 = 3º período, 5 elétrons de valência = família 5A.</small>
+  </div>
+
+  <h3>Exemplo 4 &mdash; cálcio (Z = 20)</h3>
+  <div class="eq">
+    <b>Ca = 1s² 2s² 2p⁶ 3s² 3p⁶ 4s²</b><br>
+    maior camada = <b>4</b> &rarr; 4º período<br>
+    elétrons na camada 4 = <b>2</b> &rarr; família <b>2A</b>
+  </div>
+</section>
+
+<!-- =========================================== TABELA PERIÓDICA ========= -->
+<section id="s7">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(244,114,182,.12); border-color:rgba(244,114,182,.32)">&#128203;</div>
+    <div>
+      <h2>7. A tabela periódica</h2>
+      <p>Nada ali é aleatório: tudo está em ordem crescente de número atômico.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h4 style="margin-top:0">&#8596; PERÍODOS (linhas horizontais)</h4>
+      <p style="margin-bottom:0">São <b>7</b>, e correspondem às <b>7 camadas</b> (K a Q).
+      O período diz em qual camada está a valência do elemento.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">&#8597; FAMÍLIAS / GRUPOS (colunas verticais)</h4>
+      <p style="margin-bottom:0">Agrupam elementos com <b>propriedades semelhantes</b> &mdash;
+      porque têm o <b>mesmo número de elétrons na camada de valência</b>.</p>
+    </div>
+  </div>
+
+  <h3>Família &rarr; elétrons na camada de valência</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Família</th><th>e⁻ de valência</th><th>Nome do grupo</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td><b>1A</b></td><td>1</td><td>Metais alcalinos</td><td>Li, Na, K</td></tr>
+        <tr><td><b>2A</b></td><td>2</td><td>Metais alcalinoterrosos</td><td>Mg, Ca, Ba</td></tr>
+        <tr><td><b>3A</b></td><td>3</td><td>Família do boro</td><td>B, Al</td></tr>
+        <tr><td><b>4A</b></td><td>4</td><td>Família do carbono</td><td>C, Si</td></tr>
+        <tr><td><b>5A</b></td><td>5</td><td>Família do nitrogênio</td><td>N, P</td></tr>
+        <tr><td><b>6A</b></td><td>6</td><td>Calcogênios</td><td>O, S</td></tr>
+        <tr><td><b>7A</b></td><td>7</td><td>Halogênios</td><td>F, Cl, Br, I</td></tr>
+        <tr><td><b>8A</b></td><td><b>8</b> (He tem 2)</td><td><b>Gases nobres</b></td><td>He, Ne, Ar, Kr</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-dica">
+    <div class="tit">&#127919; O número da família É o número de elétrons de valência</div>
+    <p>Família 1A &rarr; 1 elétron. Família 7A &rarr; 7 elétrons. Bateu o olho na coluna,
+    já sabe quantos elétrons de valência o átomo tem &mdash; sem fazer distribuição nenhuma.
+    (Só vale para as famílias <b>A</b>; as <b>B</b>, do meio, são os metais de transição.)</p>
+  </div>
+
+  <h3>Grupos A e B</h3>
+  <ul>
+    <li><b>Grupos A</b> (principais): as <b>2 primeiras</b> colunas + as <b>6 últimas</b>. São os elementos
+    representativos, com a valência nos subníveis <b>s</b> e <b>p</b>.</li>
+    <li><b>Grupos B</b>: o <b>bloco do meio</b> &mdash; os metais de transição, com valência no subnível <b>d</b>.</li>
+  </ul>
+
+  <h3>As cinco regiões da tabela</h3>
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Região</th><th>Propriedades</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><td><b style="color:var(--rosa)">METAIS</b></td>
+            <td>Sólidos (<b>exceto o mercúrio</b>, líquido) · bons condutores de calor e eletricidade ·
+            <b>maleáveis e dúcteis</b> (deformam, não quebram) · brilho metálico</td>
+            <td>Fe, Cu, Al, Na, Hg</td></tr>
+        <tr><td><b style="color:var(--esmeralda)">AMETAIS</b> (não metais)</td>
+            <td>Maus condutores (isolantes) · <b>quebradiços</b> · sem brilho metálico</td>
+            <td>O, N, Cl, S, P</td></tr>
+        <tr><td><b style="color:var(--ambar)">SEMIMETAIS</b></td>
+            <td>Sólidos · propriedades <b>intermediárias</b> · condutividade <b>moderada</b>
+            (são os semicondutores)</td>
+            <td><b>Si</b>, Ge, As, B</td></tr>
+        <tr><td><b style="color:var(--azul)">GASES NOBRES</b></td>
+            <td>Gasosos · <b>inertes</b> e <b>estáveis</b> &mdash; não reagem, porque já têm
+            8 elétrons na valência</td>
+            <td>He, Ne, Ar, Kr, Xe</td></tr>
+        <tr><td><b style="color:var(--mut)">HIDROGÊNIO</b></td>
+            <td>Fica <b>separado</b>: tem características de metal e de ametal ao mesmo tempo</td>
+            <td>H</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; As duas exceções que caem em prova</div>
+    <p><b>Mercúrio (Hg)</b> é o único metal <b>líquido</b> à temperatura ambiente &mdash;
+    é o do termômetro antigo.<br>
+    <b>Silício (Si)</b> é semimetal e é o coração de todo componente eletrônico, porque é
+    <b>semicondutor</b>.</p>
+  </div>
+</section>
+
+<!-- ======================================= PROPRIEDADES ================= -->
+<section id="s8">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(238,165,61,.12); border-color:rgba(238,165,61,.32)">&#128207;</div>
+    <div>
+      <h2>8. Propriedades periódicas</h2>
+      <p>Cinco propriedades, e só <b>duas direções</b> para memorizar.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th>Propriedade</th><th>O que é</th><th>Aumenta para&hellip;</th></tr></thead>
+      <tbody>
+        <tr><td><b>Raio atômico</b></td>
+            <td>O <b>tamanho</b> do átomo (núcleo + eletrosfera). Mais camadas ocupadas, maior o raio.</td>
+            <td><b style="color:var(--azul)">&larr; esquerda e &darr; baixo</b></td></tr>
+        <tr><td><b>Eletronegatividade</b></td>
+            <td>A tendência de <b>atrair</b> elétrons (agir como um ímã de elétrons).</td>
+            <td><b style="color:var(--vermelho)">&rarr; direita e &uarr; cima</b></td></tr>
+        <tr><td><b>Eletropositividade</b></td>
+            <td>A tendência de <b>ceder</b> elétrons. É o contrário da eletronegatividade.</td>
+            <td><b style="color:var(--azul)">&larr; esquerda e &darr; baixo</b></td></tr>
+        <tr><td><b>Afinidade eletrônica</b></td>
+            <td>A energia <b>liberada</b> quando o átomo <b>recebe</b> um elétron.</td>
+            <td><b style="color:var(--vermelho)">&rarr; direita e &uarr; cima</b></td></tr>
+        <tr><td><b>Potencial de ionização</b></td>
+            <td>A energia <b>absorvida</b> para <b>arrancar</b> um elétron do átomo.</td>
+            <td><b style="color:var(--vermelho)">&rarr; direita e &uarr; cima</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box b-dica">
+    <div class="tit">&#127919; Tudo em uma frase</div>
+    <p><b>Direita + cima</b> = o átomo quer PEGAR elétron (eletronegatividade, afinidade eletrônica,
+    potencial de ionização, todos crescem juntos).<br>
+    <b>Esquerda + baixo</b> = o átomo quer DAR elétron, e ele é GRANDE
+    (eletropositividade e raio atômico).<br>
+    Só existem essas duas direções. Decore uma, a outra é o contrário.</p>
+  </div>
+  <div class="box b-prova">
+    <div class="tit">&#127891; Onde isso vai ser usado</div>
+    <p>A <b>eletronegatividade</b> é a propriedade mais importante daqui para a frente: ela decide
+    se a ligação vai ser <b>iônica</b> ou <b>covalente</b> (aula 02) e quem cede ou recebe elétron.
+    Se você só levar uma propriedade desta aula, leve essa.</p>
+  </div>
+  <div class="box b-atencao">
+    <div class="tit">&#9888; O flúor é o campeão</div>
+    <p>Canto superior direito (excluindo gases nobres) = <b>flúor</b>, o elemento mais eletronegativo
+    que existe. Canto inferior esquerdo = <b>frâncio</b>, o mais eletropositivo e de maior raio.</p>
+  </div>
+</section>
+
+
+<!-- ================================================ FLASHCARDS ========== -->
+<section id="sfc">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:#60A5FA1f; border-color:#60A5FA52">&#127183;</div>
+    <div>
+      <h2>Flashcards da aula 01</h2>
+      <p>62 cartões &mdash; os mesmos que estão gravados na matéria. Clique para virar.</p>
+    </div>
+  </div>
+
+  <div class="fc-barra">
+    <button class="btn btn-l" id="fc-embaralhar">&#127922; Embaralhar</button>
+    <button class="btn" id="fc-virar">&#128260; Virar todos</button>
+    <button class="btn" id="fc-fechar">&#8617; Desvirar todos</button>
+    <span style="font-size:12.5px; color:var(--mut); font-weight:600" id="fc-conta"></span>
+  </div>
+
+  <div class="fc-grid" id="fc-grid"></div>
+
+  <script>
+  var CARTOES = [
+    ["Aula 01","Qual foi o primeiro modelo atômico, e o que ele dizia?","DALTON, 1808: o átomo é uma esfera maciça e INDIVISÍVEL, que sofre rearranjos numa reação química. Era considerada a menor partícula possível."],
+    ["Aula 01","O que Thomson descobriu, e em que ano?","1897 — o ELÉTRON e sua carga NEGATIVA. Com isso o átomo deixou de ser indivisível: passou a poder ser subdividido em partículas."],
+    ["Aula 01","Qual foi a contribuição de Rutherford (1911)?","Descobriu o NÚCLEO. O átomo passou a ser um núcleo central com os elétrons distribuídos ao redor dele — e é quase todo espaço vazio."],
+    ["Aula 01","O que Bohr acrescentou em 1913?","Que os elétrons não ficam em qualquer lugar: eles se distribuem em CAMADAS DE ENERGIA bem definidas ao redor do núcleo."],
+    ["Aula 01","Como é o modelo atômico ATUAL?","Núcleo com PRÓTONS e NÊUTRONS, cercado por uma NUVEM ELETRÔNICA — a região onde há PROBABILIDADE de encontrar os elétrons. Não há órbita definida."],
+    ["Aula 01","Coloque em ordem: Bohr, Dalton, modelo atual, Rutherford, Thomson","Dalton (1808) → Thomson (1897) → Rutherford (1911) → Bohr (1913) → atual (1920s). Dalton disse que existe, Thomson achou o elétron, Rutherford achou o núcleo, Bohr organizou em camadas, o atual trocou órbita por probabilidade."],
+    ["Aula 01","Qual a carga do próton, do nêutron e do elétron?","Próton +1 (positiva) · Nêutron 0 (nenhuma) · Elétron −1 (negativa)."],
+    ["Aula 01","Onde fica cada partícula do átomo?","PRÓTONS e NÊUTRONS ficam no NÚCLEO. ELÉTRONS ficam na ELETROSFERA, orbitando ao redor do núcleo."],
+    ["Aula 01","Por que a massa do átomo é praticamente só o núcleo?","Porque o elétron tem cerca de 1/1836 da massa do próton — desprezível. Massa fica no núcleo; o tamanho (volume) fica na eletrosfera."],
+    ["Aula 01","O que é o número atômico (Z)?","É o NÚMERO DE PRÓTONS do átomo. É a identidade do elemento: não existem dois elementos diferentes com o mesmo Z. A tabela periódica é ordenada em Z crescente."],
+    ["Aula 01","O que é o número de massa (A)?","A = prótons + nêutrons. É a \"massa do núcleo\", porque soma tudo que está lá dentro. O elétron não entra: a massa dele é desprezível."],
+    ["Aula 01","Como achar o número de nêutrons de um átomo?","N = A − Z. Subtraia o número atômico do número de massa. É a conta mais cobrada da aula 01."],
+    ["Aula 01","Quando um átomo é neutro?","Quando o número de PRÓTONS é igual ao número de ELÉTRONS — as cargas +1 e −1 se anulam e a carga total é zero."],
+    ["Aula 01","O número de nêutrons tem relação com o de prótons?","NÃO, nenhuma. \"Prótons = elétrons\" só vale para o átomo neutro. Nêutrons são independentes: o mesmo elemento pode ter 8, 9 ou 10 deles."],
+    ["Aula 01","Por que a massa atômica na tabela periódica é um número quebrado?","Porque é a MÉDIA PONDERADA das massas de todos os isótopos do elemento, pesada pela abundância de cada um na natureza."],
+    ["Aula 01","Quando NÃO se deve arredondar a massa atômica?","Quando o decimal é ,5 — fica no meio e não há para onde arredondar. Ex.: Cl = 35,5 e Cu = 63,5. Nos outros casos, arredonde (Fe 55,847 → 56)."],
+    ["Aula 01","Numa tabela periódica sem legenda, como saber qual número é Z e qual é A?","O Z é sempre MENOR e é INTEIRO. A massa atômica costuma ser DECIMAL (55,847). Achou o decimal, é a massa."],
+    ["Aula 01","Um átomo tem A = 31 e Z = 15. Quantos prótons, elétrons e nêutrons?","15 prótons (= Z), 15 elétrons (átomo neutro) e 16 nêutrons (N = 31 − 15). É o fósforo."],
+    ["Aula 01","O que são ISÓTOPOS?","Átomos com o MESMO número de prótons (mesmo Z, mesmo elemento) mas números de MASSA diferentes — porque têm quantidades diferentes de nêutrons. IsótoPos = mesmo Próton."],
+    ["Aula 01","O que são ISÓBAROS?","Átomos de elementos DIFERENTES (Z diferente) que têm o MESMO número de MASSA (A). IsóbAros = mesmo A. Ex.: Ca-40 e Ar-40."],
+    ["Aula 01","O que são ISÓTONOS?","Átomos de elementos DIFERENTES que têm o MESMO número de NÊUTRONS. IsótoNos = mesmo Nêutron. Ex.: N-14 e C-13, os dois com 7 nêutrons."],
+    ["Aula 01","Um átomo pode \"ser isótopo\" por si só?","NÃO. É sempre uma COMPARAÇÃO entre dois átomos: um é isótopo DE OUTRO. A classificação é relacional."],
+    ["Aula 01","Nos isótopos do oxigênio (16, 17, 18), o que muda e o que não muda?","NÃO muda: 8 prótons e 8 elétrons em todos (é sempre oxigênio neutro). MUDA: os nêutrons (8, 9, 10) e por consequência a massa (16, 17, 18)."],
+    ["Aula 01","Ca (Z=20, A=40) e Ar (Z=18, A=40): que relação existe?","São ISÓBAROS — mesmo número de massa (40), elementos diferentes. O Ca tem 20 nêutrons e o Ar tem 22."],
+    ["Aula 01","Quantas camadas de energia existem, e como se chamam?","SETE camadas possíveis: K, L, M, N, O, P, Q (n = 1 a 7). Nem todo átomo preenche todas — depende de quantos elétrons ele tem."],
+    ["Aula 01","Quanto mais longe do núcleo, mais ou menos energia?","MAIS energia. A camada K (n=1) é a de menor energia; a camada Q (n=7) é a de maior. Pense numa cebola: as camadas de fora são as mais energéticas."],
+    ["Aula 01","O que diz o Princípio da Incerteza de Heisenberg?","Que é impossível determinar com precisão a POSIÇÃO de um elétron na eletrosfera. Só se pode falar da PROBABILIDADE de encontrá-lo numa região."],
+    ["Aula 01","Quais são os quatro números quânticos?","PRINCIPAL (n) = a camada, 1 a 7 · SECUNDÁRIO (ℓ) = o subnível, s p d f · MAGNÉTICO (mℓ) = qual orbital · SPIN (ms) = sentido de rotação, +½ ou −½."],
+    ["Aula 01","O que é um orbital?","A região do espaço ao redor do núcleo onde há MÁXIMA PROBABILIDADE de encontrar o elétron — a \"casinha\" dele."],
+    ["Aula 01","Quantos elétrons cabem em UM orbital?","No máximo DOIS — um com spin +½ (↑) e outro com −½ (↓). Vale para qualquer orbital, de qualquer subnível."],
+    ["Aula 01","Quantos orbitais tem cada subnível: s, p, d, f?","s = 1 orbital · p = 3 · d = 5 · f = 7. Sempre número ÍMPAR, com o zero no meio."],
+    ["Aula 01","Quantos elétrons no máximo cabem em s, p, d e f?","s = 2 · p = 6 · d = 10 · f = 14. É o nº de orbitais × 2. Decore a sequência 2, 6, 10, 14."],
+    ["Aula 01","O que é o número quântico de spin?","O sentido de rotação do elétron: +½ (seta para cima, ↑) ou −½ (seta para baixo, ↓). Dois elétrons no mesmo orbital têm spins opostos."],
+    ["Aula 01","Para que serve o diagrama de Linus Pauling?","Para dar a ORDEM DE PREENCHIMENTO dos subníveis, da menor para a maior energia — assim todos fazem a distribuição eletrônica do mesmo jeito."],
+    ["Aula 01","Qual a ordem de preenchimento dos 8 primeiros subníveis?","1s, 2s, 2p, 3s, 3p, 4s, 3d, 4p. Atenção: depois do 4s vem o 3d, não o 4p — é a diagonal do diagrama."],
+    ["Aula 01","Em \"3d⁶\", o que significa cada parte?","3 = a camada (nível). d = o subnível. 6 = o número de elétrons que estão ali dentro."],
+    ["Aula 01","Faça a distribuição eletrônica do alumínio (Z = 13)","1s² 2s² 2p⁶ 3s² 3p¹. O 3p cabe 6, mas só sobrou 1 elétron para colocar. Camada de valência = 3."],
+    ["Aula 01","Faça a distribuição eletrônica do ferro (Z = 26)","1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶. Note a diagonal: depois do 4s² vem o 3d, e o 3d cabe 10 mas só faltavam 6."],
+    ["Aula 01","O que é a camada de valência?","A camada mais EXTERNA do átomo — o MAIOR número de camada que aparece na distribuição eletrônica. É ela que participa das ligações químicas."],
+    ["Aula 01","No ferro, qual é o subnível mais energético e qual é a camada de valência?","Mais energético: 3d⁶ (o último preenchido). Camada de valência: a 4 (4s²), porque 4 > 3 — é a mais externa. SÃO COISAS DIFERENTES."],
+    ["Aula 01","Camada de valência e subnível mais energético são a mesma coisa?","NÃO. O mais energético é o último preenchido pelo diagrama. A valência é a camada de maior NÚMERO. Às vezes coincidem, mas isso é coincidência, não regra."],
+    ["Aula 01","Como localizar um elemento na tabela pela distribuição eletrônica?","A MAIOR camada dá o PERÍODO (linha). O nº de elétrons NESSA camada dá a FAMÍLIA (coluna). Ex.: P = ...3s² 3p³ → camada 3, 5 elétrons → 3º período, família 5A."],
+    ["Aula 01","É preciso decorar o diagrama de Linus Pauling?","Não — fazendo cinco distribuições a ordem cola sozinha. E na prática você quase nunca vai além de 4s/3d, porque os elementos mais usados estão no começo da tabela."],
+    ["Aula 01","Em que ordem a tabela periódica é organizada?","Em ordem CRESCENTE de número atômico (Z), ou seja, de número de prótons. Nada ali é aleatório."],
+    ["Aula 01","O que são os PERÍODOS da tabela periódica?","As LINHAS horizontais. São 7 e correspondem às 7 CAMADAS de energia (K a Q). O período diz em qual camada está a valência do elemento."],
+    ["Aula 01","O que são as FAMÍLIAS (ou grupos) da tabela?","As COLUNAS verticais. Agrupam elementos com propriedades semelhantes, porque todos têm o MESMO número de elétrons na camada de valência."],
+    ["Aula 01","Quantos elétrons de valência tem um elemento da família 7A?","SETE. O número da família É o número de elétrons de valência (só vale para as famílias A). 1A→1, 2A→2, ..., 7A→7."],
+    ["Aula 01","Qual a diferença entre grupos A e grupos B?","GRUPOS A (principais): as 2 primeiras colunas + as 6 últimas, com valência nos subníveis s e p. GRUPOS B: o bloco do meio, os metais de transição, com valência no subnível d."],
+    ["Aula 01","Quais são as propriedades dos METAIS?","Sólidos (exceto o mercúrio, líquido) · bons condutores de calor e eletricidade · maleáveis e dúcteis (deformam sem quebrar) · têm brilho metálico."],
+    ["Aula 01","Quais são as propriedades dos AMETAIS?","Maus condutores (isolantes) · quebradiços · sem brilho metálico. São o oposto dos metais."],
+    ["Aula 01","Qual é o único metal LÍQUIDO à temperatura ambiente?","O MERCÚRIO (Hg) — é o do termômetro antigo. É a exceção clássica de prova."],
+    ["Aula 01","O que caracteriza os SEMIMETAIS? Dê o exemplo mais importante.","Sólidos, com propriedades intermediárias entre metais e ametais e condutividade elétrica MODERADA — são semicondutores. O exemplo é o SILÍCIO, base dos componentes eletrônicos."],
+    ["Aula 01","Por que os gases nobres são inertes?","Porque já têm 8 elétrons na camada de valência (o hélio, 2) — já estão estáveis. Não precisam ganhar, perder nem compartilhar elétrons, então não reagem."],
+    ["Aula 01","Por que o hidrogênio fica separado na tabela periódica?","Porque é um elemento especial: apresenta características de metal E de ametal ao mesmo tempo, então não pertence a nenhum grupo."],
+    ["Aula 01","O que é raio atômico, e para onde ele cresce na tabela?","É o TAMANHO do átomo (núcleo + eletrosfera). Cresce para a ESQUERDA e para BAIXO — mais camadas ocupadas, maior o raio."],
+    ["Aula 01","O que é eletronegatividade, e para onde ela cresce?","É a tendência de ATRAIR elétrons (agir como ímã de elétrons). Cresce para a DIREITA e para CIMA na tabela."],
+    ["Aula 01","O que é eletropositividade?","A tendência de CEDER elétrons — o contrário da eletronegatividade. Cresce para a ESQUERDA e para BAIXO."],
+    ["Aula 01","O que é afinidade eletrônica?","A energia LIBERADA quando o átomo RECEBE um elétron. Segue a mesma direção da eletronegatividade: direita e cima."],
+    ["Aula 01","O que é potencial de ionização?","A energia ABSORVIDA para ARRANCAR um elétron do átomo. Cresce para a direita e para cima — igual à eletronegatividade."],
+    ["Aula 01","Qual é o elemento mais eletronegativo da tabela?","O FLÚOR — canto superior direito, excluindo os gases nobres. Por isso o NOX dele é sempre −1."],
+    ["Aula 01","Resuma as direções das propriedades periódicas em uma frase","DIREITA + CIMA: o átomo quer PEGAR elétron (eletronegatividade, afinidade eletrônica e potencial de ionização crescem juntos). ESQUERDA + BAIXO: o átomo quer DAR elétron e é GRANDE (eletropositividade e raio atômico)."],
+    ["Aula 01","Qual propriedade periódica é a mais importante para as próximas aulas, e por quê?","A ELETRONEGATIVIDADE — ela decide se a ligação será iônica ou covalente e quem cede ou recebe elétron nas ligações químicas."]
+  ];
+
+  (function(){
+    var grid = document.getElementById('fc-grid');
+    if(!grid) return;
+
+    function pintar(lista){
+      grid.innerHTML = '';
+      lista.forEach(function(c, i){
+        var b = document.createElement('button');
+        b.className = 'fc'; b.type = 'button';
+        b.setAttribute('aria-label', 'Flashcard ' + (i+1));
+        b.innerHTML =
+          '<div class="fc-int">' +
+            '<div class="fc-face fc-frente">' +
+              '<span class="fc-tema">' + c[0] + ' &middot; ' + (i+1) + '/' + lista.length + '</span>' +
+              '<span class="fc-txt">' + c[1] + '</span>' +
+              '<span class="fc-pista">clique para ver a resposta</span>' +
+            '</div>' +
+            '<div class="fc-face fc-tras">' +
+              '<span class="fc-tema">Resposta</span>' +
+              '<span class="fc-txt">' + c[2] + '</span>' +
+            '</div>' +
+          '</div>';
+        b.addEventListener('click', function(){ b.classList.toggle('virado'); });
+        grid.appendChild(b);
+      });
+      var conta = document.getElementById('fc-conta');
+      if(conta) conta.textContent = lista.length + ' cartões';
+    }
+
+    pintar(CARTOES);
+
+    document.getElementById('fc-embaralhar').addEventListener('click', function(){
+      var c = CARTOES.slice();
+      for(var i = c.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = c[i]; c[i] = c[j]; c[j] = t;
+      }
+      pintar(c);
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('fc-virar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.add('virado'); });
+    });
+    document.getElementById('fc-fechar').addEventListener('click', function(){
+      grid.querySelectorAll('.fc').forEach(function(f){ f.classList.remove('virado'); });
+    });
+  })();
+  </script>
+</section>
+
+<!-- ================================================ EXERCÍCIOS ========== -->
+<section id="s10">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(167,139,250,.12); border-color:rgba(167,139,250,.32)">&#9997;</div>
+    <div>
+      <h2>10. Exercícios comentados</h2>
+      <p>12 questões no estilo das objetivas. Tente antes de abrir o gabarito.</p>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">1</span><span class="q-tema">Modelos atômicos</span></div>
+    <p class="q-enun">O modelo atômico que introduziu a ideia de que os elétrons se distribuem em
+    <b>camadas de energia</b> ao redor do núcleo foi proposto por:</p>
+    <ul class="alts">
+      <li><b>a)</b> Dalton &nbsp;&nbsp;<b>b)</b> Thomson &nbsp;&nbsp;<b>c)</b> Rutherford
+        &nbsp;&nbsp;<b>d)</b> Bohr &nbsp;&nbsp;<b>e)</b> Lavoisier</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa D.</b> Rutherford (1911) descobriu o núcleo com elétrons ao redor;
+      foi <b>Bohr</b> (1913) que organizou esses elétrons em <b>camadas de energia</b> definidas.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">2</span><span class="q-tema">Partículas</span></div>
+    <p class="q-enun">Sobre as partículas subatômicas, é correto afirmar:</p>
+    <ul class="alts">
+      <li><b>a)</b> o nêutron tem carga negativa e fica na eletrosfera.</li>
+      <li><b>b)</b> prótons e nêutrons ficam no núcleo; os elétrons, na eletrosfera.</li>
+      <li><b>c)</b> o elétron concentra praticamente toda a massa do átomo.</li>
+      <li><b>d)</b> o próton tem carga negativa.</li>
+      <li><b>e)</b> os três têm massas praticamente iguais.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Próton (+1) e nêutron (0) no núcleo; elétron (&minus;1) na eletrosfera.
+      Em (c), é o contrário: o elétron tem cerca de <b>1/1836</b> da massa do próton, então a massa está
+      praticamente toda no núcleo.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">3</span><span class="q-tema">Z e A</span></div>
+    <p class="q-enun">Um átomo neutro possui número de massa 56 e número atômico 26.
+    Quantos prótons, elétrons e nêutrons ele tem?</p>
+    <ul class="alts">
+      <li><b>a)</b> 26 p, 26 e, 56 n &nbsp;&nbsp;<b>b)</b> 26 p, 30 e, 26 n
+        &nbsp;&nbsp;<b>c)</b> 26 p, 26 e, 30 n &nbsp;&nbsp;<b>d)</b> 56 p, 56 e, 26 n
+        &nbsp;&nbsp;<b>e)</b> 30 p, 30 e, 26 n</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Z = 26 &rarr; <b>26 prótons</b>. Átomo neutro &rarr; <b>26 elétrons</b>.
+      N = A &minus; Z = 56 &minus; 26 = <b>30 nêutrons</b>. É o ferro.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">4</span><span class="q-tema">Isótopos</span></div>
+    <p class="q-enun">Dois átomos são <b>isótopos</b> quando apresentam:</p>
+    <ul class="alts">
+      <li><b>a)</b> mesmo número de massa e Z diferente.</li>
+      <li><b>b)</b> mesmo número de nêutrons e Z diferente.</li>
+      <li><b>c)</b> mesmo número atômico e números de massa diferentes.</li>
+      <li><b>d)</b> mesmo número de elétrons e massas iguais.</li>
+      <li><b>e)</b> tudo igual, mudando apenas o nome.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> IsótoPos &rarr; mesmo <b>P</b>róton (mesmo Z, mesmo elemento),
+      massas diferentes. (a) descreve isóbaros; (b) descreve isótonos.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">5</span><span class="q-tema">Isótonos</span></div>
+    <p class="q-enun">Considere <span class="f"><sup>14</sup><sub>7</sub>N</span> e
+    <span class="f"><sup>13</sup><sub>6</sub>C</span>. A relação entre eles é de:</p>
+    <ul class="alts">
+      <li><b>a)</b> isótopos &nbsp;&nbsp;<b>b)</b> isóbaros &nbsp;&nbsp;<b>c)</b> isótonos
+        &nbsp;&nbsp;<b>d)</b> íons &nbsp;&nbsp;<b>e)</b> nenhuma relação</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> N: 14 &minus; 7 = <b>7 nêutrons</b>.
+      C: 13 &minus; 6 = <b>7 nêutrons</b>. Mesmo número de nêutrons &rarr; <b>isótonos</b>
+      (Z e A são diferentes nos dois).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">6</span><span class="q-tema">Massa atômica</span></div>
+    <p class="q-enun">A massa atômica do cloro na tabela periódica é 35,5. Isso acontece porque:</p>
+    <ul class="alts">
+      <li><b>a)</b> o cloro tem meio nêutron.</li>
+      <li><b>b)</b> é uma média ponderada das massas dos isótopos do cloro, conforme sua abundância.</li>
+      <li><b>c)</b> houve erro de medição.</li>
+      <li><b>d)</b> a massa do elétron foi somada.</li>
+      <li><b>e)</b> o cloro é um íon.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Todo elemento existe na natureza em vários isótopos.
+      A tabela mostra a <b>média ponderada</b> pela abundância de cada um.
+      E o 35,<b>5</b> é justamente um caso em que <b>não se arredonda</b>, porque está no meio.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">7</span><span class="q-tema">Orbitais</span></div>
+    <p class="q-enun">O número máximo de elétrons nos subníveis s, p, d e f é, respectivamente:</p>
+    <ul class="alts">
+      <li><b>a)</b> 1, 3, 5, 7 &nbsp;&nbsp;<b>b)</b> 2, 4, 6, 8 &nbsp;&nbsp;<b>c)</b> 2, 6, 10, 14
+        &nbsp;&nbsp;<b>d)</b> 2, 8, 18, 32 &nbsp;&nbsp;<b>e)</b> 2, 6, 8, 10</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> São 1, 3, 5 e 7 <b>orbitais</b> &mdash; e cada orbital cabe
+      <b>2 elétrons</b>. Logo 2, 6, 10 e 14. A alternativa (a) dá o número de orbitais, não de elétrons;
+      a (d) dá o máximo por <b>camada</b>.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">8</span><span class="q-tema">Distribuição eletrônica</span></div>
+    <p class="q-enun">A distribuição eletrônica correta do cálcio (Z = 20) é:</p>
+    <ul class="alts">
+      <li><b>a)</b> 1s² 2s² 2p⁶ 3s² 3p⁶ 3d²</li>
+      <li><b>b)</b> 1s² 2s² 2p⁶ 3s² 3p⁶ 4s²</li>
+      <li><b>c)</b> 1s² 2s² 2p⁸ 3s² 3p⁸</li>
+      <li><b>d)</b> 1s² 2s² 2p⁶ 3s² 3p⁴ 4s⁴</li>
+      <li><b>e)</b> 1s² 2s⁶ 2p⁶ 3s⁶</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> 2+2+6+2+6+2 = 20 &#10004;. Pelo diagrama de Pauling, depois do
+      3p⁶ vem o <b>4s</b> (e só depois o 3d) &mdash; é a diagonal. Em (c) e (e) os subníveis estouram
+      o máximo (p só cabe 6, s só cabe 2).</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">9</span><span class="q-tema">Camada de valência</span></div>
+    <p class="q-enun">O ferro tem distribuição <span class="f">1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶</span>.
+    Qual é a camada de valência e qual é o subnível mais energético?</p>
+    <ul class="alts">
+      <li><b>a)</b> valência 3, mais energético 4s²</li>
+      <li><b>b)</b> valência 4, mais energético 3d⁶</li>
+      <li><b>c)</b> valência 3d, mais energético 4s</li>
+      <li><b>d)</b> os dois são o 3d⁶</li>
+      <li><b>e)</b> os dois são o 4s²</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Camada de valência = a de <b>maior número</b> = <b>4</b> (4s²),
+      a mais externa e a que faz as ligações. Subnível mais energético = o <b>último preenchido</b>
+      pelo diagrama = <b>3d⁶</b>. Esta é a pegadinha nº 1 da aula.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">10</span><span class="q-tema">Tabela periódica</span></div>
+    <p class="q-enun">Um elemento tem distribuição <span class="f">1s² 2s² 2p⁶ 3s² 3p⁵</span>.
+    Ele pertence ao:</p>
+    <ul class="alts">
+      <li><b>a)</b> 3º período, família 5A &nbsp;&nbsp;<b>b)</b> 5º período, família 3A</li>
+      <li><b>c)</b> 3º período, família 7A &nbsp;&nbsp;<b>d)</b> 7º período, família 3A</li>
+      <li><b>e)</b> 2º período, família 7A</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Maior camada = <b>3</b> &rarr; 3º período.
+      Elétrons nessa camada = 2 (do 3s) + 5 (do 3p) = <b>7</b> &rarr; família <b>7A</b>.
+      É o cloro. Cuidado: o expoente 5 não é a família &mdash; some os elétrons da camada toda.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">11</span><span class="q-tema">Gases nobres</span></div>
+    <p class="q-enun">Os gases nobres são inertes porque:</p>
+    <ul class="alts">
+      <li><b>a)</b> são muito eletronegativos.</li>
+      <li><b>b)</b> já possuem a camada de valência completa (8 elétrons), estando estáveis.</li>
+      <li><b>c)</b> têm raio atômico muito pequeno.</li>
+      <li><b>d)</b> são metais.</li>
+      <li><b>e)</b> não têm elétrons.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa B.</b> Estão na família <b>8A</b>, já com 8 elétrons na valência
+      (o hélio, 2). Não precisam ganhar, perder nem compartilhar elétrons &rarr; não reagem.</div>
+    </details>
+  </div>
+
+  <div class="q">
+    <div class="q-cab"><span class="q-n">12</span><span class="q-tema">Propriedades periódicas</span></div>
+    <p class="q-enun">Sobre as propriedades periódicas, assinale a alternativa correta:</p>
+    <ul class="alts">
+      <li><b>a)</b> a eletronegatividade cresce para a esquerda e para baixo.</li>
+      <li><b>b)</b> o raio atômico cresce para a direita e para cima.</li>
+      <li><b>c)</b> a eletronegatividade e o potencial de ionização crescem para a direita e para cima.</li>
+      <li><b>d)</b> a eletropositividade cresce junto com a eletronegatividade.</li>
+      <li><b>e)</b> o flúor é o elemento mais eletropositivo.</li>
+    </ul>
+    <details><summary>Ver resposta</summary>
+      <div class="resp"><b>Alternativa C.</b> Direita + cima: eletronegatividade, afinidade eletrônica e
+      potencial de ionização (o átomo quer <b>pegar</b> elétron). Esquerda + baixo: eletropositividade e
+      raio atômico. O flúor é o <b>mais eletronegativo</b>, não eletropositivo.</div>
+    </details>
+  </div>
+</section>
+
+<!-- ================================================ PEGADINHAS ========== -->
+<section id="s11">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(229,72,77,.12); border-color:rgba(229,72,77,.32)">&#128680;</div>
+    <div>
+      <h2>11. Pegadinhas de prova</h2>
+      <p>Os erros que fazem perder ponto neste conteúdo.</p>
+    </div>
+  </div>
+
+  <div class="tab-rol">
+    <table>
+      <thead><tr><th style="width:44%">O erro</th><th>O certo</th></tr></thead>
+      <tbody>
+        <tr><td>Confundir <b>camada de valência</b> com <b>subnível mais energético</b></td>
+            <td>Valência = camada de <b>maior número</b>. Mais energético = <b>último preenchido</b>.
+            No Fe: valência 4 (4s²), mais energético 3d⁶.</td></tr>
+        <tr><td>Achar que o n° de <b>nêutrons</b> acompanha o de prótons</td>
+            <td>Nêutron é <b>independente</b>. Só prótons = elétrons (e só no átomo neutro).</td></tr>
+        <tr><td>Somar o elétron no <b>número de massa</b></td>
+            <td>A = prótons + nêutrons. O elétron não entra: massa desprezível.</td></tr>
+        <tr><td>Trocar <b>isóbaro</b> com <b>isótono</b></td>
+            <td>Está no nome: isób<b>A</b>ro = mesmo <b>A</b>; isóto<b>N</b>o = mesmo <b>N</b>êutron.</td></tr>
+        <tr><td>Dizer que um átomo &ldquo;é isótopo&rdquo;</td>
+            <td>É sempre <b>comparação</b>: um átomo é isótopo <em>de outro</em>.</td></tr>
+        <tr><td>Confundir <b>orbitais</b> (1, 3, 5, 7) com <b>elétrons</b> (2, 6, 10, 14)</td>
+            <td>Cada orbital cabe 2 elétrons. s p d f = 1 3 5 7 orbitais = 2 6 10 14 elétrons.</td></tr>
+        <tr><td>Preencher <b>4p</b> depois do 4s</td>
+            <td>Depois do 4s vem o <b>3d</b> &mdash; é a diagonal do diagrama de Pauling.</td></tr>
+        <tr><td>Usar o <b>expoente</b> do último subnível como número da família</td>
+            <td>A família é a <b>soma de todos os elétrons da camada de valência</b>.
+            3s² 3p⁵ &rarr; 2+5 = 7 &rarr; 7A.</td></tr>
+        <tr><td>Arredondar <b>35,5</b> ou <b>63,5</b></td>
+            <td>Decimal ,5 fica <b>como está</b>. Só arredonde quando estiver claramente perto do inteiro.</td></tr>
+        <tr><td>Achar que o mercúrio é ametal por ser líquido</td>
+            <td><b>Mercúrio é metal</b> &mdash; o único líquido à temperatura ambiente. É a exceção, não outra categoria.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================================================== LINKS =========== -->
+<section id="slinks">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.32)">&#128279;</div>
+    <div>
+      <h2>Links e simuladores</h2>
+      <p>Para brincar com o conteúdo desta aula.</p>
+    </div>
+  </div>
+
+  <div class="links">
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/build-an-atom" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#9883;</span>
+      <span><span class="tit">PhET &mdash; Construir um Átomo</span>
+      <span class="desc">Coloque prótons, nêutrons e elétrons e veja na hora o Z, o A, o símbolo, a carga
+      e se virou íon. É a aula 01 inteira em forma de brinquedo.</span></span>
+    </a>
+    <a class="link" href="https://phet.colorado.edu/pt_BR/simulations/isotopes-and-atomic-mass" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#9878;</span>
+      <span><span class="tit">PhET &mdash; Isótopos e Massa Atômica</span>
+      <span class="desc">Responde na prática por que a massa atômica da tabela é quebrada:
+      misture os isótopos nas abundâncias reais e veja a média ponderada aparecer.</span></span>
+    </a>
+    <a class="link" href="https://ptable.com/?lang=pt" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128203;</span>
+      <span><span class="tit">Tabela periódica interativa (ptable)</span>
+      <span class="desc">Mostra Z, massa, distribuição eletrônica, raio e eletronegatividade
+      de cada elemento ao clicar. Deixe numa aba aberta durante o estudo.</span></span>
+    </a>
+    <a class="link" href="https://www.unicesumar.edu.br/biblioteca/" target="_blank" rel="noreferrer noopener">
+      <span class="ico">&#128218;</span>
+      <span><span class="tit">Biblioteca Unicesumar / Minha Biblioteca</span>
+      <span class="desc">O livro da disciplina está no Studeo &mdash; não precisa do físico.
+      Aqui também estão as bibliografias básica e complementar.</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- ===================================================== COLA =========== -->
+<section id="s12">
+  <div class="sec-cab">
+    <div class="sec-ico" style="background:rgba(232,147,63,.14); border-color:rgba(232,147,63,.35)">&#128203;</div>
+    <div>
+      <h2>12. Cola de uma página</h2>
+      <p>Se você só tiver 5 minutos antes da prova, leia isto.</p>
+    </div>
+  </div>
+
+  <div class="card cola">
+    <div class="cola-grid">
+      <div class="cola-bloco">
+        <h5>Modelos</h5>
+        <ul>
+          <li>Dalton &rarr; indivisível</li>
+          <li>Thomson &rarr; elétron</li>
+          <li>Rutherford &rarr; núcleo</li>
+          <li>Bohr &rarr; camadas</li>
+          <li>Atual &rarr; nuvem/probabilidade</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Partículas</h5>
+        <ul>
+          <li>próton <b>+1</b> núcleo</li>
+          <li>nêutron <b>0</b> núcleo</li>
+          <li>elétron <b>&minus;1</b> eletrosfera</li>
+          <li>massa &asymp; só o núcleo</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Z e A</h5>
+        <ul>
+          <li>Z = prótons (identidade)</li>
+          <li>A = prótons + nêutrons</li>
+          <li><b>N = A &minus; Z</b></li>
+          <li>neutro: p = e</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Isó-quem</h5>
+        <ul>
+          <li>isóto<b>P</b>os = mesmo <b>P</b></li>
+          <li>isób<b>A</b>ros = mesmo <b>A</b></li>
+          <li>isóto<b>N</b>os = mesmo <b>N</b></li>
+          <li>sempre em comparação</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Camadas</h5>
+        <ul>
+          <li><b>K L M N O P Q</b></li>
+          <li>2 8 18 32 32 18 8</li>
+          <li>mais longe = mais energia</li>
+          <li>Heisenberg: só probabilidade</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Orbitais</h5>
+        <ul>
+          <li>s p d f = <b>1 3 5 7</b> orbitais</li>
+          <li>s p d f = <b>2 6 10 14</b> e⁻</li>
+          <li>cada orbital: <b>2</b> e⁻</li>
+          <li>spin +&frac12; e &minus;&frac12;</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Pauling</h5>
+        <ul>
+          <li>1s 2s 2p 3s 3p <b>4s 3d</b> 4p</li>
+          <li>Al(13) = &hellip;3s² 3p¹</li>
+          <li>Fe(26) = &hellip;4s² 3d⁶</li>
+          <li>valência = maior camada</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Tabela</h5>
+        <ul>
+          <li>ordem crescente de <b>Z</b></li>
+          <li>7 períodos = 7 camadas</li>
+          <li>família = e⁻ de valência</li>
+          <li>8A = gases nobres inertes</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Regiões</h5>
+        <ul>
+          <li>metais: condutor, dúctil</li>
+          <li>ametais: isolante, quebradiço</li>
+          <li>semimetais: <b>Si</b>, semicondutor</li>
+          <li>Hg = único metal líquido</li>
+          <li>H fica separado</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Propriedades</h5>
+        <ul>
+          <li>&rarr;&uarr; eletronegatividade</li>
+          <li>&rarr;&uarr; afinidade eletrônica</li>
+          <li>&rarr;&uarr; potencial de ionização</li>
+          <li>&larr;&darr; raio e eletropositividade</li>
+          <li>campeão: <b>flúor</b></li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Não confundir</h5>
+        <ul>
+          <li>valência &ne; mais energético</li>
+          <li>orbitais &ne; elétrons</li>
+          <li>4s vem antes de 3d</li>
+          <li>,5 não arredonda</li>
+        </ul>
+      </div>
+      <div class="cola-bloco">
+        <h5>Como estudar</h5>
+        <ul>
+          <li>revise as aulas</li>
+          <li>refaça os exercícios</li>
+          <li>decore o <b>raciocínio</b></li>
+          <li>conteúdo é cumulativo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><b>Aula 01 &mdash; Átomo e Tabela Periódica</b> &middot; Química Geral e Experimental &middot; Módulo 53/2026<br>
+  Material de estudo montado a partir da aula ao vivo (1h34), com complementos de números quânticos,
+  máximos por camada e propriedades periódicas.</p>
+  <p style="margin-bottom:0">Plataforma Bueno &middot; Cérebro Digital</p>
+</footer>
+
+</div>
+</body>
+</html>
