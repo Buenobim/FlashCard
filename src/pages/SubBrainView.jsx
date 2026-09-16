@@ -24,6 +24,7 @@ import {
   ArrowLeft,
   BookOpen,
   ChevronRight,
+  ClipboardList,
   Edit3,
   Network,
   Orbit,
@@ -33,6 +34,7 @@ import {
 } from 'lucide-react';
 
 import MicroBrainView from './MicroBrainView.jsx';
+import { provasDoBaralho, contarQuestoes } from '../estudo/questoes/index.js';
 import AulaEditorModal from '../components/AulaEditorModal.jsx';
 import { tamanhoLegivel } from '../utils/aulasCore.js';
 import { apagarAula } from '../utils/db';
@@ -74,6 +76,19 @@ export default function SubBrainView({
 
   const cards = set?.cards || [];
   const subItems = set?.subItems || [];
+
+  /*
+    AS PROVAS RESOLVIDAS desta matéria (src/estudo/questoes/*.json).
+
+    POR QUE ELAS ENTRAM NA ESFERA "EXERCÍCIOS": exercício é exatamente isto —
+    questão para você resolver. Ter uma esfera "Exercícios" vazia no mapa ao
+    mesmo tempo em que a matéria tem 10 questões de prova resolvidas guardadas
+    em outro canto é justamente o tipo de coisa que faz você parar de confiar
+    no mapa. Então elas contam na bolinha e aparecem dentro do painel, em cima
+    das listas de tarefa que você mesmo criou.
+  */
+  const provasResolvidas = provasDoBaralho(set);
+  const totalDeQuestoes = contarQuestoes(set);
   // Mapa da família dos cartões (quem é mãe, quem é filho) — usado nos contadores
   const cardIndex = buildCardIndex(cards, subItems);
 
@@ -104,7 +119,9 @@ export default function SubBrainView({
         key: type,
         label: config.label,
         color: ORBIT_COLORS[type] || config.color,
-        count: countByType[type] || 0,
+        // As provas resolvidas contam junto com as listas de exercício que
+        // você criou à mão — as duas coisas são "questão para resolver".
+        count: (countByType[type] || 0) + (type === 'exercises' ? totalDeQuestoes : 0),
       });
     });
 
@@ -172,7 +189,7 @@ export default function SubBrainView({
 
     sceneRef.current.nodes = nodes;
     sceneRef.current.centerR = centerR;
-  }, [cards.length, subItems]);
+  }, [cards.length, subItems, totalDeQuestoes]);
 
   /* ------------------------------------------------------------------
      ESTRELAS DE FUNDO
@@ -613,13 +630,51 @@ export default function SubBrainView({
         <div className="sub-brain-panel-header">
           <Icon size={20} color={config.color} />
           <h3>{config.label}</h3>
-          <span className="sub-brain-count-badge" style={{ background: `${config.color}1a`, color: config.color }}>{items.length}</span>
+          <span className="sub-brain-count-badge" style={{ background: `${config.color}1a`, color: config.color }}>
+            {items.length + (type === 'exercises' ? totalDeQuestoes : 0)}
+          </span>
           <button className="btn-primary btn-sm" style={{ marginLeft: 'auto' }} onClick={() => setEditorState({ type, subItem: null })}><Plus size={14} /> Novo</button>
           <button className="sub-brain-panel-close" onClick={() => setActiveModal(null)}><X size={18} /></button>
         </div>
+        {/*
+          AS PROVAS RESOLVIDAS, em cima de tudo dentro de Exercícios.
+          Elas não são sub-itens do baralho (não dá para editar nem apagar por
+          aqui): vêm dos arquivos de src/estudo/questoes/. Por isso o cartão é
+          outro — é um atalho para o treino, não uma linha de lista.
+        */}
+        {type === 'exercises' && provasResolvidas.length > 0 && (
+          <div className="sub-brain-provas">
+            {provasResolvidas.map((prova) => (
+              <button
+                key={prova.id}
+                type="button"
+                className="sub-brain-prova"
+                onClick={() => {
+                  setActiveModal(null);
+                  if (onEstudarTrilha) onEstudarTrilha(set, 'questoes');
+                }}
+              >
+                <span className="sub-brain-prova-icone"><ClipboardList size={18} /></span>
+                <span className="sub-brain-prova-texto">
+                  <strong>{prova.titulo}</strong>
+                  <small>
+                    {(prova.questoes || []).length} questões resolvidas, com o passo a passo
+                    e a pegadinha de cada uma. Toque para treinar.
+                  </small>
+                </span>
+                <ChevronRight size={17} />
+              </button>
+            ))}
+          </div>
+        )}
+
         {items.length === 0 ? (
           <div className="sub-brain-empty-items">
-            <p>Nenhum(a) {config.label.toLowerCase()} ainda. Clique em "+ Novo" para criar!</p>
+            <p>
+              {type === 'exercises' && provasResolvidas.length > 0
+                ? 'Além das provas acima, você pode criar suas próprias listas de exercício em "+ Novo".'
+                : `Nenhum(a) ${config.label.toLowerCase()} ainda. Clique em "+ Novo" para criar!`}
+            </p>
           </div>
         ) : (
           <div className="sub-brain-items-list">

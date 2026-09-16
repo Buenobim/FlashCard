@@ -16,7 +16,7 @@ import StudyMaterialModal, { STUDY_MATERIAL_TYPES } from '../components/StudyMat
 import { raioX as calcularRaioX } from '../estudo/trilhaCore.js';
 import { resumoDoEstudo } from '../utils/db';
 
-export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, categories = [], onAddCategory, activeProfile, isSyncing, initialCategoryFilter, initialExpandedSetId, studyMaterials = [], onSaveStudyMaterials, onOpenNotebook, onEstudarTrilha }) {
+export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, categories = [], onAddCategory, activeProfile, isSyncing, initialCategoryFilter, initialExpandedSetId, baralhoFocadoId, studyMaterials = [], onSaveStudyMaterials, onOpenNotebook, onEstudarTrilha }) {
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [activeCategory, setActiveCategory] = useState(initialCategoryFilter || 'Todos');
   const [isAddingCategory, setIsAddingCategory] = useState(false);
@@ -24,6 +24,18 @@ export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, 
   const [searchTerm, setSearchTerm] = useState('');
   const [createMenuOpen, setCreateMenuOpen] = useState(false);
   const [materialEditor, setMaterialEditor] = useState(null);
+
+  /*
+    O FOCO NUMA MATÉRIA SÓ.
+    Quando você clica no balão de uma matéria lá no Cérebro Digital, o que você
+    quer ver é AQUELA matéria — não a estante inteira com ela perdida no meio,
+    e não o mapa de esferas (que é para explorar, não para começar a estudar).
+    Então o painel abre mostrando só ela, com um atalho para voltar a ver tudo.
+    É estado, e não só um filtro fixo: assim o "Ver todas as matérias" funciona
+    sem precisar navegar de novo.
+  */
+  const [focoId, setFocoId] = useState(baralhoFocadoId || null);
+  const baralhoFocado = focoId ? sets.find((s) => s.id === focoId) : null;
 
   const handleAddCategorySubmit = (e) => {
     e.preventDefault();
@@ -54,15 +66,15 @@ export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, 
   const totalCards = sets.reduce((acc, s) => acc + s.cards.length, 0);
   const firstName = (activeProfile || 'Estudante').split(' ')[0];
 
-  // Filtro por grupo + busca por texto
-  const filteredSets = sets.filter(s => {
+  // Filtro por grupo + busca por texto (o foco numa matéria vence os dois)
+  const filteredSets = baralhoFocado ? [baralhoFocado] : sets.filter(s => {
     const inCategory = activeCategory === 'Todos' || s.category === activeCategory;
     const q = searchTerm.trim().toLowerCase();
     const inSearch = !q || s.title.toLowerCase().includes(q) || (s.description || '').toLowerCase().includes(q);
     return inCategory && inSearch;
   });
 
-  const filteredMaterials = studyMaterials.filter((material) => {
+  const filteredMaterials = baralhoFocado ? [] : studyMaterials.filter((material) => {
     const inCategory = activeCategory === 'Todos' || material.category === activeCategory;
     const q = searchTerm.trim().toLowerCase();
     const inSearch = !q || material.title.toLowerCase().includes(q) || (material.content || '').toLowerCase().includes(q);
@@ -261,6 +273,18 @@ export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, 
         </div>
       </section>
 
+      {/* A FAIXA DO FOCO — só aparece quando você chegou aqui por um balão */}
+      {baralhoFocado && (
+        <div style={styles.faixaDeFoco}>
+          <span>
+            Mostrando só <strong>{baralhoFocado.title}</strong>
+          </span>
+          <button type="button" onClick={() => setFocoId(null)} style={styles.faixaDeFocoBtn}>
+            Ver todas as matérias
+          </button>
+        </div>
+      )}
+
       {/* BIBLIOTECA DE ESTUDOS */}
       {filteredSets.length === 0 && filteredMaterials.length === 0 ? (
         <div className="glass-panel empty-state">
@@ -394,6 +418,20 @@ export default function Dashboard({ sets, onNavigate, onSelectSet, onDeleteSet, 
 }
 
 const styles = {
+  faixaDeFoco: {
+    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    gap: '14px', flexWrap: 'wrap',
+    background: 'rgba(232, 147, 63, 0.09)',
+    border: '1px solid rgba(232, 147, 63, 0.28)',
+    borderRadius: '13px', padding: '11px 16px', marginBottom: '18px',
+    fontSize: '13.5px', color: '#99A1AC',
+  },
+  faixaDeFocoBtn: {
+    background: 'transparent', border: '1px solid rgba(232, 147, 63, 0.35)',
+    color: '#EFAE6B', borderRadius: '9px', padding: '7px 14px',
+    fontSize: '12.5px', fontWeight: 700, cursor: 'pointer',
+    fontFamily: 'var(--font-main)',
+  },
   welcomeSection: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
     marginBottom: '28px', flexWrap: 'wrap', gap: '18px',

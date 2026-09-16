@@ -41,8 +41,16 @@ export default function FlashcardsModule({
   // Vindos do Grafo: qual baralho abrir já expandido e/ou em qual grupo filtrar
   baralhoInicial, grupoInicial, onAbrirNoCofre,
 }) {
-  // A tela atual DESTA aba (outra aba de flashcards tem a sua própria)
-  const [tela, setTela] = useState(baralhoInicial ? 'sub_brain' : 'dashboard');
+  /*
+    A tela atual DESTA aba (outra aba de flashcards tem a sua própria).
+
+    CHEGANDO POR UM BALÃO DO CÉREBRO: abre o PAINEL com aquela matéria
+    filtrada, e não mais o mapa de esferas. O mapa é ótimo para explorar o que
+    existe dentro da matéria, mas quem clica no balão já sabe o que quer — quer
+    a matéria na mão, com o botão de estudar. O mapa continua a um clique, no
+    "Ver no Cérebro" do editor.
+  */
+  const [tela, setTela] = useState('dashboard');
   const [materialSelecionado, setMaterialSelecionado] = useState(null);
   /*
     A AULA aberta no momento. Guardamos o ID, não o objeto: assim, se você
@@ -213,6 +221,7 @@ export default function FlashcardsModule({
           isSyncing={isSyncing}
           initialCategoryFilter={grupoInicial || initialCategoryFilter}
           initialExpandedSetId={baralhoInicial}
+          baralhoFocadoId={baralhoInicial}
           studyMaterials={studyMaterials}
           onSaveStudyMaterials={onSaveStudyMaterials}
           onOpenNotebook={(material) => { setMaterialSelecionado(material); navegar('study_notebook'); }}
