@@ -1,0 +1,223 @@
+{
+  "materia": "Química Geral e experimental",
+  "casaCom": ["quimica geral e experimental", "quimica geral", "quimica"],
+  "provas": [
+    {
+      "id": "qge-prova-01",
+      "titulo": "Prova 1 — 10 questões",
+      "fonte": "BIGATÃO, D. M. M. M.; GODOI, T. B. de. Química Geral e Experimental. Florianópolis, SC: Arqué, 2024.",
+      "questoes": [
+        {
+          "id": "qge-p1-q01",
+          "numero": 1,
+          "assunto": "Concentração em mol/L → massa a pesar",
+          "enunciado": "Desejamos preparar 100 mL de solução de hidróxido de sódio (NaOH) 0,1 mol/L. Assinale a alternativa da massa de sólido NaOH que precisamos pesar para diluir em 100 mL de forma a obter uma solução na concentração desejada.",
+          "dados": ["MM Na: 23 g/mol", "MM O: 16 g/mol", "MM H: 1 g/mol"],
+          "alternativas": ["0,4 g", "0,8 g", "1 g", "2 g", "4 g"],
+          "correta": 0,
+          "gatilho": "Vi \"preparar X mL de solução Y mol/L\" → é sempre o mesmo caminho de duas pernas: primeiro quantos MOLS, depois quantos GRAMAS. Nunca pule direto para a massa.",
+          "formula": "n = C · V(L)      m = n · MM",
+          "passos": [
+            { "titulo": "1. Passe o volume para litros", "texto": "100 mL = 0,100 L. Esse é o erro nº 1 da questão: a concentração está em mol por LITRO e o enunciado deu mililitro." },
+            { "titulo": "2. Quantos mols você precisa", "texto": "n = C · V = 0,1 mol/L × 0,100 L = 0,01 mol de NaOH." },
+            { "titulo": "3. Monte a massa molar do NaOH", "texto": "Na (23) + O (16) + H (1) = 40 g/mol." },
+            { "titulo": "4. Converta mols em gramas", "texto": "m = n · MM = 0,01 mol × 40 g/mol = 0,4 g." }
+          ],
+          "resposta": "0,4 g",
+          "pegadinha": "As alternativas são um mapa dos erros clássicos: 4 g é quem esqueceu de dividir o volume por 1000; 2 g e 1 g aparecem quando se erra a massa molar. Se o seu resultado bater EXATAMENTE em 10× ou 100× uma alternativa, quase sempre foi conversão de unidade.",
+          "leveConsigo": "MM do NaOH = 40 g/mol. Vale decorar: é a base que mais cai em preparo de solução."
+        },
+        {
+          "id": "qge-p1-q02",
+          "numero": 2,
+          "assunto": "Classificação dos ácidos (hidrácido × oxiácido × força)",
+          "enunciado": "Avalie as asserções a seguir e a relação proposta entre elas:\n\nI. O ácido fluorídrico (HF) é classificado como oxiácido e o ácido clorídrico (HCl) é classificado como hidrácido.\n\nPORQUE\n\nII. A classificação de um ácido quanto à sua força (grau de ionização) é um critério independente da classificação quanto à presença ou ausência de oxigênio, de modo que dois ácidos pertencentes à mesma categoria estrutural podem ter forças diferentes.",
+          "alternativas": [
+            "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+            "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+            "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+            "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+            "As asserções I e II são proposições falsas."
+          ],
+          "correta": 3,
+          "gatilho": "Questão de asserção-PORQUE: NUNCA leia as duas juntas. Julgue a I sozinha (V ou F). Julgue a II sozinha (V ou F). Só se as DUAS forem verdadeiras é que você pergunta se a II explica a I. Se a I já for falsa, acabou — não perca tempo com o resto.",
+          "passos": [
+            { "titulo": "1. Julgue a I", "texto": "HF = H + F. Tem oxigênio? Não. Logo o HF é HIDRÁCIDO, não oxiácido. A asserção I já nasce FALSA. (Dizer que o HCl é hidrácido está certo, mas basta um pedaço errado para a frase inteira ser falsa.)" },
+            { "titulo": "2. Julgue a II", "texto": "São duas réguas medindo coisas diferentes: 'tem oxigênio?' é ESTRUTURA; 'ioniza muito?' é FORÇA. HF e HCl são os dois hidrácidos, mas o HF é fraco e o HCl é forte — prova viva de que os critérios são independentes. A II é VERDADEIRA." },
+            { "titulo": "3. Cruze o resultado", "texto": "I falsa + II verdadeira → só existe uma alternativa com esse par." }
+          ],
+          "resposta": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+          "pegadinha": "O nome engana de propósito: 'fluorídrico' e 'clorídrico' terminam igual porque são a mesma família (hidrácidos). Oxiácido tem OXI no nome porque tem oxigênio na fórmula — H₂SO₄, HNO₃, H₃PO₄.",
+          "leveConsigo": "Hidrácido = sem oxigênio (HF, HCl, HBr, HI, H₂S). Oxiácido = com oxigênio. Força é outra conversa: entre os hidrácidos, só HCl, HBr e HI são fortes — o HF é a exceção fraca."
+        },
+        {
+          "id": "qge-p1-q03",
+          "numero": 3,
+          "assunto": "Hidrocarbonetos — saturado × insaturado",
+          "enunciado": "Sobre os hidrocarbonetos, avalie as afirmativas a seguir:\n\nI. Os hidrocarbonetos podem ser classificados em alcanos, alcenos, alcinos e aromáticos.\nII. Hidrocarbonetos são compostos orgânicos formados apenas por carbono e hidrogênio.\nIII. Alcenos e alcinos são exemplos de hidrocarbonetos saturados.\n\nÉ correto o que se afirma em:",
+          "alternativas": ["I, apenas.", "III, apenas.", "I e II, apenas.", "I e III, apenas.", "II e III, apenas."],
+          "correta": 2,
+          "gatilho": "Questão de I/II/III: cace primeiro a afirmativa que você tem CERTEZA que é falsa e elimine todas as alternativas que a contêm. Normalmente sobram uma ou duas opções e você nem precisa julgar o resto.",
+          "passos": [
+            { "titulo": "1. Afirmativa I — verdadeira", "texto": "É exatamente a divisão clássica dos hidrocarbonetos: alcanos, alcenos, alcinos e aromáticos." },
+            { "titulo": "2. Afirmativa II — verdadeira", "texto": "Hidrocarboneto quer dizer isso mesmo: HIDROgênio + CARBONo, e mais nada. Entrou O, N ou halogênio, virou outra função." },
+            { "titulo": "3. Afirmativa III — falsa", "texto": "Saturado = só ligações simples entre carbonos = alcano. Alceno tem uma dupla e alcino tem uma tripla: são INSATURADOS. Esta é a única errada." },
+            { "titulo": "4. Elimine", "texto": "Fora tudo que tenha III → sobram 'I, apenas' e 'I e II, apenas'. Como a II é verdadeira, a resposta é 'I e II, apenas'." }
+          ],
+          "resposta": "I e II, apenas.",
+          "pegadinha": "'Saturado' aqui não tem nada a ver com solução saturada. Saturado = cheio de hidrogênio, sem sobrar lugar, portanto SEM dupla ou tripla. Só o alcano é saturado.",
+          "leveConsigo": "Alc-ANO = simples (saturado) · alc-ENO = dupla · alc-INO = tripla. A vogal do meio te entrega a ligação."
+        },
+        {
+          "id": "qge-p1-q04",
+          "numero": 4,
+          "assunto": "Isótopos — o número atômico é que define a química",
+          "enunciado": "Avalie as asserções a seguir e a relação proposta entre elas:\n\nI. Isótopos de um mesmo elemento químico, como o Carbono-12 e o Carbono-14, apresentam comportamentos químicos distintos durante a formação de compostos em reações industriais, visto que a variação de suas massas nucleares altera diretamente a capacidade de reação do elemento.\n\nPORQUE\n\nII. A identidade química de um átomo e as suas interações (ligações) com outros elementos são determinadas exclusivamente pelo seu número atômico, enquanto a variação no número de massa nos isótopos decorre apenas de uma diferença na quantidade de nêutrons no núcleo, partículas que não afetam a eletrosfera.",
+          "alternativas": [
+            "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+            "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+            "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+            "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+            "As asserções I e II são proposições falsas."
+          ],
+          "correta": 3,
+          "gatilho": "Quando a I e a II se CONTRADIZEM (uma diz 'muda o comportamento', a outra diz 'não muda'), já elimine as duas primeiras alternativas. Uma delas é falsa por força da lógica — sua única tarefa é descobrir qual.",
+          "passos": [
+            { "titulo": "1. Onde mora a química", "texto": "Ligação química é conversa de ELÉTRON, e quem manda no número de elétrons é o número de prótons (Z). O nêutron fica no núcleo, mexendo com a massa e a estabilidade nuclear — não com a eletrosfera." },
+            { "titulo": "2. Julgue a I", "texto": "C-12 e C-14 têm o mesmo Z = 6, mesma eletrosfera, mesma química. A asserção diz que a massa 'altera a capacidade de reação' — FALSA." },
+            { "titulo": "3. Julgue a II", "texto": "É a explicação certa do que acabamos de dizer: identidade química vem do Z; o isótopo só difere em nêutrons, que não afetam a eletrosfera. VERDADEIRA." },
+            { "titulo": "4. Cruze", "texto": "I falsa + II verdadeira." }
+          ],
+          "resposta": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+          "pegadinha": "A I é sedutora porque cita 'reações industriais' e o C-14 (que a gente associa a datação e radioatividade). Radioatividade é fenômeno NUCLEAR, não químico — não confunda uma coisa com a outra.",
+          "leveConsigo": "Z (prótons) = identidade e química. A (prótons + nêutrons) = massa. Isótopos: mesmo Z, A diferente — irmãos com a mesma química e pesos diferentes."
+        },
+        {
+          "id": "qge-p1-q05",
+          "numero": 5,
+          "assunto": "Curva de solubilidade do KNO₃",
+          "enunciado": "Com base na curva de solubilidade do KNO₃ em água (gramas de KNO₃ por 100 g de água × temperatura), avalie as afirmativas:\n\nI. A solubilidade do KNO₃ a 60 °C é aproximadamente 110 g KNO₃/100 g de água.\nII. Em 100 g de água a 40 °C é possível diluir 80 g KNO₃, sendo esta solução formada uma solução estável.\nIII. A 80 °C, é possível diluir 200 g KNO₃ a cada 100 g de água, e esta solução formada é insaturada.\n\nÉ correto o que se afirma em:",
+          "alternativas": ["I, apenas.", "I e II, apenas.", "I e III, apenas.", "II e III, apenas.", "I, II e III."],
+          "correta": 0,
+          "gatilho": "Curva de solubilidade é um mapa de três territórios: ACIMA da curva = supersaturada (instável); EM CIMA da linha = saturada; ABAIXO = insaturada (estável). Toda afirmativa vira a mesma pergunta: o ponto (temperatura, massa) caiu acima ou abaixo da linha?",
+          "passos": [
+            { "titulo": "1. Leia os pontos da curva", "texto": "20 °C ≈ 32 g · 40 °C ≈ 64 g · 60 °C ≈ 110 g · 80 °C ≈ 170 g · 100 °C ≈ 246 g (por 100 g de água)." },
+            { "titulo": "2. Afirmativa I", "texto": "A 60 °C a curva passa em ≈ 110 g/100 g de água. VERDADEIRA." },
+            { "titulo": "3. Afirmativa II", "texto": "A 40 °C cabem ≈ 64 g. Jogar 80 g é passar do limite: o ponto fica ACIMA da curva → supersaturada, ou seja, INSTÁVEL (na prática nem dissolve tudo). O texto diz 'estável' — FALSA." },
+            { "titulo": "4. Afirmativa III", "texto": "A 80 °C cabem ≈ 170 g. Com 200 g o ponto também fica acima da curva → supersaturada, e não insaturada. FALSA." },
+            { "titulo": "5. Conclusão", "texto": "Só a I se sustenta." }
+          ],
+          "resposta": "I, apenas.",
+          "pegadinha": "Duas armadilhas. (a) O eixo Y desse gráfico vem com um rótulo repetido na impressão — conte as linhas da grade (de 20 em 20) em vez de confiar no número escrito. (b) 'Estável' e 'insaturada' não são enfeite de texto: são exatamente a classificação que a questão está cobrando.",
+          "leveConsigo": "Acima da curva = supersaturada = instável. Na curva = saturada. Abaixo = insaturada = estável. E, para quase todo sólido, subir a temperatura aumenta a solubilidade."
+        },
+        {
+          "id": "qge-p1-q06",
+          "numero": 6,
+          "assunto": "Fração molar",
+          "enunciado": "Para preparar uma solução de KOH, um técnico dissolveu 5,611 g de KOH em 99,4 g de água. Utilizando a massa molar do KOH de 56,11 g/mol e a massa molar da H₂O igual a 18,02 g/mol, assinale a alternativa que representa a fração molar do KOH nessa solução.",
+          "alternativas": ["0,0009.", "0,0018.", "0,0055.", "0,0178.", "0,0532."],
+          "correta": 3,
+          "gatilho": "Viu 'fração molar'? Converta TUDO para mol antes de qualquer conta. Fração molar é mol dividido por mol — grama não entra na divisão em momento nenhum.",
+          "formula": "x(soluto) = n(soluto) ÷ [ n(soluto) + n(solvente) ]",
+          "passos": [
+            { "titulo": "1. Mols de KOH", "texto": "n = 5,611 g ÷ 56,11 g/mol = 0,100 mol. (O enunciado escolheu os números para dar redondo — sinal de que você está no caminho certo.)" },
+            { "titulo": "2. Mols de água", "texto": "n = 99,4 g ÷ 18,02 g/mol ≈ 5,516 mol." },
+            { "titulo": "3. Total de mols", "texto": "0,100 + 5,516 = 5,616 mol." },
+            { "titulo": "4. Divida", "texto": "x(KOH) = 0,100 ÷ 5,616 ≈ 0,0178." }
+          ],
+          "resposta": "0,0178.",
+          "pegadinha": "O denominador é soluto + solvente, não só o solvente. Dividir 0,100 por 5,516 dá 0,0181 — perto o bastante para te fazer marcar errado se a prova tivesse essa opção. E lembre: as frações molares da solução sempre somam 1 (aqui a água fica com 0,9822).",
+          "leveConsigo": "Fração molar não tem unidade e vive entre 0 e 1. Água tem 18 g/mol — 100 g de água são ~5,5 mol, um número que vale ter na cabeça."
+        },
+        {
+          "id": "qge-p1-q07",
+          "numero": 7,
+          "assunto": "Densidade",
+          "enunciado": "A densidade é uma propriedade característica do material, muito empregada desde o dimensionamento de equipamentos industriais até o controle de qualidade, para identificação de fraudes, qualidade de produtos fabricados, entre outros.\n\nSobre o assunto, assinale a alternativa correta.",
+          "alternativas": [
+            "Densímetro pode ser utilizado na aferição de densidade de materiais sólidos.",
+            "Densidade absoluta (d) é a razão entre o volume de um corpo e a massa por ele ocupado.",
+            "A densidade de um material que apresenta um volume de 200 mL e massa de 896 g é de 4,48 g/mL.",
+            "Em condições ambientes, a densidade do mercúrio é de aproximadamente 13 g/cm³. A massa desse metal, da qual um garimpeiro necessita para encher completamente um frasco de meio litro de capacidade, é de 6200 g.",
+            "No caso da mistura de dois líquidos, aquele com a menor densidade fica na parte superior. Isso explica o motivo da água ficar acima do óleo, ou o gelo boiar na água, ou seja, por possuírem densidades menores que da água."
+          ],
+          "correta": 2,
+          "gatilho": "Numa questão 'assinale a correta' com números no meio, faça as contas primeiro. Conta ou fecha ou não fecha — é a parte que você resolve sem depender de memória, e já elimina duas alternativas.",
+          "formula": "d = m ÷ V",
+          "passos": [
+            { "titulo": "A — falsa", "texto": "Densímetro é aquele flutuador de vidro: só funciona mergulhado em LÍQUIDO. Sólido se mede por massa e volume (deslocamento de água), não com densímetro." },
+            { "titulo": "B — falsa", "texto": "Está invertida. Densidade é MASSA por volume (m/V), e não volume por massa." },
+            { "titulo": "C — VERDADEIRA", "texto": "d = 896 g ÷ 200 mL = 4,48 g/mL. Fecha." },
+            { "titulo": "D — falsa", "texto": "Meio litro = 500 cm³. m = d · V = 13 × 500 = 6500 g, e não 6200 g." },
+            { "titulo": "E — falsa", "texto": "A primeira frase está certa (o menos denso sobe), mas o exemplo está trocado: quem fica em cima é o ÓLEO, porque ele é menos denso que a água." }
+          ],
+          "resposta": "A densidade de um material que apresenta um volume de 200 mL e massa de 896 g é de 4,48 g/mL.",
+          "pegadinha": "A alternativa E é a mais perigosa da prova: começa com uma afirmação correta e escorrega no exemplo. Leia a frase até o fim — banca adora colar uma verdade numa mentira.",
+          "leveConsigo": "d = m/V. 1 g/cm³ = 1 g/mL = 1000 kg/m³ (água). O gelo boia porque é menos denso que a água líquida — a exceção famosa da água."
+        },
+        {
+          "id": "qge-p1-q08",
+          "numero": 8,
+          "assunto": "Mol a partir da massa",
+          "enunciado": "A massa molar pode ser definida como a massa que contém 1 mol, e sua unidade é grama/mol (g/mol).\n\nAssinale a alternativa correta de quantos mols correspondem a 100 g de Silício.",
+          "dados": ["Si — número atômico: 14", "Massa atômica: 28,086 → 28,086 g/mol"],
+          "alternativas": ["2,13 mols", "3,56 mols", "5,94 mols", "7,18 mols", "10,55 mols"],
+          "correta": 1,
+          "gatilho": "'Quantos mols há em X gramas?' → divida pela massa molar. Sempre divida. Grama dividido por g/mol é a única conta que sobra com a unidade certa: mol.",
+          "formula": "n = m ÷ MM",
+          "passos": [
+            { "titulo": "1. Pegue o número certo na tabela", "texto": "A ficha traz DOIS números. O 14 é o número atômico (prótons). O que serve para o cálculo é a massa atômica: 28,086." },
+            { "titulo": "2. Divida", "texto": "n = 100 g ÷ 28,086 g/mol = 3,56 mol." },
+            { "titulo": "3. Confira a ordem de grandeza", "texto": "28 g seriam 1 mol; 100 g é pouco menos de 4 vezes isso. 3,56 faz sentido — e isso já elimina 5,94, 7,18 e 10,55 sem conta nenhuma." }
+          ],
+          "resposta": "3,56 mols",
+          "pegadinha": "A alternativa 7,18 é o que dá se você usar o número atômico (14) no lugar da massa: 100 ÷ 14 ≈ 7,14. É exatamente a isca para quem pega o número errado da tabela.",
+          "leveConsigo": "1 mol = 6,02 × 10²³ unidades e pesa, em gramas, o mesmo número da massa atômica. Faça sempre o teste de ordem de grandeza antes de marcar."
+        },
+        {
+          "id": "qge-p1-q09",
+          "numero": 9,
+          "assunto": "Solubilidade + evaporação (quando começa a cristalizar)",
+          "enunciado": "Sabendo que a 30 °C a solubilidade do cloreto de sódio é 35 g/100 g de água e a densidade da água a 30 °C é 1,0 g/mL, uma solução com 21 g de cloreto de sódio dissolvidos em 200 mL de água foi deixada em um frasco aberto, a 30 °C. Após algum tempo, o soluto começou a ser cristalizado.\n\nAssinale a alternativa do volume mínimo e aproximado, em mL, de água que deve ter evaporado quando se iniciou a cristalização.",
+          "alternativas": ["60 mL", "100 mL", "140 mL", "160 mL", "200 mL"],
+          "correta": 2,
+          "gatilho": "'Começou a cristalizar' = o instante exato em que a solução ficou SATURADA. Traduza para: qual a MENOR quantidade de água que ainda segura todo o sal dissolvido? O que passou disso, evaporou.",
+          "formula": "regra de três:  35 g ── 100 g de água   |   21 g ── x g de água",
+          "passos": [
+            { "titulo": "1. Água inicial", "texto": "200 mL × 1,0 g/mL = 200 g de água. (A densidade está no enunciado só para você poder trabalhar em gramas — e depois voltar para mL de graça.)" },
+            { "titulo": "2. Água que ainda segura os 21 g", "texto": "Se 100 g de água dissolvem 35 g de sal, então x g de água dissolvem 21 g: x = 21 × 100 ÷ 35 = 60 g de água. Abaixo disso, o sal começa a sair." },
+            { "titulo": "3. Quanto evaporou", "texto": "200 g − 60 g = 140 g de água → 140 mL." }
+          ],
+          "resposta": "140 mL",
+          "pegadinha": "60 mL está lá de propósito: é a água que SOBROU, não a que evaporou. Antes de marcar, releia a pergunta: 'ele quer o que ficou ou o que saiu?'. Metade dos erros nessa questão é responder o passo 2 em vez do passo 3.",
+          "leveConsigo": "Evaporar solvente é uma das três formas de saturar uma solução (as outras: adicionar soluto e baixar a temperatura). Quando começa a cristalizar, a solução está exatamente no ponto de saturação."
+        },
+        {
+          "id": "qge-p1-q10",
+          "numero": 10,
+          "assunto": "Reação de neutralização (Arrhenius)",
+          "enunciado": "O leite de magnésia, cujo principal constituinte é o hidróxido de magnésio (Mg(OH)₂), neutraliza o ácido em excesso no suco gástrico. Sabendo disso, avalie as asserções e a relação proposta entre elas:\n\nI. Quando o leite de magnésia é ingerido por um paciente com gastrite, ocorre uma reação de neutralização entre o Mg(OH)₂ e o HCl do suco gástrico, tendo como produtos cloreto de magnésio (MgCl₂) e água (H₂O).\n\nPORQUE\n\nII. Em toda reação de neutralização entre um ácido e uma base de Arrhenius, os produtos formados são sempre um sal e água, resultantes da combinação do ânion do ácido com o cátion da base, e da união do cátion H⁺ do ácido com o ânion OH⁻ da base, respectivamente.",
+          "alternativas": [
+            "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+            "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+            "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+            "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+            "As asserções I e II são proposições falsas."
+          ],
+          "correta": 0,
+          "gatilho": "Mesma rotina da questão 2: julgue I, julgue II e só então pergunte se a II é a REGRA GERAL da qual a I é um caso particular. Quando a II é a lei e a I é o exemplo dela, a resposta costuma ser 'a II justifica a I'.",
+          "formula": "Mg(OH)₂ + 2 HCl → MgCl₂ + 2 H₂O",
+          "passos": [
+            { "titulo": "1. Julgue a I", "texto": "Base + ácido → sal + água. O cátion Mg²⁺ encontra o ânion Cl⁻ e forma MgCl₂ (são precisos dois Cl⁻ para equilibrar a carga 2+); o H⁺ encontra o OH⁻ e forma água. VERDADEIRA." },
+            { "titulo": "2. Julgue a II", "texto": "É a definição de neutralização de Arrhenius, escrita corretamente: o sal vem do cátion da base com o ânion do ácido, e a água vem do H⁺ com o OH⁻. VERDADEIRA." },
+            { "titulo": "3. A II explica a I?", "texto": "Sim: a I é exatamente a regra da II aplicada ao par Mg(OH)₂ / HCl. É justificativa correta." }
+          ],
+          "resposta": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+          "pegadinha": "Confira a fórmula do sal pela CARGA, não pelo chute: Mg é 2+ e Cl é 1−, então são dois cloretos (MgCl₂) e, por consequência, duas águas. Escrever 'MgCl' tornaria a asserção I falsa — é assim que a banca costuma derrubar essa questão em outra prova.",
+          "leveConsigo": "Ácido + base → sal + água. O sal é sempre cátion da base + ânion do ácido. Antiácido estomacal é o exemplo favorito das provas."
+        }
+      ]
+    }
+  ]
+}

@@ -17,10 +17,14 @@
   modos Cartões 3D, Aprender, Combinar e Simulado leem), mas agora ele vive
   cercado do material que o explica.
 
-  AS TRÊS ABAS:
+  AS QUATRO ABAS:
     • Trilha    — a matéria em blocos (esta tela).
     • Caderno   — a página infinita para escrever à mão e desenhar.
     • Anotações — o texto livre, que é uma nota do Cofre de verdade.
+    • Questões  — as provas de verdade da faculdade, resolvidas passo a passo,
+                  com a pegadinha de cada uma. Elas NÃO são digitadas aqui: vêm
+                  dos arquivos de src/estudo/questoes/ (um .json por matéria),
+                  porque questão de prova a gente recebe pronta — não redigita.
 
   QUEM GRAVA: só esta tela. A Trilha avisa a cada mudança e o salvamento
   automático daqui grava um segundo depois que você para de digitar — e mostra na
@@ -29,9 +33,10 @@
 */
 
 import { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react';
-import { Save, ArrowLeft, Layers, NotebookPen, PenLine, CircleCheck, RefreshCw, Network, AlertCircle } from 'lucide-react';
+import { Save, ArrowLeft, Layers, NotebookPen, PenLine, ClipboardList, CircleCheck, RefreshCw, Network, AlertCircle } from 'lucide-react';
 
 import Trilha from '../estudo/Trilha.jsx';
+import PainelDeQuestoes from '../estudo/Questoes.jsx';
 import { lerTrilha, gravarTrilha, blocoNovo, blocoEstaVazio, raioX as calcularRaioX } from '../estudo/trilhaCore.js';
 
 // O Caderno (tldraw) é pesado, então carregamos SOB DEMANDA (só quando a aba abre).
@@ -236,6 +241,7 @@ export default function CreateEditSet({
           { chave: 'trilha', rotulo: 'Trilha', Icone: Layers, dica: 'A matéria em blocos, na ordem em que você estuda' },
           { chave: 'caderno', rotulo: 'Caderno', Icone: NotebookPen, dica: 'Página infinita para escrever à mão e desenhar' },
           { chave: 'anotacoes', rotulo: 'Anotações', Icone: PenLine, dica: 'Texto livre com Ctrl+V para colar prints' },
+          { chave: 'questoes', rotulo: 'Questões', Icone: ClipboardList, dica: 'As questões da prova, resolvidas passo a passo' },
         ].map(({ chave, rotulo, Icone, dica }) => (
           <button
             key={chave}
@@ -341,6 +347,16 @@ export default function CreateEditSet({
               onAbrirNoCofre={onAbrirNoCofre}
             />
           </Suspense>
+        </section>
+      )}
+
+      {/* ============ ABA QUESTÕES ============ */}
+      {activeTab === 'questoes' && (
+        <section style={styles.notebookArea}>
+          <PainelDeQuestoes
+            deck={{ ...(setEditData || {}), id: deckId, title }}
+            onTreinar={onEstudar ? () => estudarAgora('questoes') : null}
+          />
         </section>
       )}
     </div>

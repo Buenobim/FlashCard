@@ -27,6 +27,7 @@ import StudyNotebook from '../pages/StudyNotebook';
 import SubBrainView from '../pages/SubBrainView';
 import AulaViewer from '../pages/AulaViewer';
 import EstudarTrilha, { EscolherModo } from '../estudo/EstudarTrilha.jsx';
+import { TreinoDeQuestoes } from '../estudo/Questoes.jsx';
 import { raioX as calcularRaioX } from '../estudo/trilhaCore.js';
 import { registrarSessaoDeEstudo } from '../utils/db';
 import '../components/study-library.css';
@@ -235,7 +236,7 @@ export default function FlashcardsModule({
       />
       <main style={{ paddingBottom: '40px' }}>{conteudo}</main>
 
-      {/* "Como você quer estudar?" — três portas para a mesma matéria */}
+      {/* "Como você quer estudar?" — as portas para a mesma matéria */}
       {escolhaDeModo && (
         <EscolherModo
           deck={escolhaDeModo}
@@ -245,8 +246,19 @@ export default function FlashcardsModule({
         />
       )}
 
-      {/* A sessão em si, por cima de tudo */}
-      {sessao && (
+      {/*
+        A sessão em si, por cima de tudo.
+
+        As QUESTÕES DE PROVA seguem por outra porta de propósito: elas não têm
+        repetição espaçada nem nota de 0 a 3 (não é um cartão que volta em X
+        dias — é uma questão que a banca já cobrou). Misturar as duas coisas
+        dentro do mesmo motor só sujaria o agendamento dos seus cartões.
+      */}
+      {sessao && sessao.modo === 'questoes' && (
+        <TreinoDeQuestoes deck={sessao.deck} onSair={fecharSessao} />
+      )}
+
+      {sessao && sessao.modo !== 'questoes' && (
         <EstudarTrilha
           deck={sessao.deck}
           modo={sessao.modo}

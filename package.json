@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "testar": "node testes/leque.mjs && node testes/trilha.mjs && node testes/aulas.mjs && node testes/sincronia.mjs && node testes/correcao.mjs",
+    "testar": "node testes/leque.mjs && node testes/trilha.mjs && node testes/aulas.mjs && node testes/sincronia.mjs && node testes/correcao.mjs && node testes/questoes-de-prova.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

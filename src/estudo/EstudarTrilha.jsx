@@ -32,12 +32,14 @@ import { createPortal } from 'react-dom';
 import {
   X, Eye, ArrowRight, Layers, StickyNote, Image as ImageIcon, Link2, Sigma,
   Code2, AlertTriangle, HelpCircle, ExternalLink, Award, Clock, Target, Repeat,
+  ClipboardList,
 } from 'lucide-react';
 
 import {
   montarRoteiro, configDoBloco, aplicarNota, previsaoEmTexto,
   NOTAS, ROTULO_DAS_NOTAS,
 } from './trilhaCore.js';
+import { contarQuestoes } from './questoes/index.js';
 import './trilha.css';
 // A telinha "como você quer estudar" usa o mesmo modal do resto do módulo.
 import '../components/study-library.css';
@@ -448,10 +450,12 @@ export default function EstudarTrilha({
   ======================================================================
   ESCOLHA DO MODO — a telinha que aparece antes da sessão
   ======================================================================
-  Três portas para a mesma matéria, e cada uma serve a um momento:
+  Cada porta serve a um momento:
     • a trilha inteira, para quando você está aprendendo o assunto;
     • a revisão, para o dia a dia (é ela que segura a matéria na cabeça);
-    • o SOS, para a véspera da prova, quando só interessa o que você erra.
+    • o SOS, para a véspera da prova, quando só interessa o que você erra;
+    • as questões da prova, que só aparecem quando a matéria tem prova
+      cadastrada — é o treino no formato em que você vai ser cobrado.
 */
 export function EscolherModo({ deck, raioX, onEscolher, onFechar }) {
   const opcoes = [
@@ -481,6 +485,23 @@ export function EscolherModo({ deck, raioX, onEscolher, onFechar }) {
       selo: 'modo véspera',
     },
   ];
+
+  /*
+    A QUARTA PORTA só aparece quando a matéria TEM prova cadastrada. Botão que
+    abre uma tela vazia é pior que botão nenhum: ensina você a não confiar no
+    app.
+  */
+  const quantasQuestoes = contarQuestoes(deck);
+  if (quantasQuestoes > 0) {
+    opcoes.push({
+      modo: 'questoes',
+      icone: ClipboardList,
+      cor: '#7AA2F7',
+      titulo: 'Questões da prova',
+      texto: 'As questões que a faculdade cobrou de verdade, uma por vez. Você marca a alternativa e só então abre a resolução: o passo a passo, a pegadinha e o raciocínio para quando esse tipo cair de novo.',
+      selo: `${quantasQuestoes} resolvidas`,
+    });
+  }
 
   return emCimaDeTudo(
     <div className="study-modal-overlay trilha-por-cima" onMouseDown={(e) => e.target === e.currentTarget && onFechar?.()}>
