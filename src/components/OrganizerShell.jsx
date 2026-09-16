@@ -11,30 +11,42 @@ const SECTIONS = [
 
 export default function OrganizerShell({ activeProfile, renderSection, onTrocarPerfil }) {
   const [activeSection, setActiveSection] = useState('mapa');
+  const [sectionTarget, setSectionTarget] = useState({ baralhoId: null, grupo: null, revision: 0 });
 
   const api = useMemo(() => ({
-    abrirModulo: (key) => {
+    abrirModulo: (key, options = {}) => {
       const normalized = key === 'sonhos' ? 'metas' : key;
-      if (SECTIONS.some((section) => section.key === normalized)) setActiveSection(normalized);
+      if (!SECTIONS.some((section) => section.key === normalized)) return;
+      setSectionTarget((current) => ({
+        baralhoId: options.baralhoId || null,
+        grupo: options.grupo || null,
+        revision: current.revision + 1,
+      }));
+      setActiveSection(normalized);
     },
     abrirNota: () => setActiveSection('documentos'),
-    baralhoId: null,
-    grupo: null,
-  }), []);
+    baralhoId: sectionTarget.baralhoId,
+    grupo: sectionTarget.grupo,
+  }), [sectionTarget]);
+
+  const abrirSecao = (key) => {
+    setSectionTarget((current) => ({ baralhoId: null, grupo: null, revision: current.revision + 1 }));
+    setActiveSection(key);
+  };
 
   const initials = (activeProfile || 'BB').split(' ').map((part) => part[0]).slice(0, 2).join('').toUpperCase();
 
   return (
     <div className={`organizer-shell organizer-section-${activeSection}`}>
       <header className="organizer-header">
-        <button className="organizer-brand" onClick={() => setActiveSection('mapa')} aria-label="Abrir Cérebro Digital">
+        <button className="organizer-brand" onClick={() => abrirSecao('mapa')} aria-label="Abrir Cérebro Digital">
           <span className="organizer-brand-orb" />
           <span><strong>Bueno</strong><small>Seu centro de organização</small></span>
         </button>
 
         <nav className="organizer-nav" aria-label="Áreas principais">
           {SECTIONS.map(({ key, label, longLabel, icon: Icon }) => (
-            <button key={key} className={activeSection === key ? 'active' : ''} onClick={() => setActiveSection(key)} aria-current={activeSection === key ? 'page' : undefined} title={longLabel}>
+            <button key={key} className={activeSection === key ? 'active' : ''} onClick={() => abrirSecao(key)} aria-current={activeSection === key ? 'page' : undefined} title={longLabel}>
               <Icon size={17} strokeWidth={2} />
               <span className="organizer-label-full">{longLabel}</span>
               <span className="organizer-label-short">{label}</span>
@@ -47,7 +59,9 @@ export default function OrganizerShell({ activeProfile, renderSection, onTrocarP
         </button>
       </header>
 
-      <main className="organizer-workspace">{renderSection(activeSection, api)}</main>
+      <main className="organizer-workspace" key={`${activeSection}:${sectionTarget.revision}`}>
+        {renderSection(activeSection, api)}
+      </main>
     </div>
   );
 }

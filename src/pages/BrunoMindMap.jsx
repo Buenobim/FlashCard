@@ -41,6 +41,7 @@ export default function BrunoMindMap({
   mindMap, 
   onSaveMindMap, 
   onNavigate, 
+  onOpenStudy,
   categories = [],
   onSelectCategoryFilter,
   activeProfile,
@@ -956,7 +957,10 @@ export default function BrunoMindMap({
         });
 
         if (picked) {
-          setSelectedNode(picked);
+          // Um clique na esfera já abre o destino. Nos baralhos, o deckId leva
+          // direto à matéria, sem passar pela lista com os outros baralhos.
+          handleLaunchApp(picked.ref);
+          setSelectedNode(null);
           setSelectedCore(false);
         } else if (Math.hypot(e.clientX - cx, e.clientY - cy) < ORB_R * s) {
           setSelectedCore(true);
@@ -1019,6 +1023,10 @@ export default function BrunoMindMap({
     const cat = nodeRef.category || nodeRef.label;
 
     if (appType === 'flashcards') {
+      if (onOpenStudy) {
+        onOpenStudy({ deckId: nodeRef.deckId || null, category: cat, label: nodeRef.label });
+        return;
+      }
       if (onSelectCategoryFilter) onSelectCategoryFilter(cat);
       onNavigate('dashboard');
     } else if (appType === 'notebook') {

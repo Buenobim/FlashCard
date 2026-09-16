@@ -41,7 +41,7 @@ export default function FlashcardsModule({
   baralhoInicial, grupoInicial, onAbrirNoCofre,
 }) {
   // A tela atual DESTA aba (outra aba de flashcards tem a sua própria)
-  const [tela, setTela] = useState('dashboard');
+  const [tela, setTela] = useState(baralhoInicial ? 'sub_brain' : 'dashboard');
   const [materialSelecionado, setMaterialSelecionado] = useState(null);
   /*
     A AULA aberta no momento. Guardamos o ID, não o objeto: assim, se você
@@ -60,7 +60,7 @@ export default function FlashcardsModule({
     de que nada tinha sido criado. Guardando só o id e buscando o baralho na
     lista viva, tudo que você cria aparece na hora.
   */
-  const [baralhoSelecionadoId, setBaralhoSelecionadoId] = useState(null);
+  const [baralhoSelecionadoId, setBaralhoSelecionadoId] = useState(baralhoInicial || null);
   const baralhoSelecionado = sets.find((s) => s.id === baralhoSelecionadoId) || null;
   const selecionarBaralho = (baralho) => setBaralhoSelecionadoId(baralho?.id || null);
 

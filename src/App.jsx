@@ -601,6 +601,11 @@ export default function App() {
             mindMap={mindMap}
             onSaveMindMap={handleSaveMindMap}
             onNavigate={irPara}
+            onOpenStudy={({ deckId, category, label }) => api.abrirModulo('flashcards', {
+              baralhoId: deckId || null,
+              grupo: deckId ? null : category,
+              titulo: label || 'Flashcards',
+            })}
             categories={categories}
             onSelectCategoryFilter={(cat) => setSelectedCategoryFilter(cat)}
             activeProfile={activeProfile}
